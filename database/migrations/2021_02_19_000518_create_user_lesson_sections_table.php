@@ -15,9 +15,14 @@ class CreateUserLessonSectionsTable extends Migration
     {
         Schema::create('user_lesson_section', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id')->index();
-            $table->integer('lesson_section_id')->index();
+            $table->integer('user_id')->unsigned();
+            $table->bigInteger('lesson_section_id')->unsigned();
             $table->timestamps();
+        });
+
+        Schema::table('user_lesson_section', function($table) {
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('lesson_section_id')->references('id')->on('lesson_sections')->onDelete('cascade');
         });
     }
 

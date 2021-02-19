@@ -15,13 +15,18 @@ class CreateLoginsTable extends Migration
     {
         Schema::create('logins', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id')->index();
+            $table->integer('user_id')->unsigned();
             $table->string('login_ip', 30)->index();
             $table->dateTime('login_date');
             $table->tinyInteger('login_success')->default(0);
             $table->dateTime('logout_date')->nullable();
             $table->string('browser');
         });
+
+        Schema::table('logins', function($table) {
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        });
+
     }
 
     /**

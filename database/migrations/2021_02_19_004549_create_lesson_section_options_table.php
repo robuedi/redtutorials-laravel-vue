@@ -15,13 +15,17 @@ class CreateLessonSectionOptionsTable extends Migration
     {
         Schema::create('lesson_section_options', function (Blueprint $table) {
             $table->id();
-            $table->integer('lesson_section_id')->index();
+            $table->bigInteger('lesson_section_id')->unsigned();
             $table->string('value', 255);
             $table->string('label', 255);
             $table->double('order_weight', 6, 2)->index();
             $table->tinyInteger('is_valid')->default(0);
             $table->tinyInteger('is_public')->default(0)->index();
             $table->timestamps();
+        });
+
+        Schema::table('lesson_section_options', function($table) {
+            $table->foreign('lesson_section_id')->references('id')->on('lesson_sections')->onDelete('cascade');
         });
     }
 

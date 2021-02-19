@@ -15,12 +15,17 @@ class CreateContactMessageUsersTable extends Migration
     {
         Schema::create('contact_message_user', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id')->index();
-            $table->integer('message_id');
+            $table->integer('user_id')->unsigned();
+            $table->bigInteger('message_id')->unsigned();
             $table->tinyInteger('is_read')->default(0);
             $table->tinyInteger('is_flagged')->default(0);
             $table->tinyInteger('is_deleted')->default(0);
             $table->timestamps();
+        });
+
+        Schema::table('contact_message_user', function($table) {
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('message_id')->references('id')->on('contact_messages')->onDelete('cascade');
         });
     }
 

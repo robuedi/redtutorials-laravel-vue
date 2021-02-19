@@ -15,7 +15,7 @@ class CreateEmailsTable extends Migration
     {
         Schema::create('emails', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id')->index();
+            $table->integer('user_id')->unsigned();
             $table->string('from_address',255)->index();
             $table->text('to_address');
             $table->text('cc_address')->nullable();
@@ -30,6 +30,10 @@ class CreateEmailsTable extends Migration
             $table->text('mailer_last_response')->nullable();
             $table->dateTime('skip_check_date')->nullable();
             $table->timestamps();
+        });
+
+        Schema::table('emails', function($table) {
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

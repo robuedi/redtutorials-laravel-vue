@@ -15,7 +15,7 @@ class CreateChaptersTable extends Migration
     {
         Schema::create('chapters', function (Blueprint $table) {
             $table->id();
-            $table->integer('course_id')->nullable()->index();
+            $table->bigInteger('course_id')->unsigned();
             $table->string('name', 255);
             $table->text('description')->nullable();
             $table->double('order_weight', 6, 2)->index();
@@ -23,6 +23,10 @@ class CreateChaptersTable extends Migration
             $table->tinyInteger('is_draft')->default(1)->index();
             $table->string('slug', 100)->nullable()->index();
             $table->timestamps();
+        });
+
+        Schema::table('chapters', function($table) {
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
         });
     }
 

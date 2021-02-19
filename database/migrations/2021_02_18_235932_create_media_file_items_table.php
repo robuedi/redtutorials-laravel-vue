@@ -13,12 +13,15 @@ class CreateMediaFileItemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('media_file_item', function (Blueprint $table) {
+        Schema::create('media_fileables', function (Blueprint $table) {
             $table->id();
-            $table->integer('file_id')->index();
-            $table->integer('item_id')->index();
-            $table->string('item_type')->index();
+            $table->bigInteger('media_file_id')->unsigned();
+            $table->morphs('media_fileable');
             $table->timestamps();
+        });
+
+        Schema::table('media_fileables', function($table) {
+            $table->foreign('media_file_id')->references('id')->on('media_files')->onDelete('cascade');
         });
     }
 

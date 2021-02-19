@@ -15,7 +15,7 @@ class CreateLessonSectionsTable extends Migration
     {
         Schema::create('lesson_sections', function (Blueprint $table) {
             $table->id();
-            $table->integer('lesson_id')->index();
+            $table->bigInteger('lesson_id')->unsigned();
             $table->string('name', 255)->nullable();
             $table->text('content')->nullable();
             $table->string('type', 255)->index();
@@ -24,6 +24,10 @@ class CreateLessonSectionsTable extends Migration
             $table->tinyInteger('is_public')->default(0)->index();
             $table->tinyInteger('is_draft')->default(1)->index();
             $table->timestamps();
+        });
+
+        Schema::table('lesson_sections', function($table) {
+            $table->foreign('lesson_id')->references('id')->on('lessons')->onDelete('cascade');
         });
     }
 

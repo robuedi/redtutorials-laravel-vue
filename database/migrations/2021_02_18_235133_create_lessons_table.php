@@ -15,7 +15,7 @@ class CreateLessonsTable extends Migration
     {
         Schema::create('lessons', function (Blueprint $table) {
             $table->id();
-            $table->integer('chapter_id')->index()->nullable();
+            $table->bigInteger('chapter_id')->unsigned();
             $table->string('name', 255);
             $table->text('description')->nullable();
             $table->double('order_weight', 6, 2)->index();
@@ -23,6 +23,10 @@ class CreateLessonsTable extends Migration
             $table->tinyInteger('is_draft')->default(1)->index();
             $table->string('slug', 100)->index();
             $table->timestamps();
+        });
+
+        Schema::table('lessons', function($table) {
+            $table->foreign('chapter_id')->references('id')->on('chapters')->onDelete('cascade');
         });
     }
 
