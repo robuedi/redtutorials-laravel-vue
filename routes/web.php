@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\AuthenticationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+// Admin
+Route::group(['namespace' => 'admin', 'prefix' => config('app.admin_route')], function(){
+
+    //Authentication
+    Route::get('/', [AuthenticationController::class, 'login']);
+    Route::post('/login', [AuthenticationController::class, 'doLogin']);
+    Route::get('/logout', [AuthenticationController::class, 'logout']);
+
+    //Require authentication
+    Route::group(['middleware' => 'admin_section'], function()
+    {
+
+    });
 });

@@ -7,5 +7,18 @@ use Illuminate\Http\Request;
 
 class AuthenticationController extends Controller
 {
-    //
+    public function login()
+    {
+
+    }
+
+    public function doLogin()
+    {
+
+    }
+
+    public function logout()
+    {
+
+    }
 }
