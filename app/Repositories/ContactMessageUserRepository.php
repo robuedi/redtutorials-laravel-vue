@@ -7,9 +7,9 @@ use App\Models\ContactMessageUser;
 
 class ContactMessageUserRepository implements ContactMessageUserRepositoryInterface
 {
-    public function getCountUserUnreadMsg($user_id)
+    public function getCountUserUnreadMsg(?int $user_id)
     {
-        if(empty($user_id))
+        if(!is_int($user_id))
         {
             return null;
         }

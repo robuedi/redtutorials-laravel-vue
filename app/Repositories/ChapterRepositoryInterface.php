@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Repositories;
-
 
 interface ChapterRepositoryInterface
 {
@@ -11,4 +9,6 @@ interface ChapterRepositoryInterface
     public function getCountPublic();
 
     public function getCountDraft();
+
+    public function getByWeightGroupedByCourse();
 }

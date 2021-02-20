@@ -9,4 +9,6 @@ interface CourseRepositoryInterface
     public function getCountPublic();
 
     public function getCountDraft();
+
+    public function getByWeight();
 }

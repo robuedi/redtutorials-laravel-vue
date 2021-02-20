@@ -38,7 +38,7 @@ class CoursesHierarchyAdmin extends CoursesHierarchy implements CoursesHierarchy
             'clear_name'    => $course->name,
             'type'          => 'course',
             'parent_id'     => 0,
-            'link'          => URL::to(config('app.admin_route').'/courses/'.$course->id.'/edit'),
+            'link'          => url(config('app.admin_route').'/courses/'.$course->id.'/edit'),
             'is_public'     => $course->status,
             'is_draft'      => $course->is_draft,
             'pointing_id'   => (string)$this->pointing_id === (string)$course->id.'course' ? 1 : 0,
