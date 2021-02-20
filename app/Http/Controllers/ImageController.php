@@ -1,19 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: eduard
- * Date: 01/12/18
- * Time: 18:36
- */
 
 namespace App\Http\Controllers;
 
 use Illuminate\Contracts\Filesystem\Filesystem;
 use League\Glide\Responses\LaravelResponseFactory;
 use League\Glide\ServerFactory;
-use Log;
-use Storage;
-use Illuminate\Support\Facades\Input;
 
 class ImageController extends Controller
 {

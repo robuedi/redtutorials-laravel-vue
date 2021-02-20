@@ -3,11 +3,9 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Repositories\CourseRepositoryInterface;
-use App\Services\CoursesServiceInterface;
 
-class TutorialsController
+class TutorialsController extends Controller
 {
     private CourseRepositoryInterface $course_repository;
     public function __construct(CourseRepositoryInterface $course_repository)
