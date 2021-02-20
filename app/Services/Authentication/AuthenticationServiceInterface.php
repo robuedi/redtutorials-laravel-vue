@@ -25,7 +25,8 @@ interface AuthenticationServiceInterface
      */
     public function getUserId();
 
-    public function getUserName();
+    public function getUserName() : string;
+    public function getUserFirstName() : string;
 
     /**
      * Check if admin user logged

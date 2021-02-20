@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\admin\AuthenticationController;
 use App\Http\Controllers\admin\DashboardController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-// Admin
+// Admin/CMS side
 Route::group(['namespace' => 'admin', 'prefix' => config('app.admin_route')], function(){
 
     //Authentication
@@ -31,3 +32,8 @@ Route::group(['namespace' => 'admin', 'prefix' => config('app.admin_route')], fu
         Route::get('/dashboard', [DashboardController::class, 'index']);
     });
 });
+
+// Client side
+
+//Home
+Route::get('/', [HomeController::class, 'index']);

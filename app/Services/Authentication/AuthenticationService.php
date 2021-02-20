@@ -23,7 +23,7 @@ class AuthenticationService implements AuthenticationServiceInterface
         return null;
     }
 
-    public function getUserName()
+    public function getUserName() : string
     {
         if(!$this->userLogged())
         {
@@ -31,6 +31,16 @@ class AuthenticationService implements AuthenticationServiceInterface
         }
 
         return $this->userLogged()->first_name.' '.$this->userLogged()->last_name;
+    }
+
+    public function getUserFirstName() : string
+    {
+        if(!$this->userLogged())
+        {
+            return '';
+        }
+
+        return $this->userLogged()->first_name;
     }
 
     public function checkIfAdmin() : string

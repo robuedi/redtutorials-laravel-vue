@@ -37,4 +37,22 @@ class CourseRepository implements CourseRepositoryInterface
             ->select('id', 'name')
             ->get();
     }
+
+    public function getByStatus($status = [], $fields = [])
+    {
+        return Course::where('status', $status)
+            ->select($fields)
+            ->orderBy('order_weight')
+            ->get();
+    }
+
+    public function getByStatusWithSlug($status = [], $fields = [])
+    {
+        return Course::where('status', $status)
+            ->select($fields)
+            ->whereNotNull('slug')
+            ->orderBy('order_weight')
+            ->get();
+    }
+
 }
