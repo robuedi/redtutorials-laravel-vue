@@ -4,12 +4,15 @@ namespace App\Providers;
 
 use App\Services\CoursesHierarchy\CoursesHierarchyAdmin;
 use App\Services\CoursesHierarchy\CoursesHierarchyAdminInterface;
+use App\Services\CoursesService;
+use App\Services\CoursesServiceInterface;
 use App\Services\Menu\MenuAdmin;
 use App\Services\Menu\MenuAdminInterface;
 use App\Services\Menu\MenuUserContactMessages;
 use App\Services\Menu\MenuUserContactMessagesInterface;
 use App\Services\UserProgress\CourseStatus;
 use App\Services\UserProgress\CourseStatusInterface;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider

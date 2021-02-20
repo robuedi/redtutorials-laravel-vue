@@ -39,4 +39,19 @@ class LessonRepository implements LessonRepositoryInterface
             ->get()
             ->groupBy('chapter_id');
     }
+
+    public function getLessonsByChapters(array $chapters_ids, int $public = 1)
+    {
+        if(!$chapters_ids)
+        {
+            return collect([]);
+        }
+
+        return Lesson::whereIn('chapter_id', $chapters_ids)
+            ->where('is_public', $public)
+            ->whereNotNull('slug')
+            ->orderBy('order_weight')
+            ->select('id', 'name', 'slug')
+            ->get();
+    }
 }

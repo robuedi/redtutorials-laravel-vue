@@ -5,6 +5,7 @@ namespace App\Repositories;
 
 
 use App\Models\Course;
+use Illuminate\Support\Facades\Log;
 
 class CourseRepository implements CourseRepositoryInterface
 {
@@ -38,7 +39,7 @@ class CourseRepository implements CourseRepositoryInterface
             ->get();
     }
 
-    public function getByStatus($status = [], $fields = [])
+    public function getByStatus(array $status = [], array $fields = [])
     {
         return Course::where('status', $status)
             ->select($fields)
@@ -46,7 +47,7 @@ class CourseRepository implements CourseRepositoryInterface
             ->get();
     }
 
-    public function getByStatusWithSlug($status = [], $fields = [])
+    public function getByStatusWithSlug(array $status = [], array $fields = [])
     {
         return Course::where('status', $status)
             ->select($fields)
@@ -54,5 +55,29 @@ class CourseRepository implements CourseRepositoryInterface
             ->orderBy('order_weight')
             ->get();
     }
+
+    public function getBySlug(string $slug, array $status = [])
+    {
+        return Course::where('slug', $slug)
+            ->where('status', $status)
+            ->first();
+    }
+
+    public function getBySlugWith(string $slug, array $status = [], array $with = [], array $select = [])
+    {
+        $q = Course::query();
+        $q->where('slug', $slug)
+            ->whereIn('status', $status)
+            ->select($select);
+
+        if($with)
+        {
+            $q->with($with);
+        }
+
+        return $q->first();
+    }
+
+
 
 }

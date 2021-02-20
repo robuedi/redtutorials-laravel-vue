@@ -8,12 +8,12 @@ use App\Services\Authentication\AuthenticationServiceInterface;
 
 class LoginSessionRepository implements LoginSessionRepositoryInterface
 {
-    public function saveLogin(AuthenticationServiceInterface $authentication_service) : void
+    public function saveLogin(int $user_id) : void
     {
         /// insert in BD and in session login_id
         // if we are here, that means it's a successful login
         $new_login                = new Login;
-        $new_login->user_id       = $authentication_service->getUserId();
+        $new_login->user_id       = $user_id;
         $new_login->login_date    = date('Y-m-d H:i:s');
         $new_login->login_success = 1;
         $new_login->login_ip      = request()->getClientIp();

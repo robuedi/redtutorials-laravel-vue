@@ -6,7 +6,7 @@ use App\Services\Authentication\AuthenticationServiceInterface;
 
 interface LoginSessionRepositoryInterface
 {
-    public function saveLogin(AuthenticationServiceInterface $authentication_service): void;
+    public function saveLogin(int $user_id): void;
 
     public function saveLogout(): void;
 }

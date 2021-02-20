@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class MediaFile extends Model
 {
     use HasFactory;
+
+    public function courses()
+    {
+        return $this->morphedByMany(Course::class, 'media_fileable');
+    }
 }
