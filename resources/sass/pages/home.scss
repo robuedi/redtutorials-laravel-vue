@@ -1,0 +1,300 @@
+.body-home {
+  background-color: #fafafa;
+  #main_navigation{
+    background-color: #fafafa;
+
+
+    @media (min-width: 823px) {
+      background-color: rgba(255,255,255,0.8);
+      //background: repeating-linear-gradient(45deg,  rgba(#fcfcfc, 0.9),  rgba(#fcfcfc, 0.9) 1px, rgba(#fcfcfc, 0.7) 2px, rgba(#fcfcfc, 0.7) 3px);
+    }
+
+    .navigation-links {
+      background-color: #fafafa;
+
+      @media (min-width: 823px) {
+        background-color: transparent;
+      }
+    }
+  }
+}
+
+#home_container {
+  box-sizing: border-box;
+  min-height: $full-height-minus-header;
+  width: 100%;
+  position: relative;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-color: #fafafa;
+
+  &:after {
+    z-index: 0;
+    position: absolute;
+    top: -50px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-position: 30% 46px;
+    background-image: url("/assets/img/cup-desk-drink-434337.jpg?w=1000&fit=contain");
+    background-repeat: no-repeat;
+    content: '';
+    background-size: cover;
+
+    @media(min-width: $screen-md) {
+      background-position: top;
+      top: -174px;
+    }
+  }
+
+  .page-title {
+    box-sizing: border-box;
+    max-width: 100%;
+    z-index: 2;
+    padding: 70px 15px 30px;
+    position: relative;
+
+    @media (min-width: $screen-md) {
+      background-color: rgba(255,255,255,0.8);
+      padding-top: 100px;
+      padding-bottom: 10px;
+      padding-left: 75px;
+    }
+
+
+    .part-one {
+      margin: 0;
+      text-align: center;
+      color: $brand-primary;
+      display: block;
+      font-size: 45px;
+      font-weight: 400;
+
+      @media (min-width: $screen-md) {
+        font-size: 52px;
+      }
+    }
+
+    .part-two {
+      margin-top: 10px;
+      margin-bottom: 0;
+      font-weight: 100;
+      font-size: 26px;
+      text-align: center;
+      display: block;
+
+      @media (min-width: $screen-md) {
+        font-size: 30px;
+        padding-left: 150px;
+      }
+    }
+  }
+
+  .page-content {
+      margin: 0 auto;
+      padding: 50px 0;
+      font-size: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      width: 100%;
+      box-sizing: border-box;
+      position: relative;
+      z-index: 2;
+      min-height: auto;
+
+      @media (min-width: $screen-md) {
+        padding: 130px 75px 75px;
+      }
+
+      .course-item {
+        z-index: 1;
+        color: $text-color;
+        position: relative;
+        overflow: auto;
+        width: 35%;
+        box-sizing: border-box;
+        min-height: 200px;
+        padding: 25px ;
+        //background-color: rgba(255,255,255,0.8);
+        //margin-bottom: 50px;
+        border-radius: 4px;
+
+        @media (min-width: $screen-md) {
+          //background-color: transparent;
+          margin: 0px 10px 50px;
+          padding: 0px ;
+        }
+
+        //@media (min-width: $screen-xl) {
+        //  background: transparent;
+        //}
+
+        @media (max-width: 1675px) {
+          width: calc(33.33% - 20px);
+        }
+
+        @media (max-width: 1390px) {
+          width: calc(50% - 20px);
+        }
+
+        @media (max-width: 800px) {
+          width: 100%;
+          padding: 15px;
+        }
+
+
+
+        .inner-container{
+          height: 100%;
+          text-align: left;
+          box-sizing: border-box;
+          padding: 25px 0 55px;
+          position: relative;
+          text-decoration: none;
+
+
+          @media (min-width: $screen-sm) {
+            border: none
+          }
+
+          @media (min-width: $screen-md) {
+            padding: 25px 25px 55px;
+          }
+
+          h2 {
+            margin: 10px 0 35px ;  
+
+            @media (min-width: $screen-md) {
+              margin: 0 0 35px ;  
+            }
+
+            @media (min-width: $screen-sm) {
+              text-align: center;
+            }
+
+            a{
+              text-decoration:none;
+              display: inline-block;
+              position: relative;
+              z-index: 2;
+              font-size: 50px;
+              color: $text-color;
+              font-weight: 700;
+
+              small {
+                font-weight: 400;
+                background: none;
+                display: block;
+                font-size: 26px;
+                -webkit-background-clip: initial;
+                -webkit-text-fill-color: #000;
+              }
+
+              
+            }
+          }
+
+          .txt-content{
+            position: relative;
+            z-index: 2;
+            padding-bottom: 45px;
+            line-height: 1.3;
+            font-size: 20px;
+            color: $text-color;
+
+            @media (min-width: $screen-md) {
+              padding-bottom: 60px;
+            }
+
+            p {
+              margin: 0;
+            }
+          }
+
+          .start-course{
+            z-index: 2;
+            font-family: $font-family;
+            letter-spacing: 1px;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 8px 20px;
+            font-weight: 800;
+            text-decoration: none;
+            line-height: 25px;
+            vertical-align: middle;
+            position: absolute;
+            right: 25px;
+            bottom: 25px;
+            background-color: $white-color;
+            color: $brand-primary;
+            border-radius: 8px;
+            box-shadow: 0 0 4px 1px rgba(0,0,0,0.05); 
+
+            @media (min-width: $screen-sm) {
+              transition: background-color 0.5s;
+            }
+
+            span{
+              z-index: 2;
+              position: relative;
+              display: inline-block;
+              padding-right: 5px;
+            }
+
+            i {
+              line-height: 24px;
+              vertical-align: middle;
+              z-index: 2;
+              font-size: 24px;
+              color: #2d2d2d;
+              height: 24px;
+              width: 24px;
+              position: relative;
+
+
+              &:after{
+                content: "";
+                position: absolute;
+                left: 1px;
+                right: 1px;
+                top: 1px;
+                bottom: 1px;
+                border-radius: 50%;
+                z-index: 0;
+
+              }
+              &:before{
+                position: relative;
+                z-index: 1;
+                color: $brand-primary ;
+
+              }
+            }
+
+            &:hover, &:focus, &:active {
+              background-color: $brand-primary;
+              color: $white-color;
+
+              i:before{
+                  color: $white-color ;
+                
+              }
+            }
+          }
+        }
+
+      }
+
+    }
+}
+@-webkit-keyframes move-bg-up {
+  0% {
+    background-position-y: 0;
+  }
+  100% {
+    background-position-y: 120px;
+  }
+}
+

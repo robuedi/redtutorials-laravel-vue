@@ -1,0 +1,57 @@
+.user-profile {
+    .progress-content{
+      .course {
+        .name{
+          font-size: 34px;
+          font-weight: 600;
+        }
+
+        .percentage {
+          font-size: 34px;
+          color: $brand-primary;
+        }
+      }
+    }
+
+    .profile-info-content{
+      text-align: left;
+
+      .password-main-label {
+        font-size: 20px;
+        font-weight: 100;
+        border: 1px dashed $layout-border;
+        padding: 10px 15px;
+        margin: 15px 0 55px;
+        font-style: italic;
+        cursor: pointer;
+        border-radius: 8px;
+        box-shadow: 0 0 4px 1px rgba(0,0,0,0.05);
+
+        &.active {
+          background-color: #f7f7f7;
+          margin-bottom: 15px;
+        }
+      }
+
+      .password-main-label.active + .password-change-section{
+        display: block;
+      }
+
+      .password-change-section {
+        display: none;
+        margin-bottom: 25px;
+      }
+
+
+      @media (max-width: $screen-sm){
+        .user-profile-btns{
+          padding-bottom: 25px;
+
+          .profile-btn{
+            padding-left: 25px;
+            padding-right: 25px;
+          }
+        }
+      }
+    }
+}

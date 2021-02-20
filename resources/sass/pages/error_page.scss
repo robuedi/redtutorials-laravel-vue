@@ -1,0 +1,40 @@
+.exception-page-content{
+  min-height: $full-height-minus-footer-header;
+  box-sizing: border-box;
+
+  h1{
+    margin: 75px 75px 0px 0px;
+    padding: 30px 75px;
+    display: inline-block;
+    @include main-page-header();
+    @include main-page-header-left-padding();
+    font-size: 40px;
+
+    .error-code {
+       display: block;
+      color: $text-color;
+      font-size: 70px;
+      font-weight: 100;
+    }
+  }
+
+  .propose-pages .btn-s-one {
+    display: inline-block;
+    margin-right: 13px;
+    margin-bottom: 15px;
+  }
+
+  .inner-container{
+
+    @include container-sizing();
+
+    .error-description{
+
+      font-family: $font-family;
+      font-size: 28px;
+      font-weight: 400;
+    }
+
+  }
+
+}

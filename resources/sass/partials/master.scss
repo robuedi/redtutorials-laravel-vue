@@ -1,0 +1,99 @@
+body {
+  font-family: $font-family;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+
+  text-shadow: rgba(0,0,0,.01) 0 0 1px;
+
+
+  &.fixed-body {
+    position: fixed;
+  }
+
+  > main {
+    margin-top: 46px;
+
+    @media (min-width: $screen-md) {
+      margin-top: 0;
+    }
+  }
+
+  #footer-container{
+    margin: 10px 15px;
+    text-align: center;
+
+    .copyright-container{
+      box-sizing: border-box;
+      text-align: center;
+      margin: 0;
+      line-height: 2;  
+    }
+
+    .footer-links{
+      margin: 0;
+      box-sizing: border-box;
+      vertical-align: middle;
+      list-style: none;
+      padding: 0;
+
+      > li {
+        display: inline-block;
+        padding-left: 10px;
+
+        a {
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          color: $text-color;
+          text-decoration: none;
+          transition: color .5s;
+          font-size: 18px;
+          letter-spacing: 1px;
+          font-weight: 100;
+          line-height: 2;
+          display: inline-block;
+
+          &.active, &:hover {
+            color: $brand-primary;
+          }
+        }
+
+      }
+    }
+  }
+}
+textarea:focus, input:focus, button:focus{
+  outline: none;
+}
+.logo-txt {
+  display: inline-block;
+  text-align: right;
+  text-decoration: none;
+  height: 46px;
+  vertical-align: middle;
+  line-height: 46px;
+  font-size: 26px;
+  text-transform: capitalize;
+
+  @media (min-width: 808px) {
+      height: 65px;
+      line-height: 65px;
+      font-size: 28px;
+  }
+
+  .red{
+    display: inline-block;
+    color: $brand-primary;
+    font-weight: 900;
+  }
+
+  .tutorial{
+    display: inline-block;
+    font-weight: 100;
+    color: $text-color;
+
+  }
+}

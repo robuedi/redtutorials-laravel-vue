@@ -1,0 +1,153 @@
+#main_navigation{
+  text-align: left;
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 46px;
+  background-color: #fff;
+
+  &.scroll-show-hide-enabled{
+    transition: top .5s;
+
+    &.scroll-hide {
+      top: -50px;
+    }
+  }
+
+  @media (min-width: 808px) {
+    height: 65px;
+    text-align: center;
+    position: relative;
+  }
+
+  .nav-inner {
+    display: inline-block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0px 20px;
+    vertical-align: bottom;
+
+    .logo-txt{
+      position: relative;
+      z-index: 2;
+      margin: 0 30px 0 0;
+
+    }
+
+    .navigation-links {
+      z-index: 1;
+      position: absolute;
+      height: calc(100vh - 50px);
+      transition: left .5s;
+      overflow: hidden;
+      width: 100vw;
+      top: 45px;
+      left: -100vw;
+      background-color: #fff;
+      padding: 30px 0 0;
+      margin: 0;
+      box-sizing: border-box;
+
+
+
+      @media (min-width: 808px) {
+        position: relative;
+        vertical-align: middle;
+        display: inline-block;
+        list-style: none;
+        padding: 0;
+        height: auto;
+        width: auto;
+        top: auto;
+        left: auto;
+      }
+
+      li {
+        display: block;
+        line-height: 65px;
+        vertical-align: bottom;
+        padding: 0px 20px;
+
+        &:last-child{
+          border-bottom: none;
+
+        }
+
+        @media (min-width: 808px) {
+          display: inline-block;
+          padding: 0px 10px;
+        }
+
+        .option {
+          cursor: pointer;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          color: $text-color;
+          text-decoration: none;
+          transition: color .5s;
+          font-size: 17px;
+          font-weight: 400;
+
+          &.active:not(.twitter-account), &:hover {
+            color: $brand-primary;
+          }
+        }
+
+        .nav-submenu {
+          display: none;
+        }
+      }
+    }
+
+    .trigger-sidebar {
+      display: inline-block;
+      z-index: 2;
+      float: right;
+      height: 40px;
+      width: 65px;
+      border-radius: 7px;
+      background-color: initial;
+      position: relative;
+      box-sizing: border-box;
+      border: none;
+      cursor: pointer;
+
+      @media (min-width: 808px) {
+        display: none;
+      }
+
+      &:before, &:after{
+        content: "";
+        position: absolute;
+        height: 1px;
+        width: 30px;
+        background-color: $brand-primary;
+        left: 17px;
+        top: 15px;
+        transition: transform .5s;
+      }
+
+      &:after {
+        top: 24px;
+      }
+
+      &.trigger-open{
+        &:before {
+          top: 20px;
+          transform: rotate(45deg);
+        }
+        &:after {
+          top: 20px;
+          transform: rotate(-45deg);
+        }
+      }
+    }
+
+    .trigger-open + .navigation-links {
+      left: 0px;
+    }
+  }
+}
+

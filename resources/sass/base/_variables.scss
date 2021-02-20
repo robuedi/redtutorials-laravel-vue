@@ -1,0 +1,36 @@
+// Brands
+$brand-primary: #cf142b;
+//$brand-primary: #E62C33;
+
+$white-color: #FFF;
+
+// Typography
+$font-family: 'Lato', sans-serif;
+$font-family-text: 'Roboto', sans-serif;
+$font-family-monospace: 'MonoFont', monospace;
+$font-font-awesome: "Font Awesome 5 Free";
+$text-color: #000;
+
+$footer-height: 48px;
+$header-height: 74px;
+$full-height-minus-footer-header: calc(100vh - 145px);
+$full-height-minus-header: calc(100vh - 74px);
+
+$background-color: #fbfbfd;
+
+//Grid breakpoints:
+// Small screen / phone
+$screen-sm: 576px;
+
+// Medium screen / tablet
+$screen-md: 768px;
+$screen-md-max: 991px;
+
+// Large screen / desktop
+$screen-lg: 992px;
+
+// Extra large screen / wide desktop
+$screen-xl: 1200px;
+
+//Layout
+$layout-border: #999;

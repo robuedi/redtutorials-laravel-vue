@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\AuthenticationController;
+use App\Http\Controllers\admin\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,6 +27,7 @@ Route::group(['namespace' => 'admin', 'prefix' => config('app.admin_route')], fu
     //Require authentication
     Route::group(['middleware' => 'admin_section'], function()
     {
-
+        //Dashboard
+        Route::get('/dashboard', [DashboardController::class, 'index']);
     });
 });

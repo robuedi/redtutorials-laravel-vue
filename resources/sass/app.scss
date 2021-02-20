@@ -1,0 +1,41 @@
+// Variables
+@import "base/fonts";
+@import "base/variables";
+@import "base/mixin";
+
+//Libs
+@import "libs/normalize8.scss";
+@import "libs/cookieBar.scss";
+@import "libs/highlightjs_idea.css";
+@import "libs/custom_hljs";
+
+//Layout
+@import "layout/containers";
+@import "layout/helpers";
+@import "layout/buttons";
+@import "layout/elements";
+@import "layout/forms_inputs";
+//@import "layout/icons";
+@import "layout/doughnut_pie_chart";
+
+//Partials
+@import "partials/master";
+@import "partials/navigation";
+
+//Pages
+@import "pages/admin_login";
+@import "pages/contact_us";
+@import "pages/error_page";
+@import "pages/home";
+@import "pages/static_page";
+@import "pages/chapters";
+@import "pages/lesson_content";
+@import "pages/standard_page";
+@import "pages/user/profile";
+
+//awesome fonts
+@import url("https://use.fontawesome.com/releases/v5.7.0/css/all.css");
+
+
+
+

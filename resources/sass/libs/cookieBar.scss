@@ -1,0 +1,85 @@
+/**
+ * cookiebar - It is a pure JS code, that warns the visitors in the notification bar, the page saves cookies. This is Compliant with the new EU cookie law.
+ * Date 2018-12-25T03:13:56Z
+ * 
+ * @author Tamás András Horváth <htomy92@gmail.com> (https://icetee.hu)
+ * @version v1.0.0
+ * @link https://github.com/icetee/cookiebar#readme
+ * @license MIT
+ */
+
+.cookiebar {
+  background-color: #FFF;
+  bottom: 0;
+  -webkit-box-sizing: initial;
+  box-sizing: initial;
+  color: #000;
+  min-height: 50px;
+  left: 0;
+  position: fixed;
+  width: 100%;
+  z-index: 9;
+}
+
+.cookiebar-wrapper {
+  height: 100%;
+  overflow: hidden;
+  padding: 14px;
+}
+
+.cookiebar-content {
+  display: inline-block;
+  width: 90%;
+  vertical-align: middle;
+}
+
+.cookiebar-actions {
+  width: 10%;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.cookiebar-desciption {
+  display: inline;
+  font-size: 18px;
+}
+
+.cookiebar-link {
+  display:inline-block;
+  a {
+    font-weight: 800;
+    color: $brand-primary;
+    font-size: 19px
+  } 
+}
+
+.cookiebar-link a:hover {
+  text-decoration: underline;
+}
+
+.cookiebar-button {
+  display: inline-block;
+  vertical-align: middle;
+  width: auto;
+}
+
+.cookiebar-btn {
+  background-color: #FFF;
+  border: 0 none;
+  cursor: pointer;
+  height: 28px;
+  padding: 0 10px 2px;
+  margin: auto;
+  font-weight: 800;
+  color: $brand-primary;
+  font-size: 20px;   
+}
+
+@media screen and (max-width: 767px) {
+  .cookiebar-actions {
+    width: 100%;
+    text-align: right;
+    margin: 8px 0 0 0;
+  }
+}
