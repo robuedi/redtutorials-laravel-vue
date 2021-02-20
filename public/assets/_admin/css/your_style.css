@@ -1,0 +1,129 @@
+/*
+ * It is advised not to edit the smartadmin_production.css
+ * as this will override any changes you make in the 
+ * later versions of this theme. 
+ * 
+ * We advise that you use use this CSS to override 
+ * SmartAdmin styles. 
+ * 
+ * Rename the stylesheet to whatever your liking so it will stay
+ * unique to you with each update of SmartAdmin.
+ */
+
+/*
+ * INDEX
+ * 
+ * - HTML
+ * - BODY
+ * - CUSTOM STYLES
+ */
+
+header #logo {
+    margin-top: 5px;
+}
+
+header #logo img {
+    width: auto;
+    max-height: 100%;
+}
+
+#main[role="main"] {
+    min-height: calc( 100vh - 101px );
+}
+.label.toggle-inline {
+    display: inline-block;
+    margin-bottom: 0;
+}
+label.toggle-inline  + .toggle  {
+    display: inline-block;
+    padding-left: 20px;
+}
+
+label.toggle-inline  + .toggle > i {
+    display: inline-block;
+    position: relative;
+    top: 7px;
+}
+
+.smart-form.table-listing .label {
+    margin: 0;
+    padding: .2em .6em .3em;
+    color: #fff;
+    text-align: center;
+    border-radius: 0;
+    font-size: 89%;
+}
+.widget-filters .filter-buttons {
+    text-align: right;
+    padding: 22px 20px 0 0;
+}
+
+.jarviswidget .widget-body {
+    min-height: 60px;
+}
+
+.widget-body.widget-listing.alert-margin .alert.alert-info {
+    margin: 13px;
+    border: 1px solid #9cb4c5 !important;
+    border-radius: 0px !important;
+    -webkit-border-radius: 0px !important;
+    -moz-border-radius: 0px !important;
+}
+
+button.btn.btn-lg, a.btn.btn-lg {
+    border-radius: 0px !important;
+}
+.smart-style-5 .page-footer, .smart-style-5.fixed-header #header {
+    background: url(../img/glass.jpg) no-repeat center top fixed;
+    background-size: cover;
+}
+.smart-style-5 .login-info img {
+    border-radius: 0 !important;
+}
+
+/*Lessons*/
+#content_editor .ck.ck-toolbar {
+    border-top: none;
+    background-color: transparent;
+    border-bottom: 1px solid #C2C2C2
+}
+#content_editor .ck.ck-editor__editable_inline {
+    /*border-top-style: dotted;*/
+}
+#content_editor .ck.ck-sticky-panel__content {
+    border-bottom: 17px solid #FAFAFA
+}
+#content_editor .ck.ck-editor__main>.ck-editor__editable.ck-focused {
+    border-color: var(--ck-color-base-border);
+    box-shadow: none;
+}
+.text-content-preview{
+    padding: 20px;
+}
+
+.table-relative-columns tr td {
+    position: relative;
+}
+.absolute-full-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+.dropdown-menu.danger li{
+    background-color: #a90329;
+    color: #FFF;
+}
+.dropdown-menu.danger li:hover, .dropdown-menu.danger li a:hover {
+    background-color: #77021d;
+}
+.dropdown-menu.danger li a {
+    border: none;
+    box-shadow: none;
+     color: #FFF;
+}
+
+.display-block {
+    display: block !important;
+}

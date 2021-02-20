@@ -2,10 +2,14 @@
 
 namespace App\Providers;
 
-use App\Repositories\LoginSessionRepository;
-use App\Repositories\LoginSessionRepositoryInterface;
-use App\Services\Authentication\AuthenticationService;
-use App\Services\Authentication\AuthenticationServiceInterface;
+use App\Repositories\ChapterRepository;
+use App\Repositories\ChapterRepositoryInterface;
+use App\Repositories\CourseRepository;
+use App\Repositories\CourseRepositoryInterface;
+use App\Repositories\LessonRepository;
+use App\Repositories\LessonRepositoryInterface;
+use App\Services\CoursesHierarchy\CoursesHierarchyAdmin;
+use App\Services\CoursesHierarchy\CoursesHierarchyAdminInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -17,8 +21,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        app()->singleton(AuthenticationServiceInterface::class, AuthenticationService::class);
-        app()->singleton(LoginSessionRepositoryInterface::class, LoginSessionRepository::class);
+        //repositories
+        app()->singleton(CourseRepositoryInterface::class, CourseRepository::class);
+        app()->singleton(ChapterRepositoryInterface::class, ChapterRepository::class);
+        app()->singleton(LessonRepositoryInterface::class, LessonRepository::class);
+        app()->singleton(CoursesHierarchyAdminInterface::class, CoursesHierarchyAdmin::class);
+
     }
 
     /**

@@ -44,10 +44,8 @@ class AuthenticationController extends Controller
             $login_session_repository->saveLogin($this->authentication_service);
             return response()->redirectToIntended(config('app.admin_route').'/dashboard');
         }
-        else
-        {
-            return redirect()->back()->withInput()->withErrors($this->authentication_service->getLoginMsg());
-        }
+
+        return redirect()->back()->withInput()->withErrors($this->authentication_service->getLoginMsg());
     }
 
     function logout(LoginSessionRepositoryInterface $login_repository)

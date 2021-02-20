@@ -1,0 +1,602 @@
+/*
+ * It is advised not to edit the smartadmin_production.css
+ * as this will override any changes you make in the 
+ * later versions of this theme. 
+ * 
+ * We advise that you use use this CSS to override 
+ * SmartAdmin styles. 
+ * 
+ * Rename the stylesheet to whatever your liking so it will stay
+ * unique to you with each update of SmartAdmin.
+ */
+
+/*
+ * INDEX
+ * 
+ * - HTML
+ * - BODY
+ * - CUSTOM STYLES
+ */
+
+.widget-listing .info {
+    color: #969696;
+    font-size: 13px;
+    font-style: italic;
+    line-height: 28px;
+    padding-right: 10px;
+    padding-left: 5px;
+}
+
+.widget-footer .pagination {
+    margin: 0;
+}
+
+.widget-listing .smart-form .label {
+    color: #fff;
+    text-align: center;
+    font-size: 90%;
+    padding: 0.2em 0.6em 0.3em;
+}
+
+.jarviswidget .widget-body {
+    min-height: 60px;
+}
+
+.widget-filters .filter-buttons {
+    text-align: right;
+    padding: 22px 20px 0 0;
+}
+
+.widget-content {
+    padding: 15px 15px 0;
+}
+
+.widget-options section {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    margin: 10px -15px 0 -15px;
+    padding: 0 15px;
+}
+
+.widget-options section div {
+    padding: 5px 0;
+}
+
+.widget-options section div:first-child {
+    padding-top: 10px;
+}
+
+.widget-body .btn {
+    padding: 6px 12px;
+}
+
+.widget-body .widget-footer {
+    padding: 5px;
+}
+
+.widget-body.no-padding .alert {
+    margin: 15px;
+}
+
+#widget-attachments .widget-body.no-padding .alert {
+    margin: 0;
+}
+
+input.page-title {
+    margin-bottom: 15px;
+    margin-top: 0;
+}
+
+/*
+    Media Library
+*/
+
+.drag-drop-container {
+    margin: 100px auto 0;
+}
+
+.drag-drop-container p {
+    color: #BBBBBB;
+    text-align: center;
+}
+
+.drag-drop-container p:first-child {
+    font-size: 50px;
+}
+
+.uploaded-files .progress {
+    margin-bottom: 0;
+}
+
+.modal-browse {
+    width: 90%;
+    height: 90%;
+}
+
+.modal-browse .modal-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.modal-browse .modal-footer {
+    position: absolute;
+    bottom: 0;
+    height: 74px;
+    width: 100%;
+}
+
+.modal-browse .modal-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 98px;
+    width: 100%;
+    padding: 0 20px;
+    background-color: #eee;
+    border-bottom: none;
+}
+
+.modal-browse .modal-header .close {
+    margin-top: -50px;
+}
+
+.modal-browse .modal-header h1 {
+    margin-top: 0;
+    padding-top: 20px;
+    font-weight: 400;
+}
+
+.modal-browse .nav-tabs > li > a {
+    font-size: 14px;
+    padding: 10px 20px;
+}
+
+.modal-browse .nav > li > a:focus, .modal-browse .nav > li > a:hover {
+    color: #e74c3c !important;
+}
+
+.modal-browse .modal-body {
+    position: absolute;
+    top: 98px;
+    bottom: 74px;
+    height: auto;
+    width: 100%;
+    overflow: auto;
+}
+
+.page-image-gallery {
+    padding-top: 10px;
+}
+
+.page-image-gallery .thumbnail {
+    display: block;
+    margin-right: 10px;
+}
+
+.preloader {
+    background: url('../img/preloader_rubik.gif') no-repeat center center;
+    width: 128px;
+    height: 128px;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    top: 250px;
+}
+
+.preloader-medium {
+    background: url('../img/preloader_rubik_medium.gif') no-repeat center center;
+    width: 64px;
+    height: 64px;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    top: 90px;
+}
+
+.profile-photo .thumbnail {
+    margin-bottom: 10px;
+}
+
+.req {
+    color: #FF0000;
+    font-weight: bold;
+}
+
+header #logo {
+    color: #555;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 34px;
+    margin-top: 8px;
+}
+
+header #logo img {
+    width: auto;
+    margin-right: 5px;
+    padding-left: 0;
+}
+
+#extr-page #header #logo img {
+    width: auto !important;
+}
+
+.no-margin {
+    margin: 0 !important;
+}
+
+.profile-page .thumbnail {
+    display: inline-block;
+}
+
+.widget-listing .smart-form span.label-inline {
+    font-size: 10px;
+    text-transform: uppercase;
+    display: inline-block;
+    padding: 2px 8px;
+    margin-bottom: 0;
+    margin-top: 3px;
+}
+
+.empty-list {
+    background: url("../img/information_icon.png") no-repeat center top;
+    width: 100%;
+    height: 100px;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    top: 80px;
+    padding-top: 80px;
+    color: #D1DEE8;
+    font-size: 12px;
+    text-align: center;
+}
+
+/*
+    Inbox
+    --------------------------------------------------------------------------------------------------------------
+*/
+
+.widget-attachments {
+    padding-bottom: 15px;
+}
+
+.selected-attachments ul {
+    list-style-type: none;
+}
+
+.selected-attachments li {
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #ddd;
+}
+
+.selected-attachments li:last-child {
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+    border-bottom: none;
+}
+
+.attachment-right {
+    width: 35px;
+    line-height: 35px;
+}
+
+.add-cc, .add-bcc {
+    display: inline-block;
+}
+
+.add-cc:hover, .add-cc:focus, .add-bcc:hover, .add-bcc:focus {
+    color: #c0392b;
+    text-decoration: none;
+}
+
+.add-cc {
+    margin-right: 10px;
+}
+
+/*
+    Notes
+    --------------------------------------------------------------------------------------------------------------
+*/
+
+#widget-notes .chat-body {
+    position: relative;
+    background: none;
+}
+
+.chat-body li.message:last-child {
+    margin-bottom: 20px;
+}
+
+.chat-body li.message {
+    margin-left: 0;
+}
+
+.chat-footer > .alert {
+    margin-top: 10px !important;
+}
+
+.chat-body li.message .message-text {
+    margin-left: 55px !important;
+}
+
+/*
+    Attachments
+    --------------------------------------------------------------------------------------------------------------
+*/
+
+.entity-attachments {
+    padding: 15px;
+}
+
+.attachment {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.05);
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    box-sizing: border-box;
+    display: block;
+    margin: 3px 0;
+    padding: 4px;
+}
+
+.attachment .file-name {
+    line-height: 26px;
+    padding-top: 3px;
+}
+
+.attachment .file-actions {
+    text-align: right;
+}
+
+.file-thumbnail {
+    padding: 10px 0;
+    text-align: center;
+}
+
+.attachments-container .entity-attachments {
+    min-height: 150px;
+}
+
+.attachments-container .preloader-medium {
+    top: 40px;
+}
+
+.attachments-container .empty-list {
+    top: 30px;
+}
+
+#widget-entity-contacts div.dataTables_info {
+    padding: 5px;
+    display: inline-block;
+    float: right;
+    margin-right: 10px;
+}
+
+/*
+    Popup
+    --------------------------------------------------------------------------------------------------------------
+*/
+body.popup {
+    background: #fff;
+}
+
+body.popup #content {
+    padding: 0;
+}
+
+.bold-up {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.modal-browse.modal-contacts .modal-header {
+    height: 68px;
+}
+
+.modal-browse.modal-contacts .modal-body {
+    top: 78px;
+}
+.editor-title-new,
+.editor-title-edit{
+    display: none !important;
+}
+.event-editor-controls-new,
+.event-editor-controls-edit{
+    display: none;
+}
+
+.event-editor{}
+.event-editor.event-new .editor-title-new{
+    display: block !important;
+}
+.event-editor.event-new .event-editor-controls-new{
+    display: block;
+}
+.event-editor.event-edit .editor-title-edit{
+    display: block !important;
+}
+.event-editor.event-edit .event-editor-controls-edit{
+    display: block;
+}
+
+.selected-attendees{
+    margin-top: 20px;
+    background: #f1f1f1;
+}
+.selected-attendees tr:first-child td{
+    border-top: 0;
+}
+.selected-attendees td.actions{
+    width: 30px;
+}
+.selected-attendees td.actions button{
+    border: 0;
+    background: transparent;
+}
+
+.help-text-color{
+    color: #CCC;
+}
+
+.select2-container.select2-allowclear .select2-choice abbr {
+  font-size: 12px;
+  right: 32px;
+  top: 10px;
+}
+.select2-container.select2-allowclear .select2-choice abbr:before {
+  color: #AAAAAA;
+}
+
+/*
+    Quick stats dashboard widget
+    --------------------------------------------------------------------------------------------------------------
+*/
+
+.circle-icon {
+    float: left;
+    margin-right: 15px;
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    color: #fff;
+    text-align: center;
+    font-size: 20px;
+    line-height: 50px;
+}
+
+.icon-success {
+    background-color: #2ecc71;
+}
+
+.icon-danger {
+    background-color: #e74c3c;
+}
+
+.icon-info {
+    background-color: #3498db;
+}
+
+.icon-default {
+    background-color: #bdc3c7;
+}
+
+.icon-warning {
+    background-color: #f1c40f;
+}
+
+.select2-hidden-accessible {
+    display: none;
+}
+
+.flag-icon.flag-icon-zz {
+    display: none;
+}
+
+.accent {
+    font-size: 16px;
+}
+
+/*
+    Pending Bookings Calendar dashboard widget
+    --------------------------------------------------------------------------------------------------------------
+*/
+
+.day-block {
+    position: relative;
+    padding: 15px;
+    text-transform: uppercase;
+    color: #858689;
+    font-weight: 700;
+    text-align: center;
+}
+
+.day-block .week-day {
+    font-size: 2em;
+    line-height: .9em;
+}
+
+.day-block .day {
+    font-size: 9em;
+    line-height: .7em;
+    font-weight: 800;
+}
+
+.day-block .month-year {
+    line-height: 1.5em;
+}
+.pending-bookings .details {
+    color: #858689;
+    padding: 3px 0;
+}
+
+.pending-bookings .details > span {
+    padding-right: 10px;
+}
+.customer-name {
+    color: #858689;
+    font-weight: bold;
+}
+.pending-bookings h4 {
+    font-weight: 500;
+}
+.pending-bookings .booking-item {
+    margin-bottom: 1px;
+    padding: 8px 15px;
+
+   
+
+}
+
+.pending-bookings .booking-item:nth-child(odd) {
+    background-color: #E3E4E4;
+}
+
+.pending-bookings h3 {
+    background-color: #858689;
+    color: #fff;
+    margin: 0;
+    padding: 10px 15px;
+}
+/* Dashboard */
+.dashboard-pending-bookings-container {
+    position: relative;
+}
+
+.dashboard-pending-bookings-container .dashboard-pending-bookings {
+    max-height: 310px;
+    overflow-y:scroll;
+}
+.dashboard-outcoming-payments {
+    max-height: 310px;
+    overflow-y:scroll;
+}
+    .dashboard-outcoming-payments hr{
+        margin: 2px 0px 2px 0px;
+        opacity: 0;
+        filter: alpha(opacity=0); /* For IE8 and earlier */
+    }
+.invoice-background{
+    background: url("/assets/backend/img/invoice_background.jpg") no-repeat;
+}
+.invoice-logo{
+    background-image: url("/assets/backend/img/logo_invoice.png");
+    width: 132px;
+    height: 60px;
+}
+/*required terms*/
+:required:focus {
+  box-shadow: 0  0 3px rgba(255,0,0,0.5); 
+}
+.invoice-icons{
+    color:#DEBB6D ;
+    font-size: medium;
+}
+.invoice-color{
+    color:#6b5e4d ;
+}
