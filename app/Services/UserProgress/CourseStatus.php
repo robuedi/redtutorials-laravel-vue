@@ -74,13 +74,7 @@ class CourseStatus implements CourseStatusInterface
 
         $courses = $this->course_repository->getByStatus([1,2], ['id','name', 'slug', 'short_description', 'status']);
 
-
         $user_id = $this->authentication_service->getUserId();
-
-        if(!$user_id)
-        {
-            return collect([]);
-        }
 
         //add info
         foreach ($courses as $course)
