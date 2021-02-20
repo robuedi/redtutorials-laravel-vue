@@ -35,10 +35,13 @@ class AuthenticationController extends Controller
 
     public function doLogin(LoginRequest $request, LoginSessionRepositoryInterface $login_session_repository)
     {
-        $this->authentication_service->doLogin($request->get('email'),$request->get('password'),$request->get('remember'));
+        //make login
+        $login_status = $this->authentication_service->doLogin($request->get('email'),$request->get('password'),$request->get('remember'));
 
-        if($this->authentication_service->getLoginStatus())
+        //check login status
+        if($login_status)
         {
+            //save the login session
             $login_session_repository->saveLogin();
             return response()->redirectToIntended(config('app.admin_route').'/dashboard');
         }
@@ -50,7 +53,9 @@ class AuthenticationController extends Controller
 
     function logout(LoginSessionRepositoryInterface $login_repository)
     {
+        //do logout
         $this->authentication_service->logout();
+        //save logout action
         $login_repository->saveLogout();
 
         return response()->redirectTo(config('app.admin_route'));

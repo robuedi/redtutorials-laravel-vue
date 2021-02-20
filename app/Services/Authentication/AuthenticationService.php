@@ -3,8 +3,6 @@
 
 namespace App\Services\Authentication;
 
-use App\Repositories\LoginRepository;
-use App\Repositories\LoginRepositoryInterface;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Cartalyst\Sentinel\Checkpoints\NotActivatedException;
 
@@ -15,6 +13,10 @@ class AuthenticationService implements AuthenticationServiceInterface
     private $logged_user;
     private $has_access = [];
 
+    /**
+     * get current logged user id
+     * @return int|null
+     */
     public function getLoggedUserId()
     {
         if($this->userLogged())
@@ -25,10 +27,14 @@ class AuthenticationService implements AuthenticationServiceInterface
         return null;
     }
 
+    /**
+     * Check if admin user logged
+     * @return string
+     */
     public function checkIfAdmin() : string
     {
         try {
-            if ($this->userLogged() && $this->hasAdminAcces())
+            if ($this->userLogged() && $this->hasAcces('admin'))
                 return 'yes';
             else
                 return 'no';
@@ -37,6 +43,10 @@ class AuthenticationService implements AuthenticationServiceInterface
         }
     }
 
+    /**
+     * Get logged user
+     * @return \Cartalyst\Sentinel\Users\UserInterface|null
+     */
     public function userLogged()
     {
         if(!isset($this->user_logged))
@@ -47,14 +57,18 @@ class AuthenticationService implements AuthenticationServiceInterface
         return $this->logged_user;
     }
 
-    public function hasAdminAcces()
+    /**
+     * Check if logged user is admin
+     * @return mixed
+     */
+    public function hasAcces(string $type)
     {
-        if(!isset($this->has_access['admin'])&& $this->has_access['admin'] === true)
+        if(!isset($this->has_access[$type]))
         {
-            $this->has_access['admin'] = Sentinel::hasAccess('admin');
+            $this->has_access[$type] = Sentinel::hasAccess($type);
         }
 
-        return $this->has_access['admin'];
+        return $this->has_access[$type];
     }
 
 }
