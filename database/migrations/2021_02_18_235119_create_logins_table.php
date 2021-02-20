@@ -21,6 +21,7 @@ class CreateLoginsTable extends Migration
             $table->tinyInteger('login_success')->default(0);
             $table->dateTime('logout_date')->nullable();
             $table->string('browser');
+            $table->timestamps();
         });
 
         Schema::table('logins', function($table) {

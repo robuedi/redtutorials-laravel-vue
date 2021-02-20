@@ -42,7 +42,7 @@ class AuthenticationController extends Controller
         if($login_status)
         {
             //save the login session
-            $login_session_repository->saveLogin();
+            $login_session_repository->saveLogin($this->authentication_service);
             return response()->redirectToIntended(config('app.admin_route').'/dashboard');
         }
         else

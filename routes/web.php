@@ -25,7 +25,7 @@ Route::group(['namespace' => 'admin', 'prefix' => config('app.admin_route')], fu
     Route::get('/logout', [AuthenticationController::class, 'logout']);
 
     //Require authentication
-    Route::group(['middleware' => 'admin_section'], function()
+    Route::group(['middleware' => 'admin_auth'], function()
     {
         //Dashboard
         Route::get('/dashboard', [DashboardController::class, 'index']);

@@ -8,6 +8,13 @@ use Illuminate\Http\Request;
 
 class AuthenticateAdmin
 {
+    private AuthenticationServiceInterface $authentication_service;
+
+    public function __construct(AuthenticationServiceInterface $authentication_service)
+    {
+        $this->authentication_service = $authentication_service;
+    }
+
     /**
      * Handle an incoming request.
      *
@@ -15,10 +22,10 @@ class AuthenticateAdmin
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle(Request $request, Closure $next, AuthenticationServiceInterface $authentication_service)
+    public function handle(Request $request, Closure $next)
     {
         //check if user is logged in as admin
-        switch ($authentication_service->checkIfAdmin())
+        switch ($this->authentication_service->checkIfAdmin())
         {
             case 'yes':
                 return $next($request);
