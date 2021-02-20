@@ -28,8 +28,7 @@ class AuthenticationController extends Controller
                 return view('_admin.authentication.login');
 
             case 'inactivated':
-//                UIMessage::set('danger', 'Account not activated.');
-                return view('_admin.authentication.login');
+                return view('_admin.authentication.login')->withErrors(['Account not activated.']);
         }
     }
 
