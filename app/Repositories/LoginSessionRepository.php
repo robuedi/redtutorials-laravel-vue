@@ -13,7 +13,7 @@ class LoginSessionRepository implements LoginSessionRepositoryInterface
         /// insert in BD and in session login_id
         // if we are here, that means it's a successful login
         $new_login                = new Login;
-        $new_login->user_id       = $authentication_service->getLoggedUserId();
+        $new_login->user_id       = $authentication_service->getUserId();
         $new_login->login_date    = date('Y-m-d H:i:s');
         $new_login->login_success = 1;
         $new_login->login_ip      = request()->getClientIp();

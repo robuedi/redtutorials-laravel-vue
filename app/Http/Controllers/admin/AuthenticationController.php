@@ -51,10 +51,12 @@ class AuthenticationController extends Controller
     function logout(LoginSessionRepositoryInterface $login_repository)
     {
         //do logout
-        $this->authentication_service->logout();
-        //save logout action
-        $login_repository->saveLogout();
+        if($this->authentication_service->logout()){
+            //save logout action
+            $login_repository->saveLogout();
+            return response()->redirectTo(config('app.admin_route'));
+        }
 
-        return response()->redirectTo(config('app.admin_route'));
+        return response()->redirectTo(config('app.admin_route'))->withErrors(['Unable to logout.']);
     }
 }

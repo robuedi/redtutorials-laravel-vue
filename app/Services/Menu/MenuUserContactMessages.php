@@ -10,35 +10,44 @@ namespace App\Services\Menu;
 
 
 use App\ContactMessageToUser;
+use App\Repositories\ContactMessageUserRepositoryInterface;
+use App\Services\Authentication\AuthenticationServiceInterface;
 use Sentinel;
 
-class MenuUserContactMessages
+class MenuUserContactMessages implements MenuUserContactMessagesInterface
 {
-    private static $unread_msg_nr = 0;
+    private $unread_msg_nr = null;
+    private AuthenticationServiceInterface $authentication_service;
+    private ContactMessageUserRepositoryInterface $contact_message_user_repository;
 
-    public static function currentUserUnreadMsgNr()
+    public function __construct(AuthenticationServiceInterface $authentication_service, ContactMessageUserRepositoryInterface $contact_message_user_repository)
     {
-        $user = Sentinel::getUser();
-
-        if($user)
-        {
-            //get number of unread messages
-            $unread_messages = ContactMessageToUser::where('user_id', $user->id)
-                ->where('is_deleted', 0)
-                ->where('is_read', 0)
-                ->count();
-
-            self::$unread_msg_nr = $unread_messages;
-
-            return $unread_messages;
-        }
-
-        return 0;
+        $this->authentication_service = $authentication_service;
+        $this->contact_message_user_repository = $contact_message_user_repository;
     }
 
-    public static function getUnreadMsgNr()
+    private function checkUnreadMsgNr()
     {
-        return self::$unread_msg_nr;
+        //check if we get the nr of msg
+        if($this->unread_msg_nr !== null)
+        {
+            return;
+        }
+
+        //get the nr of msg
+        $user_id = $this->authentication_service->getUserId();
+
+        if($user_id)
+        {
+            //get number of unread messages
+            $this->unread_msg_nr =  $this->contact_message_user_repository->getCountUserUnreadMsg($user_id);
+        }
+    }
+
+    public function getLoggedUserUnreadMsgNr()
+    {
+        $this->checkUnreadMsgNr();
+        return $this->unread_msg_nr;
     }
 
 }

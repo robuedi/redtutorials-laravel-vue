@@ -2,23 +2,30 @@
 
 namespace App\Services\Menu;
 
+use App\Services\Authentication\AuthenticationServiceInterface;
 use Config;
 use function foo\func;
 use Log;
 use Request;
 use Sentinel;
 
-class MenuAdmin
+class MenuAdmin implements MenuAdminInterface
 {
+    private $authentication_service;
 
-    public static function getMenu()
+    public function __construct(AuthenticationServiceInterface $authentication_service)
     {
-        $current_url = Request::path();
+        $this->authentication_service = $authentication_service;
+    }
+
+    public function getMenu()
+    {
+        $current_url = request()->path();
 
         $url_items = explode('/', $current_url);
 
         // get all menu structure
-        $menu = Config::get('menu');
+        $menu = config('menu');
 
         //update routes, make them dynamic
         array_walk_recursive(
@@ -31,7 +38,7 @@ class MenuAdmin
         );
 
         // filter menu based on current user type
-        if (Sentinel::hasAccess('admin'))
+        if ($this->authentication_service->checkIfAdmin() === 'yes')
             $menu = $menu['admin'];
 
         foreach ($menu as $top_level_menu_key => $top_level_menu)

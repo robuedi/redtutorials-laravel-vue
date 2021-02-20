@@ -11,12 +11,6 @@ trait AuthenticationLogin
 {
     private string $login_msg = '';
 
-    /**
-     * Login user
-     * @param string|null $email
-     * @param string|null $password
-     * @param bool|null $remember
-     */
     public function doLogin(?string $email, ?string $password, ?bool $remember)
     {
         try {

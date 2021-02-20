@@ -13,11 +13,7 @@ class AuthenticationService implements AuthenticationServiceInterface
     private $logged_user;
     private $has_access = [];
 
-    /**
-     * get current logged user id
-     * @return int|null
-     */
-    public function getLoggedUserId()
+    public function getUserId()
     {
         if($this->userLogged())
         {
@@ -27,10 +23,16 @@ class AuthenticationService implements AuthenticationServiceInterface
         return null;
     }
 
-    /**
-     * Check if admin user logged
-     * @return string
-     */
+    public function getUserName()
+    {
+        if(!$this->userLogged())
+        {
+            return '';
+        }
+
+        return $this->userLogged()->first_name.' '.$this->userLogged()->last_name;
+    }
+
     public function checkIfAdmin() : string
     {
         try {
@@ -43,10 +45,6 @@ class AuthenticationService implements AuthenticationServiceInterface
         }
     }
 
-    /**
-     * Get logged user
-     * @return \Cartalyst\Sentinel\Users\UserInterface|null
-     */
     public function userLogged()
     {
         if(!isset($this->user_logged))
@@ -57,10 +55,6 @@ class AuthenticationService implements AuthenticationServiceInterface
         return $this->logged_user;
     }
 
-    /**
-     * Check if logged user is admin
-     * @return mixed
-     */
     public function hasAcces(string $type)
     {
         if(!isset($this->has_access[$type]))

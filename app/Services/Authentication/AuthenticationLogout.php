@@ -7,12 +7,9 @@ use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 
 trait AuthenticationLogout
 {
-    /**
-     * user logout
-     */
-    public function logout()
+    public function logout() : bool
     {
-        Sentinel::logout();
+        return Sentinel::logout();
     }
 
 }

@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Log;
 
 class DashboardController extends Controller
 {
-    public function index(ChapterRepositoryInterface $chapter_repository, CourseRepositoryInterface $course_repository, LessonRepositoryInterface $lesson_repository, CoursesHierarchyAdminInterface $courses_hierarchy_admin)
+    public function index(ChapterRepositoryInterface $chapter_repository, CourseRepositoryInterface $course_repository, LessonRepositoryInterface $lesson_repository)
     {
         return view('_admin.dashboard.index', [
             'public_courses'    => $course_repository->getCountPublic(),
@@ -22,8 +22,7 @@ class DashboardController extends Controller
             'total_chapters'    => $chapter_repository->getCountTotal(),
             'public_lessons'    => $lesson_repository->getCountPublic(),
             'draft_lessons'     => $lesson_repository->getCountDraft(),
-            'total_lessons'     => $lesson_repository->getCountTotal(),
-            'curses_hierarchy_map' =>  $courses_hierarchy_admin->setDefaultAdminLessons()->setJsonFormat()->getHierarchyList()
+            'total_lessons'     => $lesson_repository->getCountTotal()
         ]);
     }
 }
