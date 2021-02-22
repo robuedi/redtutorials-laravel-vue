@@ -25,9 +25,9 @@ Go in the browser to [http://localhost:7001](http://localhost:7001) to check the
 
 # App Screenshots
 
-![Screenshot](readme_files/admin-dashboard.png)
-![Screenshot](readme_files/client-homepage.png)
-![Screenshot](readme_files/client-tutorial.png)
-![Screenshot](readme_files/client-tutorial2.png)
+![Screenshot](public/readme_files/admin-dashboard.png)
+![Screenshot](public/readme_files/client-homepage.png)
+![Screenshot](public/readme_files/client-tutorial.png)
+![Screenshot](public/readme_files/client-tutorial2.png)
 
 ##### Enjoy by Eduard Robu!
