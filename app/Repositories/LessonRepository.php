@@ -40,7 +40,7 @@ class LessonRepository implements LessonRepositoryInterface
             ->groupBy('chapter_id');
     }
 
-    public function getLessonsByChapters(array $chapters_ids, int $public = 1)
+    public function getLessonsByChapters(array $chapters_ids, int $public = 1, array $select_fields = [])
     {
         if(!$chapters_ids)
         {
@@ -51,7 +51,7 @@ class LessonRepository implements LessonRepositoryInterface
             ->where('is_public', $public)
             ->whereNotNull('slug')
             ->orderBy('order_weight')
-            ->select('id', 'name', 'slug')
+            ->select($select_fields)
             ->get();
     }
 }

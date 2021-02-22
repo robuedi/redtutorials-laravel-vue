@@ -6,17 +6,17 @@ namespace App\Services\UserProgress;
 
 use App\Repositories\CourseRepositoryInterface;
 use App\Repositories\LessonSectionRepositoryInterface;
-use App\Repositories\UserLessonSectionRepositoryInterface;
+use App\Repositories\LessonSectionUserRepositoryInterface;
 use App\Services\Authentication\AuthenticationServiceInterface;
 
 class CourseStatus implements CourseStatusInterface
 {
-    private UserLessonSectionRepositoryInterface $user_lesson_section_repository;
+    private LessonSectionUserRepositoryInterface $user_lesson_section_repository;
     private LessonSectionRepositoryInterface $lesson_section_repository;
     private CourseRepositoryInterface $course_repository;
     private AuthenticationServiceInterface $authentication_service;
 
-    public function __construct(UserLessonSectionRepositoryInterface $user_lesson_section_repository, LessonSectionRepositoryInterface $lesson_section_repository, CourseRepositoryInterface $course_repository, AuthenticationServiceInterface $authentication_service)
+    public function __construct(LessonSectionUserRepositoryInterface $user_lesson_section_repository, LessonSectionRepositoryInterface $lesson_section_repository, CourseRepositoryInterface $course_repository, AuthenticationServiceInterface $authentication_service)
     {
         $this->lesson_section_repository = $lesson_section_repository;
         $this->user_lesson_section_repository = $user_lesson_section_repository;

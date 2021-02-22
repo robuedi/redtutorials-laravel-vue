@@ -52,8 +52,8 @@
                                 <span class="route">
                                     <span class="inner-route"></span>
                                 </span>
-                                @if($chapter->completion_percentage ?? false)
-                                    <span class="completion-percentage" >{{$chapter->completion_percentage}}%</span>
+                                @if(isset($status_chapters[$chapter->id])&& $status_chapters[$chapter->id] > 0)
+                                    <span class="completion-percentage" >{{$status_chapters[$chapter->id]}}%</span>
                                 @endif
                             </div>
                         </span>
@@ -67,8 +67,8 @@
                                             <header class="top-txt" >
                                                 <h2>{!! $lesson->name !!}</h2>
                                             </header>
-                                            @if($lesson->completion_status&&$lesson->completion_status > 0)
-                                                <span class="lesson-completion">@if($lesson->completion_status == 100)<i class="fas fa-check"></i>@else{{$lesson->completion_status}}%@endif</span>
+                                            @if(isset($status_lessons[$lesson->id])&&$status_lessons[$lesson->id] > 0)
+                                                <span class="lesson-completion">@if($status_lessons[$lesson->id] == 100)<i class="fas fa-check"></i>@else{{$status_lessons[$lesson->id]}}%@endif</span>
                                             @endif
                                             <footer class="go-link" >
                                             <span class="lesson-number">

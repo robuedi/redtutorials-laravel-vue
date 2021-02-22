@@ -14,8 +14,8 @@ use App\Repositories\LessonSectionRepository;
 use App\Repositories\LessonSectionRepositoryInterface;
 use App\Repositories\StaticPageRepository;
 use App\Repositories\StaticPageRepositoryInterface;
-use App\Repositories\UserLessonSectionRepository;
-use App\Repositories\UserLessonSectionRepositoryInterface;
+use App\Repositories\LessonSectionUserRepositoryInterface;
+use App\Repositories\LessonSectionUserRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppRepositoryServiceProvider extends ServiceProvider
@@ -31,8 +31,9 @@ class AppRepositoryServiceProvider extends ServiceProvider
         app()->singleton(CourseRepositoryInterface::class, CourseRepository::class);
         app()->singleton(ChapterRepositoryInterface::class, ChapterRepository::class);
         app()->singleton(LessonRepositoryInterface::class, LessonRepository::class);
+        app()->bind(LessonRepositoryInterface::class, LessonRepository::class);
         app()->singleton(ContactMessageUserRepositoryInterface::class, ContactMessageUserRepository::class);
-        app()->singleton(UserLessonSectionRepositoryInterface::class, UserLessonSectionRepository::class);
+        app()->singleton(LessonSectionUserRepositoryInterface::class, LessonSectionUserRepository::class);
         app()->singleton(StaticPageRepositoryInterface::class, StaticPageRepository::class);
         app()->singleton(LessonSectionRepositoryInterface::class, LessonSectionRepository::class);
     }

@@ -1,77 +1,82 @@
 <?php
 
-
 namespace App\Services\UserProgress;
 
+use App\Repositories\LessonSectionRepositoryInterface;
+use App\Repositories\LessonSectionUserRepositoryInterface;
 
-use App\Models\LessonSection;
-use App\Models\UserLessonSection;
-
-class LessonStatus
+class LessonStatus implements LessonStatusInterface
 {
-    public static function getStatus(int $user_id, int $lessons_id, $floor_rounded = true)
+    private $user_id;
+    private $lessons_id;
+    private $floor_rounded = true;
+    private $response = [];
+    private LessonSectionUserRepositoryInterface $lesson_section_user_repository;
+    private LessonSectionRepositoryInterface $lesson_section_repository;
+
+    public function __construct(LessonSectionUserRepositoryInterface $lesson_section_user_repository, LessonSectionRepositoryInterface $lesson_section_repository )
     {
-        if(!$user_id || !$lessons_id)
-        {
-            return null;
-        }
-
-        //get all the sections completed be user for the lesson
-        $user_sections = LessonSection::whereHas(array('users'=>function($query, &$user_id){
-                $query->where('id', $user_id);
-            }))
-            ->where('is_public',1)
-            ->where('type','quiz')
-            ->whereIn('lesson_id', $lessons_id)
-            ->get()
-            ->count();
-
-
-        //get all the sections from the lesson
-        $all_sections = LessonSection::whereIn('lessons_sections.lesson_id', $lessons_id)
-            ->where('is_public',1)
-            ->where('type','quiz')
-            ->get()
-            ->count();
-
-        if($all_sections == 0 || $user_sections == 0)
-        {
-            $completion_percentage = 0;
-        }
-        else
-        {
-            $completion_percentage = ($user_sections*100)/$all_sections;
-        }
-
-        //get percentage
-        if($floor_rounded)
-        {
-            $completion_percentage = (int)$completion_percentage;
-        }
-
-        return $completion_percentage;
+        $this->lesson_section_user_repository = $lesson_section_user_repository;
+        $this->lesson_section_repository = $lesson_section_repository;
 
     }
 
-    public static function addStatusToLessons($lessons)
+    public function setUserID(int $user_id)
     {
-        $user = Sentinel::getUser();
+        $this->user_id = $user_id;
+        return $this;
+    }
 
-        if(!$user)
+    public function setLessonsIDs(array $lessons_id = [])
+    {
+        $this->lessons_id = $lessons_id;
+        return $this;
+    }
+
+    public function setFloorRounded(bool $floor_rounded)
+    {
+        $this->floor_rounded = $floor_rounded;
+        return $this;
+    }
+
+    private function makeStatus()
+    {
+        if(!$this->user_id || !$this->lessons_id)
         {
-            foreach ($lessons as $lesson)
+            return $this;
+        }
+
+        //get all the sections completed be user for the lesson
+        $user_sections = $this->lesson_section_user_repository->countLessonSectionUserByLessons($this->user_id, $this->lessons_id, 1, 'quiz');
+
+        //get all the sections from the lessons
+        $all_sections = $this->lesson_section_repository->countByLessons($this->lessons_id, 1, 'quiz');
+
+        //get the percentage
+        foreach ($this->lessons_id as $index => $lesson_id)
+        {
+            if(!isset($user_sections[$lesson_id]) || !isset($all_sections[$lesson_id]))
             {
-                $lesson->completion_status = null;
+                $this->response[$lesson_id] = 0;
+                continue;
             }
 
-            return $lessons;
+            $this->response[$lesson_id] = ($user_sections[$lesson_id]*100)/$all_sections[$lesson_id];
         }
 
-        foreach ($lessons as $lesson)
+        //round values?
+        if($this->floor_rounded)
         {
-            $lesson->completion_status = self::getStatus($user->id, $lesson->id);
+            array_walk($this->response, function (&$value) {
+                $value = (int)$value;
+            });
         }
+    }
 
-        return $lessons;
+    public function getStatus()
+    {
+        $this->makeStatus();
+
+        return $this->response;
     }
 }

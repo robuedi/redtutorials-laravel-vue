@@ -11,4 +11,6 @@ interface LessonRepositoryInterface
     public function getCountDraft();
 
     public function getByWeightGrouped();
+
+    public function getLessonsByChapters(array $chapters_ids, int $public = 1, array $select_fields = []);
 }
