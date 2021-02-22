@@ -13,7 +13,7 @@ Add the following line to your ```/etc/hosts``` file on your machine.
 ```
 
 ##### 1 Start the services
-Run the commands inside the root folder of your Laravel project
+Run the following commands inside the root folder of your Laravel project
 
 ```
 docker-compose build
