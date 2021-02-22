@@ -3,9 +3,14 @@
 ## Setting up
 
 ##### 0 Environments info
-Set the ```DB_HOST``` from ```.env``` to the mysql service name (currently ```db```, so ```DB_HOST=db```).
-
-Add this new line ```127.0.0.1 redtutorial.local``` to ```/etc/hosts``` file on you machine.
+Set the ```DB_HOST``` from ```.env``` to the mysql service name (currently ```db```), like:
+```
+DB_HOST=db
+```
+Add this following line to your ```/etc/hosts``` file on your machine.
+```
+127.0.0.1 redtutorial.local
+```
 
 ##### 1 Start the services
 Run the commands inside the root folder of your Laravel project
