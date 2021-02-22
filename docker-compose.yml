@@ -61,7 +61,7 @@ services:
     container_name: ${APP_NAME}-nginx
     restart: unless-stopped
     ports:
-      - "8001:80"
+      - "80:80"
     volumes:
       - ./:/var/www
       - ./docker/nginx:/etc/nginx/conf.d
