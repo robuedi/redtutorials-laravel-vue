@@ -3,11 +3,11 @@
 ## Setting up
 
 ##### 0 Environments info
-Set the ```DB_HOST``` from ```.env``` to the mysql service name (currently ```db```), like:
+Set the ```DB_HOST``` variable from ```.env``` file to the mysql service name (currently ```db```), like this:
 ```
 DB_HOST=db
 ```
-Add this following line to your ```/etc/hosts``` file on your machine.
+Add the following line to your ```/etc/hosts``` file on your machine.
 ```
 127.0.0.1 redtutorial.local
 ```
