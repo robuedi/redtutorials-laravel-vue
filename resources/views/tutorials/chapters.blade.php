@@ -38,7 +38,7 @@
             <div class="list-container content">
 
                 <ol class="chapters-list">
-                @foreach($course->chapters as $index => $chapter)
+                @foreach($course->publicChapters as $index => $chapter)
                     <li class=" chapter-option">
 {{--                    <li class="{{\App\Libraries\StatusChecker::checkStatus($chapter->completion_percentage)}} chapter-option">--}}
                         <span class="option" >

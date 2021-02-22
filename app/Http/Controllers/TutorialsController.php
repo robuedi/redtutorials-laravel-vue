@@ -15,7 +15,7 @@ class TutorialsController extends Controller
 
     public function showChapters(string $course_slug)
     {
-        $course_info = $this->course_repository->getBySlugWith($course_slug, [1], ['publicChapters:name,slug', 'publicChapters.publicLessons', 'mediaFilesMain'], ['name', 'id', 'description', 'slug']);
+        $course_info = $this->course_repository->getBySlugWith($course_slug, [1], ['publicChapters:id,course_id,name,slug', 'publicChapters.publicLessons:chapter_id,name,slug', 'mediaFilesMain:url'], ['name', 'id', 'description', 'slug']);
 
         return view('tutorials.chapters', [
             'course'        => $course_info,

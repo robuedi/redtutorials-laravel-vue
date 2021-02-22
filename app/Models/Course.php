@@ -24,15 +24,15 @@ class Course extends Model
 
     public function mediaFilesMain()
     {
-        return $this->morphToMany(MediaFile::class, 'media_fileable')->latest();
+        return $this->morphToMany(MediaFile::class, 'media_fileable')->latest('media_fileables.created_at');
     }
 
     public function publicChapters()
     {
         return $this->chapters()
             ->where('is_public', 1)
-            ->orderBy('chapters.order_weight')
-            ->whereNotNull('chapters.slug');
+            ->orderBy('order_weight')
+            ->whereNotNull('slug');
     }
 
 

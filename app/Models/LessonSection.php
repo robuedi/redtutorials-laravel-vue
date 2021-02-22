@@ -10,4 +10,9 @@ class LessonSection extends Model
     use HasFactory;
 
     protected $table = 'lesson_sections';
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }

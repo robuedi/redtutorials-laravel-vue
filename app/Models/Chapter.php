@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Course;
+use App\Models\Course;
 use App\Models\Lesson;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -23,6 +23,8 @@ class Chapter extends Model
 
     public function publicLessons()
     {
-        return $this->lessons()->where('is_public', 1);
+        return $this->lessons()
+            ->where('is_public', 1)
+            ->whereNotNull('slug');
     }
 }
