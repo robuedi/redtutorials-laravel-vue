@@ -23,5 +23,11 @@ Go in the browser to [http://localhost:8001](http://localhost:8001) to view the 
 
 Go in the browser to [http://localhost:7001](http://localhost:7001) to check the database in phpmyadmin (currently the phpmyadmin service uses the 7001 port).
 
+# App Screenshots
+
+![Screenshot](readme_files/admin-dashboard.png)
+![Screenshot](readme_files/client-homepage.png)
+![Screenshot](readme_files/client-tutorial.png)
+![Screenshot](readme_files/client-tutorial2.png)
 
 ##### Enjoy by Eduard Robu!
