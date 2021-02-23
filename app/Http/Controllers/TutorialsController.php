@@ -6,22 +6,18 @@ namespace App\Http\Controllers;
 use App\Repositories\CourseRepositoryInterface;
 use App\Services\Authentication\AuthenticationServiceInterface;
 use App\Services\UserProgress\ChapterStatusInterface;
-use App\Services\UserProgress\LessonStatusInterface;
 
 class TutorialsController extends Controller
 {
     private CourseRepositoryInterface $course_repository;
     private ChapterStatusInterface $chapter_status;
-    private LessonStatusInterface $lesson_status;
     private AuthenticationServiceInterface $authentication_service;
 
-    public function __construct(CourseRepositoryInterface $course_repository, LessonStatusInterface $lesson_status, ChapterStatusInterface $chapter_status, AuthenticationServiceInterface $authentication_service)
+    public function __construct(CourseRepositoryInterface $course_repository, ChapterStatusInterface $chapter_status, AuthenticationServiceInterface $authentication_service)
     {
         $this->course_repository = $course_repository;
         $this->chapter_status = $chapter_status;
-        $this->lesson_status = $lesson_status;
         $this->authentication_service = $authentication_service;
-
     }
 
     public function showChapters(string $course_slug)

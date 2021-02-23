@@ -3,54 +3,29 @@
 
 namespace App\Services\UserProgress;
 
-
 use App\Repositories\LessonRepositoryInterface;
-use App\Services\Authentication\AuthenticationServiceInterface;
 
-class ChapterStatus implements ChapterStatusInterface
+class ChapterStatus extends AbstractSectionsStatus implements ChapterStatusInterface
 {
-    private $user_id;
-    private $chapters_id;
-    private $floor_rounded = true;
-    private $response = [];
     private $lesson_status_values = [];
     private LessonRepositoryInterface $lesson_repository;
     private LessonStatusInterface $lesson_status;
 
-    public function __construct(LessonRepositoryInterface $lesson_repository, LessonStatusInterface $lesson_status, AuthenticationServiceInterface $authentication_service)
+    public function __construct(LessonRepositoryInterface $lesson_repository, LessonStatusInterface $lesson_status)
     {
         $this->lesson_repository = $lesson_repository;
         $this->lesson_status = $lesson_status;
     }
 
-    public function setUserID(?int $user_id)
+    protected function makeStatus()
     {
-        $this->user_id = $user_id;
-        return $this;
-    }
-
-    public function setChaptersIDs(array $chapters_id = [])
-    {
-        $this->chapters_id = $chapters_id;
-        return $this;
-    }
-
-    public function setFloorRounded(bool $floor_rounded)
-    {
-        $this->floor_rounded = $floor_rounded;
-        return $this;
-    }
-
-
-    private function makeStatus()
-    {
-        if(!$this->user_id || !$this->chapters_id)
+        if(!$this->user_id || !$this->ids)
         {
             return;
         }
 
         //get chapter's lessons
-        $lessons_by_chapter = $this->lesson_repository->getLessonsByChapters($this->chapters_id, 1, ['id', 'chapter_id']);
+        $lessons_by_chapter = $this->lesson_repository->getLessonsByChapters($this->ids, 1, ['id', 'chapter_id']);
 
         $all_lessons = [];
         //group lessons by chapter
@@ -63,7 +38,7 @@ class ChapterStatus implements ChapterStatusInterface
         //get chapter's lesson status
         $this->lesson_status_values = $this->lesson_status
                             ->setUserID($this->user_id ?? 0)
-                            ->setLessonsIDs($all_lessons)
+                            ->setIDs($all_lessons)
                             ->getStatus();
 
         // calculate the status by chapter
@@ -85,7 +60,7 @@ class ChapterStatus implements ChapterStatusInterface
 
     public function getLessonsStatus()
     {
-        if(!$this->user_id || !$this->chapters_id)
+        if(!$this->user_id || !$this->ids)
         {
             return [];
         }
@@ -107,10 +82,4 @@ class ChapterStatus implements ChapterStatusInterface
         return $this->lesson_status_values;
     }
 
-    public function getStatus()
-    {
-        $this->makeStatus();
-
-        return $this->response;
-    }
 }

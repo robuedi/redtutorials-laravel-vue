@@ -44,6 +44,7 @@ class CourseRepository implements CourseRepositoryInterface
         return Course::where('status', $status)
             ->select($fields)
             ->orderBy('order_weight')
+            ->whereNotNull('slug')
             ->get();
     }
 

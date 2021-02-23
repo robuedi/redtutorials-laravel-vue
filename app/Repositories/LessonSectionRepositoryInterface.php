@@ -4,5 +4,5 @@ namespace App\Repositories;
 
 interface LessonSectionRepositoryInterface
 {
-    public function countByCourse(int $course_id);
+    public function countByLessons(array $lessons_id, int $is_public, string $type);
 }

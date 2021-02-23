@@ -3,89 +3,60 @@
 
 namespace App\Services\UserProgress;
 
+use App\Repositories\ChapterRepositoryInterface;
 
-use App\Repositories\CourseRepositoryInterface;
-use App\Repositories\LessonSectionRepositoryInterface;
-use App\Repositories\LessonSectionUserRepositoryInterface;
-use App\Services\Authentication\AuthenticationServiceInterface;
-
-class CourseStatus implements CourseStatusInterface
+class CourseStatus extends AbstractSectionsStatus implements CourseStatusInterface
 {
-    private LessonSectionUserRepositoryInterface $user_lesson_section_repository;
-    private LessonSectionRepositoryInterface $lesson_section_repository;
-    private CourseRepositoryInterface $course_repository;
-    private AuthenticationServiceInterface $authentication_service;
+    private ChapterStatusInterface $chapter_status;
+    private ChapterRepositoryInterface $chapter_repository;
 
-    public function __construct(LessonSectionUserRepositoryInterface $user_lesson_section_repository, LessonSectionRepositoryInterface $lesson_section_repository, CourseRepositoryInterface $course_repository, AuthenticationServiceInterface $authentication_service)
+    public function __construct(ChapterStatusInterface $chapter_status, ChapterRepositoryInterface $chapter_repository)
     {
-        $this->lesson_section_repository = $lesson_section_repository;
-        $this->user_lesson_section_repository = $user_lesson_section_repository;
-        $this->course_repository = $course_repository;
-        $this->authentication_service = $authentication_service;
+        $this->chapter_status = $chapter_status;
+        $this->chapter_repository = $chapter_repository;
     }
 
-    public function getCourseStatus(int $course_id, int $user_id, bool $floor_rounded = true)
+    protected function makeStatus()
     {
-        //get all the sections completed be user for the course
-        $user_sections = $this->user_lesson_section_repository->countByCourse($user_id, $course_id);
-
-        //get all the sections from course
-        $all_sections = $this->lesson_section_repository->countByCourse($course_id);
-
-        if($all_sections === 0 || $user_sections === 0)
+        if(!isset($this->user_id, $this->ids))
         {
-            $completion_percentage = 0;
-        }
-        else
-        {
-            $completion_percentage = ($user_sections*100)/$all_sections;
+            return $this->response;
         }
 
-        //get percentage
-        if($floor_rounded)
+        //get courses's chapters
+        $chapters_by_course = $this->chapter_repository->getLessonsByChapters($this->ids, [], ['id', 'course_id']);
+
+        $all_chapters = [];
+        //group lessons by chapter
+        $course_chapters_grouped = $chapters_by_course->groupBy('course_id')->map(function ($item) use (&$all_chapters){
+            $ids = $item->pluck('id')->toArray();
+            $all_chapters = array_merge($all_chapters, $ids);
+            return $ids;
+        });
+
+        //get chapter's lesson status
+        $this->chapter_status_values = $this->chapter_status
+            ->setUserID($this->user_id ?? 0)
+            ->setChaptersIDs($all_chapters)
+            ->getStatus();
+
+        // calculate the status by chapter
+        foreach ($course_chapters_grouped as $course_id => $chapters_id)
         {
-            $completion_percentage = (int)$completion_percentage;
+            $course_lessons = array_intersect_key($this->chapter_status_values, array_flip($chapters_id));
+            $this->response[$course_id] = count($course_lessons) ? array_sum($course_lessons)/count($course_lessons) : 0;
         }
 
-        return $completion_percentage;
+        //if rounded
+        if($this->floor_rounded)
+        {
+            foreach ($this->response as $key => $value)
+            {
+                $this->response[$key] = (int)$this->response[$key];
+            }
+        }
+
     }
 
-    public function getCoursesStatus()
-    {
 
-        $user_id = $this->authentication_service->getUserId();
-
-        if(!$user_id)
-        {
-            return collect([]);
-        }
-
-        $courses = $this->course_repository->getByStatus([1], ['id','name', 'slug', 'short_description', 'status']);
-
-        foreach ($courses as $course)
-        {
-            $course->completion_percentage = $this->getCourseStatus($course->id, $user_id);
-        }
-
-        return $courses ?? collect([]);
-    }
-
-    public function getAllCoursesWithUserStatus(){
-
-        $courses = $this->course_repository->getByStatus([1,2], ['id','name', 'slug', 'short_description', 'status']);
-
-        $user_id = $this->authentication_service->getUserId();
-
-        //add info
-        foreach ($courses as $course)
-        {
-            //add progress
-            if($course->status == 2||!$user_id)
-                continue;
-
-            $course->completion_status = $this->getCourseStatus($course->id, $user_id);
-        }
-
-        return $courses;
-    }
 }

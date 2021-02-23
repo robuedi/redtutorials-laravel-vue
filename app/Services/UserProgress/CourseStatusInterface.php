@@ -4,9 +4,12 @@ namespace App\Services\UserProgress;
 
 interface CourseStatusInterface
 {
-    public function getCourseStatus(int $course_id, int $user_id, bool $floor_rounded = true);
+    public function setUserID(?int $user_id);
 
-    public function getCoursesStatus();
+    public function setIDs(array $chapters_id = []);
 
-    public function getAllCoursesWithUserStatus();
+    public function setFloorRounded(bool $floor_rounded);
+
+    public function getStatus();
+
 }
