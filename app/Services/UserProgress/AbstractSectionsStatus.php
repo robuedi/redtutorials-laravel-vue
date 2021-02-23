@@ -29,6 +29,21 @@ abstract class AbstractSectionsStatus implements AbstractSectionsStatusInterface
         return $this;
     }
 
+    public function getIDs() : ?array
+    {
+        return $this->ids ?? null;
+    }
+
+    public function getUserID() : ?int
+    {
+        return $this->user_id ?? null;
+    }
+
+    public function getFloorRounded() : ?bool
+    {
+        return $this->floor_rounded ?? null;
+    }
+
     protected abstract function makeStatus();
 
     public function getStatus()
@@ -36,6 +51,11 @@ abstract class AbstractSectionsStatus implements AbstractSectionsStatusInterface
         if(!isset($this->response))
         {
             $this->makeStatus();
+        }
+
+        if(!isset($this->response))
+        {
+            return [];
         }
 
         //round values?

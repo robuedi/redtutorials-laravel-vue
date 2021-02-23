@@ -18,9 +18,9 @@ class LessonStatus extends AbstractSectionsStatus implements LessonStatusInterfa
 
     protected function makeStatus()
     {
-        if(!$this->user_id || !$this->ids)
+        if(!$this->getUserID() || !$this->getIDs())
         {
-            return $this;
+            return;
         }
 
         //get all the sections completed be user for the lesson

@@ -24,7 +24,7 @@ class ChapterStatus extends AbstractSectionsStatus implements ChapterStatusInter
 
     protected function makeStatus()
     {
-        if(!$this->user_id || !$this->ids)
+        if(!$this->getUserID() || !$this->getIDs())
         {
             return;
         }

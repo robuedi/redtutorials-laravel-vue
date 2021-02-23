@@ -24,9 +24,9 @@ class CourseStatus extends AbstractSectionsStatus implements CourseStatusInterfa
 
     protected function makeStatus()
     {
-        if(!isset($this->user_id, $this->ids))
+        if(!$this->getUserID() || !$this->getIDs())
         {
-            return $this->response;
+            return;
         }
 
         //get courses' chapters
