@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Http\Controllers;
-
 
 use App\Repositories\CourseRepositoryInterface;
 use App\Services\Authentication\AuthenticationServiceInterface;
@@ -24,7 +22,7 @@ class HomeController
     public function index()
     {
         //get courses
-        $courses = $this->course_repository->getByStatus([1,2], ['id', 'name', 'slug']);
+        $courses = $this->course_repository->getByStatus([1,2], ['id', 'name', 'slug', 'status', 'short_description']);
 
         //get progress
         $courses_ids = [];
@@ -36,8 +34,7 @@ class HomeController
 
         return view('home', [
             'courses'           => $courses,
-            'courses_status'    => $this->course_status->getStatus(),
-            'hide_all_tutorials'  => true
+            'courses_status'    => $this->course_status->getStatus()
         ]);
     }
 

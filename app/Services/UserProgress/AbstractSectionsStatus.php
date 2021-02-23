@@ -4,12 +4,12 @@
 namespace App\Services\UserProgress;
 
 
-abstract class AbstractSectionsStatus
+abstract class AbstractSectionsStatus implements AbstractSectionsStatusInterface
 {
     protected array $ids;
     protected ?int $user_id;
     protected array $response;
-    protected bool $floor_rounded;
+    protected bool $floor_rounded = true;
 
     public function setIDs(array $ids = [])
     {
@@ -29,6 +29,8 @@ abstract class AbstractSectionsStatus
         return $this;
     }
 
+    protected abstract function makeStatus();
+
     public function getStatus()
     {
         if(!isset($this->response))
@@ -46,4 +48,6 @@ abstract class AbstractSectionsStatus
 
         return $this->response;
     }
+
+
 }

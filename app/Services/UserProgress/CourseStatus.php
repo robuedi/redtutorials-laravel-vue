@@ -16,6 +16,12 @@ class CourseStatus extends AbstractSectionsStatus implements CourseStatusInterfa
         $this->chapter_repository = $chapter_repository;
     }
 
+    public function setChaptersStatus(ChapterStatusInterface $chapter_status)
+    {
+        $this->chapter_status = $chapter_status;
+        return $this;
+    }
+
     protected function makeStatus()
     {
         if(!isset($this->user_id, $this->ids))
@@ -23,8 +29,8 @@ class CourseStatus extends AbstractSectionsStatus implements CourseStatusInterfa
             return $this->response;
         }
 
-        //get courses's chapters
-        $chapters_by_course = $this->chapter_repository->getLessonsByChapters($this->ids, [], ['id', 'course_id']);
+        //get courses' chapters
+        $chapters_by_course = $this->chapter_repository->getChaptersByCourses($this->ids, 1, ['id', 'course_id']);
 
         $all_chapters = [];
         //group lessons by chapter
@@ -35,28 +41,16 @@ class CourseStatus extends AbstractSectionsStatus implements CourseStatusInterfa
         });
 
         //get chapter's lesson status
-        $this->chapter_status_values = $this->chapter_status
+        $chapter_status_values = $this->chapter_status
             ->setUserID($this->user_id ?? 0)
-            ->setChaptersIDs($all_chapters)
+            ->setIDs($all_chapters)
             ->getStatus();
 
         // calculate the status by chapter
         foreach ($course_chapters_grouped as $course_id => $chapters_id)
         {
-            $course_lessons = array_intersect_key($this->chapter_status_values, array_flip($chapters_id));
+            $course_lessons = array_intersect_key($chapter_status_values, array_flip($chapters_id));
             $this->response[$course_id] = count($course_lessons) ? array_sum($course_lessons)/count($course_lessons) : 0;
         }
-
-        //if rounded
-        if($this->floor_rounded)
-        {
-            foreach ($this->response as $key => $value)
-            {
-                $this->response[$key] = (int)$this->response[$key];
-            }
-        }
-
     }
-
-
 }

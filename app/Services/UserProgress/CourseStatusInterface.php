@@ -12,4 +12,5 @@ interface CourseStatusInterface
 
     public function getStatus();
 
+    public function setLessonsStatus(LessonStatusInterface $lesson_status);
 }
