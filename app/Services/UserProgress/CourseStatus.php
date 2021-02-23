@@ -30,7 +30,7 @@ class CourseStatus extends AbstractSectionsStatus implements CourseStatusInterfa
         }
 
         //get courses' chapters
-        $chapters_by_course = $this->chapter_repository->getChaptersByCourses($this->ids, true, ['id', 'course_id']);
+        $chapters_by_course = $this->chapter_repository->getPublicChaptersByCourses($this->ids, ['id', 'course_id']);
 
         $all_chapters = [];
         //group lessons by chapter

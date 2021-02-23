@@ -10,13 +10,13 @@ use Illuminate\Support\Facades\Log;
 
 class LessonSectionUserRepository implements LessonSectionUserRepositoryInterface
 {
-    public function countLessonSectionUserByLessons(int $user_id, array $lessons_id, int $is_public, string $type)
+    public function countPublicQuizByLessons(int $user_id, array $lessons_id)
     {
         return LessonSection::whereHas('users', function($query) use (&$user_id){
                 $query->where('users.id', $user_id);
             })
-            ->where('is_public', $is_public)
-            ->where('type', $type)
+            ->public(true)
+            ->where('type', 'quiz')
             ->whereIn('lesson_id', $lessons_id)
             ->select('lesson_id', DB::raw('count(*) as total'))
             ->groupBy('lesson_id')

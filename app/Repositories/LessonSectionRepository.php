@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\DB;
 
 class LessonSectionRepository implements LessonSectionRepositoryInterface
 {
-    public function countByLessons(array $lessons_id, bool $is_public, string $type)
+    public function countPublicQuizByLessons(array $lessons_id)
     {
 
         return LessonSection::whereIn('lesson_id', $lessons_id)
-            ->public($is_public)
-            ->where('type', $type)
+            ->public(true)
+            ->where('type', 'quiz')
             ->select('lesson_id', DB::raw('count(*) as total'))
             ->groupBy('lesson_id')
             ->pluck('total', 'lesson_id');

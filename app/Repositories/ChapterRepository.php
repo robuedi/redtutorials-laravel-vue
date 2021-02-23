@@ -39,13 +39,13 @@ class ChapterRepository implements ChapterRepositoryInterface
             ->groupBy('course_id');
     }
 
-    public function getChaptersByCourses(array $courses_ids, bool $public = true, array $select_fields = [])
+    public function getPublicChaptersByCourses(array $courses_ids, array $select_fields = [])
     {
         return Chapter::whereIn('course_id', $courses_ids)
             ->withSlug(true)
             ->weightOrdering()
             ->select($select_fields)
-            ->public($public)
+            ->public(true)
             ->get();
     }
 }

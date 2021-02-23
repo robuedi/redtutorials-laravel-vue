@@ -55,13 +55,6 @@ class CourseRepository implements CourseRepositoryInterface
             ->get();
     }
 
-    public function getBySlug(string $slug, array $status = [])
-    {
-        return Course::where('slug', $slug)
-            ->where('status', $status)
-            ->first();
-    }
-
     public function getPublicBySlugWith(string $slug, array $with = [], array $select = [])
     {
         $q = Course::query();
