@@ -3,12 +3,16 @@
 namespace App\Models;
 
 use App\Models\Chapter;
+use App\Models\scope_traits\ScopeDraft;
+use App\Models\scope_traits\ScopePublic;
+use App\Models\scope_traits\ScopeSlug;
+use App\Models\scope_traits\ScopeWeight;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Course extends Model
 {
-    use HasFactory;
+    use HasFactory, ScopeSlug, ScopeDraft, ScopeWeight, ScopePublic;
 
     protected $morphClass = 'course';
 
@@ -30,9 +34,9 @@ class Course extends Model
     public function publicChapters()
     {
         return $this->chapters()
-            ->where('is_public', 1)
-            ->orderBy('order_weight')
-            ->whereNotNull('slug');
+            ->public(true)
+            ->weightOrdering()
+            ->withSlug(true);
     }
 
 

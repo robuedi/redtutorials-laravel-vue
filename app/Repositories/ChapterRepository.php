@@ -18,7 +18,7 @@ class ChapterRepository implements ChapterRepositoryInterface
     public function getCountPublic()
     {
         return Chapter::selectRaw('COUNT(id) as public')
-            ->where('is_public', 1)
+            ->public(true)
             ->pluck('public')
             ->first();
     }
@@ -26,26 +26,26 @@ class ChapterRepository implements ChapterRepositoryInterface
     public function getCountDraft()
     {
         return Chapter::selectRaw('COUNT(id) as draft')
-            ->where('is_draft', 1)
+            ->draft(true)
             ->pluck('draft')
             ->first();
     }
 
     public function getByWeightGroupedByCourse()
     {
-        return Chapter::orderBy('order_weight')
+        return Chapter::weightOrdering()
             ->select('id', 'name', 'course_id', 'is_draft', 'is_public')
             ->get()
             ->groupBy('course_id');
     }
 
-    public function getChaptersByCourses(array $courses_ids, int $public = 1, array $select_fields = [])
+    public function getChaptersByCourses(array $courses_ids, bool $public = true, array $select_fields = [])
     {
         return Chapter::whereIn('course_id', $courses_ids)
-            ->where('is_public', $public)
-            ->whereNotNull('slug')
-            ->orderBy('order_weight')
+            ->withSlug(true)
+            ->weightOrdering()
             ->select($select_fields)
+            ->public($public)
             ->get();
     }
 }

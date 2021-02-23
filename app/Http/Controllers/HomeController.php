@@ -22,7 +22,7 @@ class HomeController
     public function index()
     {
         //get courses
-        $courses = $this->course_repository->getByStatus([1,2], ['id', 'name', 'slug', 'status', 'short_description']);
+        $courses = $this->course_repository->getPublic(['id', 'name', 'slug', 'is_public', 'short_description']);
 
         //get progress
         $courses_ids = [];

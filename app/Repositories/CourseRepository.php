@@ -3,9 +3,7 @@
 
 namespace App\Repositories;
 
-
 use App\Models\Course;
-use Illuminate\Support\Facades\Log;
 
 class CourseRepository implements CourseRepositoryInterface
 {
@@ -19,7 +17,7 @@ class CourseRepository implements CourseRepositoryInterface
     public function getCountPublic()
     {
         return Course::selectRaw('COUNT(id) as public')
-            ->where('status', 1)
+            ->public(true)
             ->pluck('public')
             ->first();
     }
@@ -27,7 +25,7 @@ class CourseRepository implements CourseRepositoryInterface
     public function getCountDraft()
     {
         return Course::selectRaw('COUNT(id) as draft')
-            ->where('is_draft', 1)
+            ->draft(true)
             ->pluck('draft')
             ->first();
     }
@@ -39,21 +37,21 @@ class CourseRepository implements CourseRepositoryInterface
             ->get();
     }
 
-    public function getByStatus(array $status = [], array $fields = [])
+    public function getPublic(array $fields = [])
     {
-        return Course::where('status', $status)
+        return Course::public(true)
             ->select($fields)
-            ->orderBy('order_weight')
-            ->whereNotNull('slug')
+            ->weightOrdering()
+            ->withSlug(true)
             ->get();
     }
 
-    public function getByStatusWithSlug(array $status = [], array $fields = [])
+    public function getPublicWithSlug(array $fields = [])
     {
-        return Course::where('status', $status)
+        return Course::public(true)
             ->select($fields)
-            ->whereNotNull('slug')
-            ->orderBy('order_weight')
+            ->withSlug(true)
+            ->weightOrdering()
             ->get();
     }
 
@@ -64,11 +62,11 @@ class CourseRepository implements CourseRepositoryInterface
             ->first();
     }
 
-    public function getBySlugWith(string $slug, array $status = [], array $with = [], array $select = [])
+    public function getPublicBySlugWith(string $slug, array $with = [], array $select = [])
     {
         $q = Course::query();
         $q->where('slug', $slug)
-            ->whereIn('status', $status)
+            ->public(true)
             ->select($select);
 
         if($with)

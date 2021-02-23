@@ -33,7 +33,7 @@
                             {!! $course->short_description !!}
                         </div>
 
-                        @if($course->status === 1)
+                        @if($course->is_public === 1)
                         <a class="start-course" href="/{{$course->slug}}">
                             <span>
                                 @if(isset($courses_status[$course->id])&&$courses_status[$course->id]>0)

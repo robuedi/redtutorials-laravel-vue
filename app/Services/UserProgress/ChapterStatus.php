@@ -30,7 +30,7 @@ class ChapterStatus extends AbstractSectionsStatus implements ChapterStatusInter
         }
 
         //get chapter's lessons
-        $lessons_by_chapter = $this->lesson_repository->getLessonsByChapters($this->ids, 1, ['id', 'chapter_id']);
+        $lessons_by_chapter = $this->lesson_repository->getPublicLessonsByChapters($this->ids, ['id', 'chapter_id']);
 
         $all_lessons = [];
         //group lessons by chapter

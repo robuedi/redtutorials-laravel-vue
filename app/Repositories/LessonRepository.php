@@ -18,7 +18,7 @@ class LessonRepository implements LessonRepositoryInterface
     public function getCountPublic()
     {
         return Lesson::selectRaw('COUNT(id) as public')
-            ->where('is_public', 1)
+            ->public(true)
             ->pluck('public')
             ->first();
     }
@@ -26,7 +26,7 @@ class LessonRepository implements LessonRepositoryInterface
     public function getCountDraft()
     {
         return Lesson::selectRaw('COUNT(id) as draft')
-            ->where('is_draft', 1)
+            ->draft(true)
             ->pluck('draft')
             ->first();
     }
@@ -34,13 +34,13 @@ class LessonRepository implements LessonRepositoryInterface
     public function getByWeightGrouped()
     {
         Lesson::whereNotNull('chapter_id')
-            ->orderBy('order_weight')
+            ->weightOrdering()
             ->select('id', 'name', 'chapter_id', 'is_public', 'is_draft')
             ->get()
             ->groupBy('chapter_id');
     }
 
-    public function getLessonsByChapters(array $chapters_ids, int $public = 1, array $select_fields = [])
+    public function getPublicLessonsByChapters(array $chapters_ids, array $select_fields = [])
     {
         if(!$chapters_ids)
         {
@@ -48,10 +48,10 @@ class LessonRepository implements LessonRepositoryInterface
         }
 
         return Lesson::whereIn('chapter_id', $chapters_ids)
-            ->where('is_public', $public)
-            ->whereNotNull('slug')
-            ->orderBy('order_weight')
+            ->withSlug(true)
+            ->weightOrdering()
             ->select($select_fields)
+            ->public(true)
             ->get();
     }
 }

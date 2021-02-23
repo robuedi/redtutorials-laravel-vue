@@ -4,12 +4,16 @@ namespace App\Models;
 
 use App\Models\Course;
 use App\Models\Lesson;
+use App\Models\scope_traits\ScopeDraft;
+use App\Models\scope_traits\ScopePublic;
+use App\Models\scope_traits\ScopeSlug;
+use App\Models\scope_traits\ScopeWeight;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Chapter extends Model
 {
-    use HasFactory;
+    use HasFactory, ScopePublic, ScopeDraft, ScopeSlug, ScopeWeight;
 
     public function course()
     {
@@ -24,7 +28,7 @@ class Chapter extends Model
     public function publicLessons()
     {
         return $this->lessons()
-            ->where('is_public', 1)
-            ->whereNotNull('slug');
+            ->public(true)
+            ->withSlug(true);
     }
 }
