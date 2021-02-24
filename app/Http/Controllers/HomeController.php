@@ -29,12 +29,13 @@ class HomeController
         $courses->map(function ($item) use (&$courses_ids){
             $courses_ids[] = $item->id;
         });
-        $this->course_status->setUserID($this->authentication_service->getUserId())
-            ->setIDs($courses_ids);
 
         return view('home', [
             'courses'           => $courses,
-            'courses_status'    => $this->course_status->getStatus()
+            'courses_status'    => $this->course_status
+                                    ->setUserID($this->authentication_service->getUserId())
+                                    ->setIDs($courses_ids)
+                                    ->getStatus(true)
         ]);
     }
 

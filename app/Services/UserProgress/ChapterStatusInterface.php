@@ -4,13 +4,18 @@ namespace App\Services\UserProgress;
 
 interface ChapterStatusInterface
 {
-    public function setUserID(?int $user_id);
+    public function setLessonsStatus(LessonStatusInterface $lesson_status) : ChapterStatusInterface;
+    public function getLessonsStatus() : LessonStatusInterface;
 
-    public function setIDs(array $chapters_id = []);
+    public function setIDs(?array $ids): AbstractSectionsStatusInterface;
 
-    public function setFloorRounded(bool $floor_rounded);
+    public function setUserID(?int $user_id): AbstractSectionsStatusInterface;
 
-    public function getStatus();
+    public function getIDs(): ?array;
 
-    public function setLessonsStatus(LessonStatusInterface $lesson_status);
+    public function getUserID(): ?int;
+
+    public function getFreshStatus(bool $floor_rounded = false);
+
+    public function getStatus(bool $floor_rounded = false);
 }

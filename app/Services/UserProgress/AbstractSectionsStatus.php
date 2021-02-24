@@ -6,26 +6,19 @@ namespace App\Services\UserProgress;
 
 abstract class AbstractSectionsStatus implements AbstractSectionsStatusInterface
 {
-    protected array $ids;
+    protected ?array $ids;
     protected ?int $user_id;
-    protected array $response;
-    protected bool $floor_rounded = true;
+    protected ?array $response;
 
-    public function setIDs(array $ids = [])
+    public function setIDs(?array $ids) : AbstractSectionsStatusInterface
     {
         $this->ids = $ids;
         return $this;
     }
 
-    public function setUserID(?int $user_id)
+    public function setUserID(?int $user_id) : AbstractSectionsStatusInterface
     {
         $this->user_id = $user_id;
-        return $this;
-    }
-
-    public function setFloorRounded(bool $floor_rounded)
-    {
-        $this->floor_rounded = $floor_rounded;
         return $this;
     }
 
@@ -39,14 +32,15 @@ abstract class AbstractSectionsStatus implements AbstractSectionsStatusInterface
         return $this->user_id ?? null;
     }
 
-    public function getFloorRounded() : ?bool
-    {
-        return $this->floor_rounded ?? null;
-    }
-
     protected abstract function makeStatus();
 
-    public function getStatus()
+    public function getFreshStatus(bool $floor_rounded = false)
+    {
+        unset($this->response);
+        return $this->getStatus($floor_rounded);
+    }
+
+    public function getStatus(bool $floor_rounded = false)
     {
         if(!isset($this->response))
         {
@@ -59,7 +53,7 @@ abstract class AbstractSectionsStatus implements AbstractSectionsStatusInterface
         }
 
         //round values?
-        if($this->floor_rounded)
+        if(!$floor_rounded)
         {
             array_walk($this->response, function (&$value) {
                 $value = (int)$value;

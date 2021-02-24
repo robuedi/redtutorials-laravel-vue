@@ -24,10 +24,10 @@ class LessonStatus extends AbstractSectionsStatus implements LessonStatusInterfa
         }
 
         //get all the sections completed be user for the lesson
-        $user_sections = $this->lesson_section_user_repository->countPublicQuizByLessons($this->user_id, $this->ids);
+        $user_sections = $this->lesson_section_user_repository->countPublicQuizByLessons($this->getUserID(), $this->getIDs());
 
         //get all the sections from the lessons
-        $all_sections = $this->lesson_section_repository->countPublicQuizByLessons($this->ids);
+        $all_sections = $this->lesson_section_repository->countPublicQuizByLessons($this->getIDs());
 
         //get the percentage
         foreach ($this->ids as $index => $lesson_id)

@@ -4,11 +4,15 @@
 namespace App\Services\UserProgress;
 
 use App\Repositories\LessonRepositoryInterface;
+use Illuminate\Support\Collection;
 
 class ChapterStatus extends AbstractSectionsStatus implements ChapterStatusInterface
 {
     private LessonRepositoryInterface $lesson_repository;
     private LessonStatusInterface $lesson_status;
+    private array $children_status;
+    private ?Collection $children_grouped;
+    private ?Collection $children;
 
     public function __construct(LessonRepositoryInterface $lesson_repository, LessonStatusInterface $lesson_status)
     {
@@ -16,10 +20,22 @@ class ChapterStatus extends AbstractSectionsStatus implements ChapterStatusInter
         $this->lesson_status = $lesson_status;
     }
 
-    public function setLessonsStatus(LessonStatusInterface $lesson_status)
+    public function setLessonsStatus(LessonStatusInterface $lesson_status) : ChapterStatusInterface
     {
         $this->lesson_status = $lesson_status;
         return $this;
+    }
+
+    public function getLessonsStatus() : LessonStatusInterface
+    {
+        if(!isset($this->children_status))
+        {
+            //get chapter's lessons
+            $this->getChildren();
+            $this->makeChildrenStatus();
+        }
+
+        return $this->lesson_status;
     }
 
     protected function makeStatus()
@@ -30,36 +46,42 @@ class ChapterStatus extends AbstractSectionsStatus implements ChapterStatusInter
         }
 
         //get chapter's lessons
-        $lessons_by_chapter = $this->lesson_repository->getPublicLessonsByChapters($this->ids, ['id', 'chapter_id']);
+        $this->getChildren();
 
-        $all_lessons = [];
         //group lessons by chapter
-        $lessons_chapter_grouped = $lessons_by_chapter->groupBy('chapter_id')->map(function ($item) use (&$all_lessons){
-            $ids = $item->pluck('id')->toArray();
-            $all_lessons = array_merge($all_lessons, $ids);
-            return $ids;
-        });
+        $this->makeChildrenGroups();
 
         //get chapter's lesson status
-        $lesson_status_values = $this->lesson_status
-                            ->setUserID($this->user_id ?? 0)
-                            ->setIDs($all_lessons)
-                            ->getStatus();
+        $this->makeChildrenStatus();
 
         // calculate the status by chapter
-        foreach ($lessons_chapter_grouped as $chapter_id => $lessons_id)
+        foreach ($this->children_grouped as $chapter_id => $lessons_id)
         {
-            $chapters_lessons = array_intersect_key($lesson_status_values, array_flip($lessons_id));
+            $chapters_lessons = array_intersect_key($this->children_status, array_flip($lessons_id));
             $this->response[$chapter_id] = count($chapters_lessons) ? array_sum($chapters_lessons)/count($chapters_lessons) : 0;
         }
+    }
 
-        //if rounded
-        if($this->floor_rounded)
-        {
-            foreach ($this->response as $key => $value)
-            {
-                $this->response[$key] = (int)$this->response[$key];
-            }
-        }
+    private function getChildren()
+    {
+        //get chapter's lessons
+        $this->children = $this->lesson_repository->getPublicLessonsByChapters($this->getIDs(), ['id', 'chapter_id']);
+    }
+
+    protected function makeChildrenGroups()
+    {
+        //group lessons by chapter
+        $this->children_grouped = $this->children->groupBy('chapter_id')->map(function ($item){
+            return $item->pluck('id')->toArray();
+        });
+    }
+
+    protected function makeChildrenStatus()
+    {
+        //get chapter's lesson status
+        $this->children_status = $this->lesson_status
+            ->setUserID($this->getUserID())
+            ->setIDs($this->children->pluck('id')->toArray())
+            ->getStatus();
     }
 }
