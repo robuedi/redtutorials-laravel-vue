@@ -30,11 +30,10 @@ Go in the browser to [http://redtutorial.local](http://redtutorial.local) to vie
 
 Go in the browser to [http://localhost:7001](http://localhost:7001) to check the database in phpmyadmin (currently the phpmyadmin service uses the 7001 port).
 
-# App Screenshots
+# App Screenshots (wait for them to load..)
 
 ![Screenshot](public/readme_files/admin-dashboard.png)
 ![Screenshot](public/readme_files/client-homepage.png)
-![Screenshot](public/readme_files/client-tutorial.png)
-![Screenshot](public/readme_files/client-tutorial2.png)
+![Screenshot](public/readme_files/redtutorial-client-course-content.png)
 
 ##### Enjoy by Eduard Robu!

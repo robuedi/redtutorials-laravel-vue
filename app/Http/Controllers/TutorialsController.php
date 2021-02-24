@@ -35,7 +35,7 @@ class TutorialsController extends Controller
 
         $this->chapter_status
             ->setIDs($course_info->publicChapters->pluck('id')->toArray())
-            ->setUserID(3);
+            ->setUserID($this->authentication_service->getUserId());
 
         return view('tutorials.chapters', [
             'course'        => $course_info,

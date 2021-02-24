@@ -53,7 +53,7 @@ abstract class AbstractSectionsStatus implements AbstractSectionsStatusInterface
         }
 
         //round values?
-        if(!$floor_rounded)
+        if($floor_rounded)
         {
             array_walk($this->response, function (&$value) {
                 $value = (int)$value;
