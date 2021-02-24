@@ -32,8 +32,8 @@ Go in the browser to [http://localhost:7001](http://localhost:7001) to check the
 
 # App Screenshots (wait for them to load..)
 
-![Screenshot](public/readme_files/admin-dashboard.png)
-![Screenshot](public/readme_files/client-homepage.png)
-![Screenshot](public/readme_files/redtutorial-client-course-content.png)
+![Screenshot](storage/readme_files/admin-dashboard.png)
+![Screenshot](storage/readme_files/client-homepage.png)
+![Screenshot](storage/readme_files/redtutorial-client-course-content.png)
 
 ##### Enjoy by Eduard Robu!

@@ -16,13 +16,7 @@
 
     <main class="courses-section" >
         <section class="header-section content-parent" @if($course->mediaFilesMain->isNotEmpty()) style='background-image: url("/images/{!! $course->mediaFilesMain->pluck('url')[0] !!}?w=1000&fit=contain&filt=greyscale")' @endif>
-            <div class="background-color" style="
-                    background: linear-gradient(to left top , rgba({{rand(200, 255).', '.rand(200, 255).', '.rand(200, 255)}},0.7), rgba({{rand(200, 255).', '.rand(200, 255).', '.rand(200, 255)}},0.7));
-                    background: -moz-linear-gradient(to left top , rgba({{rand(200, 255).', '.rand(200, 255).', '.rand(200, 255)}},0.7), rgba({{rand(200, 255).', '.rand(200, 255).', '.rand(200, 255)}},0.7));
-                    background: -o-linear-gradient(to left top , rgba({{rand(200, 255).', '.rand(200, 255).', '.rand(200, 255)}},0.7), rgba({{rand(200, 255).', '.rand(200, 255).', '.rand(200, 255)}},0.7));
-                    background: -webkit-linear-gradient(to left top , rgba({{rand(200, 255).', '.rand(200, 255).', '.rand(200, 255)}},0.7), rgba({{rand(200, 255).', '.rand(200, 255).', '.rand(200, 255)}},0.7));
-                    ">
-            </div>
+            <x-client.random-gradient-container :classes="'background-color'"></x-client.random-gradient-container>
             <div class="heading-inner-container content">
                 <h1>{!! $course->name !!} Tutorial</h1>
                 @if($course->description)
