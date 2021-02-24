@@ -4,6 +4,7 @@ use App\Http\Controllers\admin\AuthenticationController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\StaticPagesController;
 use App\Http\Controllers\TutorialsController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,6 +44,9 @@ Route::get('/', [HomeController::class, 'index']);
 //Tutorials (SEO optimized URLs)
 Route::get('/{course_slag}', [TutorialsController::class, 'showCourseContent'])->where('course_slag', '^([^\s\/]+)-tutorial$');
 Route::get('/{course_slag}/{chapter_slag}/{lesson_slag}', [TutorialsController::class, 'showLessonContent'])->where('course_slag', '^([^\s\/]+)-tutorial$');
+
+//Info pages
+Route::get('/info/{url}', [StaticPagesController::class, 'index']);
 
 //Glide - for images
 Route::get('/images/uploads/media_library/{year}/{month}/{file_name}', [ImageController::class, 'showMediaImage'])->where('year', '[0-9]{4}')->where('month', '[0-9]{2}');

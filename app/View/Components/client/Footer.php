@@ -15,7 +15,7 @@ class Footer extends Component
      */
     public function __construct(StaticPageRepositoryInterface $static_page_repository)
     {
-        $this->static_menu = $static_page_repository->getStaticMenu();
+        $this->static_menu = $static_page_repository->getStaticMenu(['slug', 'name']);
     }
 
     /**

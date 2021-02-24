@@ -7,11 +7,20 @@ use App\Models\StaticPage;
 
 class StaticPageRepository implements StaticPageRepositoryInterface
 {
-    public function getStaticMenu(){
+    public function getStaticMenu(array $select)
+    {
         return StaticPage::withSlug(true)
             ->public(true)
-            ->select('slug', 'name')
+            ->select($select)
             ->get();
+    }
+
+    public function getPublicBySlug(string $slug, array $select)
+    {
+        return StaticPage::where('slug', $slug)
+            ->public(true)
+            ->select($select)
+            ->first();
     }
 
 }
