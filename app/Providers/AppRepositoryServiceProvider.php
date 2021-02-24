@@ -31,7 +31,7 @@ class AppRepositoryServiceProvider extends ServiceProvider
         app()->singleton(CourseRepositoryInterface::class, CourseRepository::class);
         app()->singleton(ChapterRepositoryInterface::class, ChapterRepository::class);
         app()->singleton(LessonRepositoryInterface::class, LessonRepository::class);
-        app()->bind(LessonRepositoryInterface::class, LessonRepository::class);
+        app()->singleton(LessonRepositoryInterface::class, LessonRepository::class);
         app()->singleton(ContactMessageUserRepositoryInterface::class, ContactMessageUserRepository::class);
         app()->singleton(LessonSectionUserRepositoryInterface::class, LessonSectionUserRepository::class);
         app()->singleton(StaticPageRepositoryInterface::class, StaticPageRepository::class);

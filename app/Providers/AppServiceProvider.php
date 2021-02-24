@@ -4,19 +4,22 @@ namespace App\Providers;
 
 use App\Services\CoursesHierarchy\CoursesHierarchyAdmin;
 use App\Services\CoursesHierarchy\CoursesHierarchyAdminInterface;
-use App\Services\CoursesService;
-use App\Services\CoursesServiceInterface;
+use App\Services\ItemsStatusFlagService;
+use App\Services\ItemsStatusFlagServiceInterface;
 use App\Services\Menu\MenuAdmin;
 use App\Services\Menu\MenuAdminInterface;
 use App\Services\Menu\MenuUserContactMessages;
 use App\Services\Menu\MenuUserContactMessagesInterface;
+use App\Services\NumericService;
+use App\Services\NumericServiceInterface;
+use App\Services\SEO\MetaDescriptionServiceInterface;
+use App\Services\SEO\MetaDescriptionService;
 use App\Services\UserProgress\ChapterStatus;
 use App\Services\UserProgress\ChapterStatusInterface;
 use App\Services\UserProgress\CourseStatus;
 use App\Services\UserProgress\CourseStatusInterface;
 use App\Services\UserProgress\LessonStatus;
 use App\Services\UserProgress\LessonStatusInterface;
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -34,6 +37,10 @@ class AppServiceProvider extends ServiceProvider
         app()->singleton(CourseStatusInterface::class, CourseStatus::class);
         app()->singleton(ChapterStatusInterface::class, ChapterStatus::class);
         app()->singleton(LessonStatusInterface::class, LessonStatus::class);
+        app()->singleton(MetaDescriptionServiceInterface::class, MetaDescriptionService::class);
+        app()->singleton(NumericServiceInterface::class, NumericService::class);
+        app()->singleton(ItemsStatusFlagServiceInterface::class, ItemsStatusFlagService::class);
+
     }
 
     /**
