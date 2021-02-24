@@ -37,7 +37,7 @@
             <div class="list-container content">
                 <ol class="chapters-list">
                 @foreach($course->publicChapters as $index => $chapter)
-                    <x-client.chapter-status-wrapper :status="$status_chapters[$chapter->id]">
+                    <x-client.chapter-status-wrapper :status="$status_chapters[$chapter->id] ?? 0">
                         <x-slot name="chapter_content">
                             <span class="option" >
                                 <span class="course-number">
@@ -45,8 +45,8 @@
                                 </span>
                                 <div class="top-level" >
                                     <h2>{!! $chapter->name !!}</h2>
-                                    <span class="line-completion-indicator" style="width: {{$chapter->completion_percentage ?? 0}}%;"></span>
-                                    <span class="dot-completion-indicator" style="left: {{$chapter->completion_percentage ?? 0}}%;"></span>
+                                    <span class="line-completion-indicator" style="width: {{$status_chapters[$chapter->id] ?? 0}}%;"></span>
+                                    <span class="dot-completion-indicator" style="left: {{$status_chapters[$chapter->id] ?? 0}}%;"></span>
                                     <span class="route">
                                         <span class="inner-route"></span>
                                     </span>
