@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Chapter;
 use App\Models\scope_traits\ScopeDraft;
 use App\Models\scope_traits\ScopePublic;
 use App\Models\scope_traits\ScopeSlug;
@@ -16,6 +15,34 @@ class Lesson extends Model
 
     public function chapter()
     {
-        return $this->belongsTo(Chapter::class, 'parent_id', 'id');
+        return $this->belongsTo(Chapter::class, 'chapter_id', 'id');
+    }
+
+    public function lessonSections()
+    {
+        return $this->hasMany(LessonSection::class, 'lesson_id', 'id');
+    }
+
+    public function publicLessonSections()
+    {
+        return $this->lessonSections()
+            ->orderBy('order_weight')
+            ->public(true);
+    }
+
+    public function publicChapter()
+    {
+        return $this->chapter()->public(true);
+    }
+
+    public function next(){
+        // get next lesson
+        return $this->orderBy('order_weight')
+                    ->where('order_weight', '>', $this->order_weight)
+                    ->where('chapter_id', '>', $this->chapter_id)
+                    ->public(true)
+                    ->withSlug(true)
+                    ->first();
+
     }
 }

@@ -5,6 +5,7 @@ namespace App\Repositories;
 
 
 use App\Models\Lesson;
+use Illuminate\Support\Facades\DB;
 
 class LessonRepository implements LessonRepositoryInterface
 {
@@ -53,5 +54,27 @@ class LessonRepository implements LessonRepositoryInterface
             ->select($select_fields)
             ->public(true)
             ->get();
+    }
+
+    public static function getLessonByCourseChapterLessonSlugs(string $course_slug, string $chapter_slug, string $lesson_slug, array $select = [], array $with = [])
+    {
+        $query = Lesson::wherehas('chapter', function($query) use (&$chapter_slug){
+                $query->where('slug', $chapter_slug);
+                $query->where('is_public', 1);
+            })
+            ->wherehas('chapter.course', function($query) use (&$course_slug){
+                $query->where('slug', $course_slug);
+                $query->where('is_public', 1);
+            })
+            ->public(true)
+            ->where('slug', '=', $lesson_slug)
+            ->select($select);
+
+        if($with)
+        {
+            $query->with($with);
+        }
+
+        return $query->first();
     }
 }

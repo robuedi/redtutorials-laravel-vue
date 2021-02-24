@@ -18,4 +18,21 @@ class LessonSectionRepository implements LessonSectionRepositoryInterface
             ->groupBy('lesson_id')
             ->pluck('total', 'lesson_id');
     }
+
+    public function getLastCompletedSectionByUserLesson(?int $user_id, ?array $ids, array $select = [])
+    {
+        if($user_id||$ids)
+        {
+            return collect([]);
+        }
+
+        return LessonSection::whereIn('id', $ids)
+            ->whereHas('users', function($query) use (&$user_id){
+                $query->where('user.id', $user_id);
+            })
+            ->where('user_id', $this->getUserID())
+            ->orderBy('order_weight', 'desc')
+            ->select($select)
+            ->first();
+    }
 }

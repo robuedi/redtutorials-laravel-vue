@@ -16,6 +16,8 @@ use App\Repositories\StaticPageRepository;
 use App\Repositories\StaticPageRepositoryInterface;
 use App\Repositories\LessonSectionUserRepositoryInterface;
 use App\Repositories\LessonSectionUserRepository;
+use App\Services\UserProgress\LessonSectionUserStatus;
+use App\Services\UserProgress\LessonSectionUserStatusInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppRepositoryServiceProvider extends ServiceProvider
@@ -36,6 +38,7 @@ class AppRepositoryServiceProvider extends ServiceProvider
         app()->singleton(LessonSectionUserRepositoryInterface::class, LessonSectionUserRepository::class);
         app()->singleton(StaticPageRepositoryInterface::class, StaticPageRepository::class);
         app()->singleton(LessonSectionRepositoryInterface::class, LessonSectionRepository::class);
+        app()->singleton(LessonSectionUserStatusInterface::class, LessonSectionUserStatus::class);
     }
 
     /**

@@ -20,6 +20,11 @@ class Chapter extends Model
         return $this->belongsTo(Course::class, 'course_id','id');
     }
 
+    public function publicCourse()
+    {
+        return $this->course()->public(true);
+    }
+
     public function lessons()
     {
         return $this->hasMany(Lesson::class, 'chapter_id', 'id');

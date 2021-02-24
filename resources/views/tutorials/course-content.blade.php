@@ -15,7 +15,7 @@
 @section('content')
 
     <main class="courses-section" >
-        <section class="header-section content-parent" @if($course->mediaFilesMain->isNotEmpty()) style='background-image: url("/images/{!! $course->mediaFilesMain->pluck('url')[0] !!}?w=1000&fit=contain&filt=greyscale")' @endif>
+        <section class="header-section content-parent" @if($course->mediaFilesMain->isNotEmpty()) style='background-image: url("/images/{!! $course->mediaFilesMain->first()->url !!}?w=1000&fit=contain&filt=greyscale")' @endif>
             <x-client.random-gradient-container :classes="'background-color'"></x-client.random-gradient-container>
             <div class="heading-inner-container content">
                 <h1>{!! $course->name !!} Tutorial</h1>
