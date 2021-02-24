@@ -6,20 +6,18 @@ namespace App\Http\Controllers;
 use App\Repositories\CourseRepositoryInterface;
 use App\Services\Authentication\AuthenticationServiceInterface;
 use App\Services\UserProgress\ChapterStatusInterface;
-use App\Services\UserProgress\CourseStatusInterface;
-use App\Services\UserProgress\LessonStatus;
 
 class TutorialsController extends Controller
 {
     private CourseRepositoryInterface $course_repository;
-    private CourseStatusInterface $course_status;
+    private ChapterStatusInterface $chapter_status;
     private AuthenticationServiceInterface $authentication_service;
 
-    public function __construct(CourseRepositoryInterface $course_repository, CourseStatusInterface $course_status, AuthenticationServiceInterface $authentication_service)
+    public function __construct(CourseRepositoryInterface $course_repository, ChapterStatusInterface $chapter_status, AuthenticationServiceInterface $authentication_service)
     {
-        $this->course_repository    = $course_repository;
-        $this->course_status        = $course_status;
-        $this->authentication_service = $authentication_service;
+        $this->course_repository        = $course_repository;
+        $this->chapter_status           = $chapter_status;
+        $this->authentication_service   = $authentication_service;
     }
 
     public function showChapters(string $course_slug)
@@ -31,23 +29,20 @@ class TutorialsController extends Controller
             abort(404);
         }
 
-        // get status for chapters and lessons
-        $status_chapters =$this->course_status
-                                ->setIDs([$course_info->id])
-                                ->setUserID(3)
-                                ->getChaptersStatus()
-                                ->getStatus(true);
+        //get chapters status
+        $chapters = [];
+        $course_info->publicChapters->map(function ($item) use (&$chapters){
+            $chapters[] = $item->id;
+        });
 
-        // get status for lessons
-        $status_lessons = $this->course_status
-                                ->getChaptersStatus()
-                                ->getLessonsStatus()
-                                ->getStatus(true);
+        $this->chapter_status
+            ->setIDs($chapters)
+            ->setUserID($this->authentication_service->getUserId());
 
         return view('tutorials.chapters', [
             'course'        => $course_info,
-            'status_chapters'  => $status_chapters,
-            'status_lessons'  => $status_lessons,
+            'status_chapters'  => $this->chapter_status->getStatus(true),
+            'status_lessons'  => $this->chapter_status->getLessonsStatus()->getStatus(true),
             'meta_description'  => '',
         ]);
     }
