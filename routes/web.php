@@ -41,7 +41,7 @@ Route::group(['namespace' => 'admin', 'prefix' => config('app.admin_route')], fu
 Route::get('/', [HomeController::class, 'index']);
 
 //Tutorials (SEO optimized URLs)
-Route::get('/{course_slag}', [TutorialsController::class, 'showChapters'])->where('course_slag', '^([^\s\/]+)-tutorial$');
+Route::get('/{course_slag}', [TutorialsController::class, 'showCourseContent'])->where('course_slag', '^([^\s\/]+)-tutorial$');
 Route::get('/{course_slag}/{chapter_slag}/{lesson_slag}', [TutorialsController::class, 'showLessonContent'])->where('course_slag', '^([^\s\/]+)-tutorial$');
 
 //Glide - for images

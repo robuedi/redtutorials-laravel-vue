@@ -24,7 +24,7 @@ class TutorialsController extends Controller
         $this->meta_description_service = $meta_description_service;
     }
 
-    public function showChapters(string $course_slug)
+    public function showCourseContent(string $course_slug)
     {
         $course_info = $this->course_repository->getPublicBySlugWith($course_slug, ['publicChapters:id,course_id,name,slug', 'publicChapters.publicLessons:id,chapter_id,name,slug', 'mediaFilesMain:url'], ['name', 'id', 'description', 'slug']);
 
@@ -37,7 +37,7 @@ class TutorialsController extends Controller
             ->setIDs($course_info->publicChapters->pluck('id')->toArray())
             ->setUserID($this->authentication_service->getUserId());
 
-        return view('tutorials.chapters', [
+        return view('tutorials.course-content', [
             'course'        => $course_info,
             'status_chapters'  => $this->chapter_status->getStatus(true),
             'status_lessons'  => $this->chapter_status->getLessonsStatus()->getStatus(true),
