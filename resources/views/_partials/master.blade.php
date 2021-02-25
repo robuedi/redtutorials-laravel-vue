@@ -33,7 +33,7 @@
         @endif
 
         <link rel="icon" href="/assets/img/logo_new.ico">
-        <link rel="stylesheet" type="text/css" href="/assets/css/bundle.min.css?v=47">
+        <link rel="stylesheet" type="text/css" href="/css/app.css?v=47">
 
         @yield('stylesheets')
 
@@ -59,7 +59,7 @@
         @yield('scripts')
 
         <!-- JS -->
-        <script src="/assets/js/bundle.min.js?v=14"></script>
+        <script src="/js/app.js?v=14"></script>
 
     </body>
 </html>
