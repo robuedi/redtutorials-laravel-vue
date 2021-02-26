@@ -55,17 +55,40 @@ class CoursesHierarchy implements ICoursesHierarchy
         return $this->courses;
     }
 
-    private function makeHierarchyList()
+    protected function setCourseData(&$key, &$course, &$children)
     {
-        //loop courses
-        $this->hierarchical_list = array_map(function ($key, $course){
-            $parent_level = '';
-            //check course children (go into recursive function)
-            $children = $this->getChapterChildren( $course, $parent_level);
+        $data = [
+            'index'     => $key,
+            'name'      => $course->name,
+            'children'  => $children
+        ];
 
-            //add new course and it's children
-            return  $this->setCourseData($key, $course, $children);
-        }, $this->courses);
+        return $data;
+    }
+
+    protected function setChapterData(&$chapter, &$children)
+    {
+        $data = [
+            'name'      => $chapter->name,
+            'children'  => $children
+        ];
+
+        return $data;
+    }
+
+    protected function setLessonData(&$lesson)
+    {
+        $data = [
+            'name'      => $lesson->name,
+        ];
+
+        return $data;
+    }
+
+    public function setJsonFormat()
+    {
+        $this->list_format = 'json';
+        return $this;
     }
 
     public function getHierarchyList()
@@ -81,10 +104,17 @@ class CoursesHierarchy implements ICoursesHierarchy
         }
     }
 
-    public function setJsonFormat()
+    private function makeHierarchyList()
     {
-        $this->list_format = 'json';
-        return $this;
+        //loop courses
+        $this->hierarchical_list = array_map(function ($key, $course){
+            $parent_level = '';
+            //check course children (go into recursive function)
+            $children = $this->getChapterChildren( $course, $parent_level);
+
+            //add new course and it's children
+            return  $this->setCourseData($key, $course, $children);
+        }, $this->courses);
     }
 
     private function getChapterChildren(&$parent, &$parent_level)
@@ -123,34 +153,6 @@ class CoursesHierarchy implements ICoursesHierarchy
         return $children;
     }
 
-    protected function setCourseData(&$key, &$course, &$children)
-    {
-        $data = [
-            'index'     => $key,
-            'name'      => $course->name,
-            'children'  => $children
-        ];
 
-        return $data;
-    }
-
-    protected function setChapterData(&$chapter, &$children)
-    {
-        $data = [
-            'name'      => $chapter->name,
-            'children'  => $children
-        ];
-
-        return $data;
-    }
-
-    protected function setLessonData(&$lesson)
-    {
-        $data = [
-            'name'      => $lesson,
-        ];
-
-        return $data;
-    }
 
 }

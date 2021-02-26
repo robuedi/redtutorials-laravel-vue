@@ -33,7 +33,7 @@ class HomeController
             'courses'           => $courses,
             'courses_status'    => $this->course_status
                                     ->setUserID($this->authentication_service->getUserId())
-                                    ->setIDs($courses_ids)
+                                    ->setIDs($courses_ids->toArray())
                                     ->getStatus(true)
         ]);
     }
