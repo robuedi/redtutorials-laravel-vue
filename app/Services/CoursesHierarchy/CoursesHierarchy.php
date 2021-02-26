@@ -58,15 +58,14 @@ class CoursesHierarchy implements ICoursesHierarchy
     private function makeHierarchyList()
     {
         //loop courses
-        foreach($this->courses as $key => $course)
-        {
+        $this->hierarchical_list = array_map(function ($key, $course){
             $parent_level = '';
             //check course children (go into recursive function)
             $children = $this->getChapterChildren( $course, $parent_level);
 
             //add new course and it's children
-            $this->hierarchical_list[] = $this->setCourseData($key, $course, $children);
-        }
+            return  $this->setCourseData($key, $course, $children);
+        }, $this->courses);
     }
 
     public function getHierarchyList()
@@ -95,8 +94,7 @@ class CoursesHierarchy implements ICoursesHierarchy
         if(isset($this->chapters[$parent->id]))
         {
             //loop chapter children
-            foreach ($this->chapters[$parent->id] as $key => $child)
-            {
+            $children = array_map(function ($key, $child) use (&$parent, &$parent_level){
                 $child_level = $key+1;
                 $inherit_level = $parent_level.$child_level.'. ';
                 $child->parent = $parent;
@@ -107,20 +105,19 @@ class CoursesHierarchy implements ICoursesHierarchy
                 $child->inherit_level = $inherit_level;
 
                 //save chapters data and it's children
-                $children[] = $this->setChapterData($child, $grandchildren);
-            }
+                return $this->setChapterData($child, $grandchildren);
+            }, $this->chapters[$parent->id]);
         }
 
         //check if parent has lesson children
         if(isset($this->lessons[$parent->id]))
         {
             //loop lesson children
-            foreach ($this->lessons[$parent->id] as $key => $child)
-            {
+            $children = array_map(function ($child) use (&$parent){
                 //save lesson data
                 $child->parent = $parent;
-                $children[] = $this->setLessonData($child);
-            }
+                return $this->setLessonData($child);
+            }, $this->lessons[$parent->id]);
         }
 
         return $children;

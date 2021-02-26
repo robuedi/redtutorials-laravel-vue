@@ -25,9 +25,8 @@ class HomeController
         $courses = $this->course_repository->getPublic(['id', 'name', 'slug', 'is_public', 'short_description']);
 
         //get progress
-        $courses_ids = [];
-        $courses->map(function ($item) use (&$courses_ids){
-            $courses_ids[] = $item->id;
+        $courses_ids = $courses->map(function ($item){
+            return $item->id;
         });
 
         return view('home', [
