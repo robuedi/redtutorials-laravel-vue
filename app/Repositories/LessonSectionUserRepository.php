@@ -22,4 +22,13 @@ class LessonSectionUserRepository implements LessonSectionUserRepositoryInterfac
             ->groupBy('lesson_id')
             ->pluck('total', 'lesson_id');
     }
+
+    public function getCompletedSections(int $user_id, array $section_id = [])
+    {
+        return LessonSectionUser::where('user_id', $user_id)
+            ->whereIn('lesson_section_id', $section_id)
+            ->select('lesson_section_id')
+            ->pluck('lesson_section_id')
+            ->toArray();
+    }
 }

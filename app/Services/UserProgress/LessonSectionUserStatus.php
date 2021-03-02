@@ -56,8 +56,6 @@ class LessonSectionUserStatus extends AbstractSectionsStatus implements LessonSe
                     $this->response[$id] = 0;
 
                 }
-
-
             }
 
             //if all completed make the first active

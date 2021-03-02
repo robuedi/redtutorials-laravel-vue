@@ -12,6 +12,11 @@ use App\Services\Menu\MenuUserContactMessages;
 use App\Services\Menu\MenuUserContactMessagesInterface;
 use App\Services\NumericService;
 use App\Services\NumericServiceInterface;
+use App\Services\Progress\ChapterProgress;
+use App\Services\Progress\CourseProgress;
+use App\Services\Progress\LessonProgress;
+use App\Services\Progress\LessonSectionProgress;
+use App\Services\Progress\Progress;
 use App\Services\SEO\MetaDescriptionServiceInterface;
 use App\Services\SEO\MetaDescriptionService;
 use App\Services\UserProgress\ChapterStatus;
@@ -41,6 +46,19 @@ class AppServiceProvider extends ServiceProvider
         app()->singleton(NumericServiceInterface::class, NumericService::class);
         app()->singleton(ItemsStatusFlagServiceInterface::class, ItemsStatusFlagService::class);
 
+
+        //Progress - Decorator Design Pattern
+        app()->when(LessonProgress::class)
+            ->needs(Progress::class)
+            ->give(LessonSectionProgress::class);
+
+        app()->when(ChapterProgress::class)
+            ->needs(Progress::class)
+            ->give(LessonProgress::class);
+
+        app()->when(CourseProgress::class)
+            ->needs(Progress::class)
+            ->give(ChapterProgress::class);
     }
 
     /**
