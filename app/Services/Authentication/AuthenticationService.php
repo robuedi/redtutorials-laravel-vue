@@ -11,7 +11,6 @@ class AuthenticationService implements AuthenticationServiceInterface
     use AuthenticationLogin, AuthenticationLogout;
 
     private $logged_user;
-    private $has_access = [];
 
     public function getUserId()
     {
@@ -46,7 +45,7 @@ class AuthenticationService implements AuthenticationServiceInterface
     public function checkIfAdmin() : string
     {
         try {
-            if ($this->userLogged() && $this->hasAcces('admin'))
+            if ($this->userLogged() && $this->hasAcces(['admin']))
                 return 'yes';
             else
                 return 'no';
@@ -65,14 +64,9 @@ class AuthenticationService implements AuthenticationServiceInterface
         return $this->logged_user;
     }
 
-    public function hasAcces(string $type)
+    public function hasAcces(array $type) : bool
     {
-        if(!isset($this->has_access[$type]))
-        {
-            $this->has_access[$type] = Sentinel::hasAccess($type);
-        }
-
-        return $this->has_access[$type];
+        return Sentinel::hasAccess($type);
     }
 
 }

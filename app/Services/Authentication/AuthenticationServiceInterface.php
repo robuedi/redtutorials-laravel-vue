@@ -44,5 +44,5 @@ interface AuthenticationServiceInterface
      * Check if logged user is admin
      * @return mixed
      */
-    public function hasAcces(string $type);
+    public function hasAcces(array $type);
 }

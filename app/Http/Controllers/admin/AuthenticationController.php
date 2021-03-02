@@ -35,6 +35,7 @@ class AuthenticationController extends Controller
     public function doLogin(LoginRequest $request, LoginSessionRepositoryInterface $login_session_repository)
     {
         //make login
+        $this->authentication_service->setLoginRequiredRoles(['admin']);
         $login_status = $this->authentication_service->doLogin($request->get('email'),$request->get('password'),$request->get('remember'));
 
         //check login status
