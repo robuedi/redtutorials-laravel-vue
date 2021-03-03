@@ -7,9 +7,11 @@ interface Progress
 {
     public function setIDs(array $ids) : Progress;
 
-    public function setUserID(int $user_id) : Progress;
+    public function setUsersIDs(array $users_id) : Progress;
 
     public function getIDs() : array;
 
-    public function getProgress() : array;
+    public function getProgress(bool $floor = false) : array;
+
+    public function getUsersIDs(): array;
 }

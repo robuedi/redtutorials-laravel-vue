@@ -19,6 +19,16 @@ class LessonSectionRepository implements LessonSectionRepositoryInterface
             ->pluck('total', 'lesson_id');
     }
 
+    public function getQuizByLessons(array $lessons_id = [], array $select = [])
+    {
+
+        return LessonSection::whereIn('lesson_id', $lessons_id)
+            ->public(true)
+            ->where('type', 'quiz')
+            ->select($select)
+            ->get();
+    }
+
     public function getLastCompletedSectionByUserLesson(?int $user_id, ?array $ids, array $select = [])
     {
         if($user_id||$ids)
