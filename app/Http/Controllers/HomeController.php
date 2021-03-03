@@ -4,17 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Repositories\CourseRepositoryInterface;
 use App\Services\Authentication\AuthenticationServiceInterface;
-use App\Services\UserProgress\CourseStatusInterface;
+use App\Services\Progress\Course\CourseProgressInterface;
 
 class HomeController
 {
-    private CourseStatusInterface $course_status;
+    private CourseProgressInterface $course_progress;
     private CourseRepositoryInterface $course_repository;
     private AuthenticationServiceInterface $authentication_service;
 
-    public function __construct(CourseRepositoryInterface $course_repository, CourseStatusInterface $course_status, AuthenticationServiceInterface $authentication_service)
+    public function __construct(CourseRepositoryInterface $course_repository, CourseProgressInterface $course_progress, AuthenticationServiceInterface $authentication_service)
     {
-        $this->course_status = $course_status;
+        $this->course_progress = $course_progress;
         $this->course_repository = $course_repository;
         $this->authentication_service = $authentication_service;
     }
@@ -31,10 +31,10 @@ class HomeController
 
         return view('home', [
             'courses'           => $courses,
-            'courses_status'    => $this->course_status
-                                    ->setUserID($this->authentication_service->getUserId())
+            'course_progress'   => $this->course_progress
+                                    ->setUsersIDs([$this->authentication_service->getUserId()])
                                     ->setIDs($courses_ids->toArray())
-                                    ->getStatus(true)
+                                    ->getProgress(true)
         ]);
     }
 
