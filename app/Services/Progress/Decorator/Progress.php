@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Services\Progress;
+namespace App\Services\Progress\Decorator;
 
 interface Progress
 {

@@ -1,12 +1,12 @@
 <?php
 
 
-namespace App\Services\Progress\Course;
+namespace App\Services\Progress\CourseComponents;
 
 use App\Repositories\ChapterRepositoryInterface;
 use App\Services\Progress\CourseProgressInterface;
-use App\Services\Progress\Progress;
-use App\Services\Progress\ProgressDecorator;
+use App\Services\Progress\Decorator\Progress;
+use App\Services\Progress\Decorator\ProgressDecorator;
 
 class CourseProgress extends ProgressDecorator implements CourseProgressInterface
 {

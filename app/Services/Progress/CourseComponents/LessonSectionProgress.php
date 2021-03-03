@@ -1,11 +1,10 @@
 <?php
 
-
-namespace App\Services\Progress\LessonSection;
+namespace App\Services\Progress\CourseComponents;
 
 use App\Repositories\LessonSectionUserRepositoryInterface;
+use App\Services\Progress\Decorator\Progress;
 use App\Services\Progress\LessonSectionProgressInterface;
-use App\Services\Progress\Progress;
 
 class LessonSectionProgress implements Progress, LessonSectionProgressInterface
 {

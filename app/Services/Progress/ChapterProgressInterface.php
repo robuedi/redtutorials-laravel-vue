@@ -2,6 +2,8 @@
 
 namespace App\Services\Progress;
 
+use App\Services\Progress\Decorator\Progress;
+
 interface ChapterProgressInterface
 {
     public function setIDs(array $ids): Progress;
