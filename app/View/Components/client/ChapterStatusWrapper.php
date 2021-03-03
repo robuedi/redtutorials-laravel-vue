@@ -2,7 +2,7 @@
 
 namespace App\View\Components\client;
 
-use App\Services\ItemsStatusFlagServiceInterface;
+use App\Services\ItemsStatusFlag\ItemsStatusFlagInterface;
 use Illuminate\View\Component;
 
 class ChapterStatusWrapper extends Component
@@ -15,7 +15,7 @@ class ChapterStatusWrapper extends Component
      *
      * @return void
      */
-    public function __construct(?int $status, ItemsStatusFlagServiceInterface $items_status_flag_service)
+    public function __construct(?int $status, ItemsStatusFlagInterface $items_status_flag_service)
     {
         $this->status = $status;
         $this->status_flag = $items_status_flag_service->checkFlag($status);

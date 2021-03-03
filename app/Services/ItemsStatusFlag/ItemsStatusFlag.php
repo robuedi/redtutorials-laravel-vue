@@ -1,9 +1,9 @@
 <?php
 
 
-namespace App\Services;
+namespace App\Services\ItemsStatusFlag;
 
-class ItemsStatusFlagService implements ItemsStatusFlagServiceInterface
+class ItemsStatusFlag implements ItemsStatusFlagInterface
 {
     private bool $currently_active = false;
 

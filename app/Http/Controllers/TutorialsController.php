@@ -40,8 +40,8 @@ class TutorialsController extends Controller
 
         return view('tutorials.course-content', [
             'course'        => $course_info,
-            'status_chapters'  => $this->chapter_progress->getStatus(true),
-            'status_lessons'  => $this->chapter_progress->getChildren()->getStatus(true),
+            'status_chapters'  => $this->chapter_progress->getProgress(true)[$this->authentication_service->getUserId()],
+            'status_lessons'  => $this->chapter_progress->getChildren()->getProgress(true)[$this->authentication_service->getUserId()],
             'meta_description'  => $this->meta_description_service->getCourseDescription($course_info->name, $course_info->meta_description, $course_info->publicChapters->pluck('name')->toArray())
         ]);
     }
@@ -64,12 +64,12 @@ class TutorialsController extends Controller
         $lesson_section_progress->setIDs($lesson->publicLessonSections->pluck('id')->toArray())
                             ->setUsersIDs([$this->authentication_service->getUserId()]);
 
-        return view('tutorials.lesson_content', [
+        return view('tutorials.lesson-content', [
             'course_slug'           => '/'.$course_slug,
             'lesson'                => $lesson,
             'next_lesson'           => $lesson->next(),
             'meta_description'      => '',
-            'lesson_sections_status'=> $lesson_section_progress->getStatus(true),
+            'lesson_sections_status'=> $lesson_section_progress->getProgress(true)[$this->authentication_service->getUserId()],
             'user'                  => $this->authentication_service->userLogged()
         ]);
     }

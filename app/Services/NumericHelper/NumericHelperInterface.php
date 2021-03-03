@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\NumericHelper;
 
-interface NumericServiceInterface
+interface NumericHelperInterface
 {
     public function numberToRomanRepresentation(int $number);
 }

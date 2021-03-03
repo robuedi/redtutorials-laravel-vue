@@ -4,14 +4,14 @@ namespace App\Providers;
 
 use App\Services\CoursesHierarchy\CoursesHierarchyAdmin;
 use App\Services\CoursesHierarchy\CoursesHierarchyAdminInterface;
-use App\Services\ItemsStatusFlagService;
-use App\Services\ItemsStatusFlagServiceInterface;
+use App\Services\ItemsStatusFlag\ItemsStatusFlag;
+use App\Services\ItemsStatusFlag\ItemsStatusFlagInterface;
 use App\Services\Menu\MenuAdmin;
 use App\Services\Menu\MenuAdminInterface;
 use App\Services\Menu\MenuUserContactMessages;
 use App\Services\Menu\MenuUserContactMessagesInterface;
-use App\Services\NumericService;
-use App\Services\NumericServiceInterface;
+use App\Services\NumericHelper\NumericHelper;
+use App\Services\NumericHelper\NumericHelperInterface;
 use App\Services\Progress\ChapterProgressInterface;
 use App\Services\Progress\CourseComponents\ChapterProgress;
 use App\Services\Progress\CourseComponents\CourseProgress;
@@ -38,8 +38,8 @@ class AppServiceProvider extends ServiceProvider
         app()->singleton(MenuUserContactMessagesInterface::class, MenuUserContactMessages::class);
         app()->singleton(MenuAdminInterface::class, MenuAdmin::class);
         app()->singleton(MetaDescriptionServiceInterface::class, MetaDescriptionService::class);
-        app()->singleton(NumericServiceInterface::class, NumericService::class);
-        app()->singleton(ItemsStatusFlagServiceInterface::class, ItemsStatusFlagService::class);
+        app()->singleton(NumericHelperInterface::class, NumericHelper::class);
+        app()->singleton(ItemsStatusFlagInterface::class, ItemsStatusFlag::class);
 
         //Progress - Decorator Design Pattern
         app()->singleton(LessonSectionProgressInterface::class, LessonSectionProgress::class);
