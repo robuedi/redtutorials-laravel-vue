@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\CourseRepositoryInterface;
 use App\Services\Authentication\AuthenticationServiceInterface;
-use App\Services\Progress\Course\CourseProgressInterface;
+use App\Services\Progress\CourseProgressInterface;
 
 class HomeController
 {

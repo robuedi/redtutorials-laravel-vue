@@ -6,21 +6,21 @@ namespace App\Http\Controllers;
 use App\Repositories\CourseRepositoryInterface;
 use App\Repositories\LessonRepositoryInterface;
 use App\Services\Authentication\AuthenticationServiceInterface;
+use App\Services\Progress\ChapterProgressInterface;
+use App\Services\Progress\LessonSectionProgressInterface;
 use App\Services\SEO\MetaDescriptionServiceInterface;
-use App\Services\UserProgress\ChapterStatusInterface;
-use App\Services\UserProgress\LessonSectionUserStatusInterface;
 
 class TutorialsController extends Controller
 {
     private CourseRepositoryInterface $course_repository;
-    private ChapterStatusInterface $chapter_status;
+    private ChapterProgressInterface $chapter_progress;
     private AuthenticationServiceInterface $authentication_service;
     private MetaDescriptionServiceInterface $meta_description_service;
 
-    public function __construct(CourseRepositoryInterface $course_repository, ChapterStatusInterface $chapter_status, AuthenticationServiceInterface $authentication_service, MetaDescriptionServiceInterface $meta_description_service)
+    public function __construct(CourseRepositoryInterface $course_repository, ChapterProgressInterface $chapter_progress, AuthenticationServiceInterface $authentication_service, MetaDescriptionServiceInterface $meta_description_service)
     {
         $this->course_repository        = $course_repository;
-        $this->chapter_status           = $chapter_status;
+        $this->chapter_progress         = $chapter_progress;
         $this->authentication_service   = $authentication_service;
         $this->meta_description_service = $meta_description_service;
     }
@@ -34,19 +34,19 @@ class TutorialsController extends Controller
             abort(404);
         }
 
-        $this->chapter_status
+        $this->chapter_progress
             ->setIDs($course_info->publicChapters->pluck('id')->toArray())
-            ->setUserID($this->authentication_service->getUserId());
+            ->setUsersIDs([$this->authentication_service->getUserId()]);
 
         return view('tutorials.course-content', [
             'course'        => $course_info,
-            'status_chapters'  => $this->chapter_status->getStatus(true),
-            'status_lessons'  => $this->chapter_status->getLessonsStatus()->getStatus(true),
+            'status_chapters'  => $this->chapter_progress->getStatus(true),
+            'status_lessons'  => $this->chapter_progress->getChildren()->getStatus(true),
             'meta_description'  => $this->meta_description_service->getCourseDescription($course_info->name, $course_info->meta_description, $course_info->publicChapters->pluck('name')->toArray())
         ]);
     }
 
-    public function showLessonContent(string $course_slug, string $chapter_slug, string $lesson_slug, LessonRepositoryInterface $lesson_repository, LessonSectionUserStatusInterface $lesson_section_user_status)
+    public function showLessonContent(string $course_slug, string $chapter_slug, string $lesson_slug, LessonRepositoryInterface $lesson_repository, LessonSectionProgressInterface $lesson_section_progress)
     {
         //get the lesson
         $lesson = $lesson_repository->getLessonByCourseChapterLessonSlugs(
@@ -61,17 +61,15 @@ class TutorialsController extends Controller
             abort(404);
         }
 
-        $lesson_sections_status = $lesson_section_user_status
-                            ->setIDs($lesson->publicLessonSections->pluck('id')->toArray())
-                            ->setUserID($this->authentication_service->getUserId())
-                            ->getStatus();
+        $lesson_section_progress->setIDs($lesson->publicLessonSections->pluck('id')->toArray())
+                            ->setUsersIDs([$this->authentication_service->getUserId()]);
 
         return view('tutorials.lesson_content', [
             'course_slug'           => '/'.$course_slug,
             'lesson'                => $lesson,
             'next_lesson'           => $lesson->next(),
             'meta_description'      => '',
-            'lesson_sections_status'=> $lesson_sections_status,
+            'lesson_sections_status'=> $lesson_section_progress->getStatus(true),
             'user'                  => $this->authentication_service->userLogged()
         ]);
     }

@@ -46,6 +46,11 @@ abstract class ProgressDecorator implements Progress
         return $this->sub_section->getProgress();
     }
 
+    public function getChildren() : Progress
+    {
+        return $this->sub_section;
+    }
+
     abstract protected function getChildrenByParent();
 
     public function getProgress(bool $floor = false): array

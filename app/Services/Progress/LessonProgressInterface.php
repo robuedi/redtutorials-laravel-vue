@@ -11,4 +11,6 @@ interface LessonProgressInterface
     public function setUsersIDs(array $users_id): Progress;
 
     public function getProgress(): array;
+
+    public function getChildren() : Progress;
 }
