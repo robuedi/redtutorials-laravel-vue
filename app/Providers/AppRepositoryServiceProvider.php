@@ -2,22 +2,20 @@
 
 namespace App\Providers;
 
-use App\Repositories\ChapterRepository;
 use App\Repositories\ChapterRepositoryInterface;
-use App\Repositories\ContactMessageUserRepository;
 use App\Repositories\ContactMessageUserRepositoryInterface;
-use App\Repositories\CourseRepository;
 use App\Repositories\CourseRepositoryInterface;
-use App\Repositories\LessonRepository;
 use App\Repositories\LessonRepositoryInterface;
-use App\Repositories\LessonSectionRepository;
 use App\Repositories\LessonSectionRepositoryInterface;
-use App\Repositories\StaticPageRepository;
+use App\Repositories\Repositories\ChapterRepository;
+use App\Repositories\Repositories\ContactMessageUserRepository;
+use App\Repositories\Repositories\CourseRepository;
+use App\Repositories\Repositories\LessonRepository;
+use App\Repositories\Repositories\LessonSectionRepository;
+use App\Repositories\Repositories\LessonSectionUserRepository;
+use App\Repositories\Repositories\StaticPageRepository;
 use App\Repositories\StaticPageRepositoryInterface;
 use App\Repositories\LessonSectionUserRepositoryInterface;
-use App\Repositories\LessonSectionUserRepository;
-use App\Services\UserProgress\LessonSectionUserStatus;
-use App\Services\UserProgress\LessonSectionUserStatusInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppRepositoryServiceProvider extends ServiceProvider
@@ -33,12 +31,10 @@ class AppRepositoryServiceProvider extends ServiceProvider
         app()->singleton(CourseRepositoryInterface::class, CourseRepository::class);
         app()->singleton(ChapterRepositoryInterface::class, ChapterRepository::class);
         app()->singleton(LessonRepositoryInterface::class, LessonRepository::class);
-        app()->singleton(LessonRepositoryInterface::class, LessonRepository::class);
         app()->singleton(ContactMessageUserRepositoryInterface::class, ContactMessageUserRepository::class);
         app()->singleton(LessonSectionUserRepositoryInterface::class, LessonSectionUserRepository::class);
         app()->singleton(StaticPageRepositoryInterface::class, StaticPageRepository::class);
         app()->singleton(LessonSectionRepositoryInterface::class, LessonSectionRepository::class);
-        app()->singleton(LessonSectionUserStatusInterface::class, LessonSectionUserStatus::class);
     }
 
     /**

@@ -4,6 +4,7 @@
 namespace App\Services\Progress\Chapter;
 
 use App\Repositories\LessonRepositoryInterface;
+use App\Services\Progress\ChapterProgressInterface;
 use App\Services\Progress\Progress;
 use App\Services\Progress\ProgressDecorator;
 

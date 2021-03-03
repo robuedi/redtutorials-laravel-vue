@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Repositories;
+namespace App\Repositories\Repositories;
 
 use App\Models\Chapter;
 use App\Repositories\ChapterRepositoryInterface;

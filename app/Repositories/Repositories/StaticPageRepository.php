@@ -1,9 +1,10 @@
 <?php
 
 
-namespace App\Repositories;
+namespace App\Repositories\Repositories;
 
 use App\Models\StaticPage;
+use App\Repositories\StaticPageRepositoryInterface;
 
 class StaticPageRepository implements StaticPageRepositoryInterface
 {

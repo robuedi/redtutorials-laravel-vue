@@ -13,9 +13,9 @@ use App\Services\Menu\MenuUserContactMessagesInterface;
 use App\Services\NumericService;
 use App\Services\NumericServiceInterface;
 use App\Services\Progress\Chapter\ChapterProgress;
-use App\Services\Progress\Chapter\ChapterProgressInterface;
+use App\Services\Progress\ChapterProgressInterface;
 use App\Services\Progress\Course\CourseProgress;
-use App\Services\Progress\Course\CourseProgressInterface;
+use App\Services\Progress\CourseProgressInterface;
 use App\Services\Progress\Lesson\LessonProgress;
 use App\Services\Progress\LessonProgressInterface;
 use App\Services\Progress\LessonSection\LessonSectionProgress;
@@ -23,12 +23,6 @@ use App\Services\Progress\LessonSectionProgressInterface;
 use App\Services\Progress\Progress;
 use App\Services\SEO\MetaDescriptionServiceInterface;
 use App\Services\SEO\MetaDescriptionService;
-use App\Services\UserProgress\ChapterStatus;
-use App\Services\UserProgress\ChapterStatusInterface;
-use App\Services\UserProgress\CourseStatus;
-use App\Services\UserProgress\CourseStatusInterface;
-use App\Services\UserProgress\LessonStatus;
-use App\Services\UserProgress\LessonStatusInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -43,9 +37,6 @@ class AppServiceProvider extends ServiceProvider
         app()->singleton(CoursesHierarchyAdminInterface::class, CoursesHierarchyAdmin::class);
         app()->singleton(MenuUserContactMessagesInterface::class, MenuUserContactMessages::class);
         app()->singleton(MenuAdminInterface::class, MenuAdmin::class);
-        app()->singleton(CourseStatusInterface::class, CourseStatus::class);
-        app()->singleton(ChapterStatusInterface::class, ChapterStatus::class);
-        app()->singleton(LessonStatusInterface::class, LessonStatus::class);
         app()->singleton(MetaDescriptionServiceInterface::class, MetaDescriptionService::class);
         app()->singleton(NumericServiceInterface::class, NumericService::class);
         app()->singleton(ItemsStatusFlagServiceInterface::class, ItemsStatusFlagService::class);

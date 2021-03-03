@@ -1,9 +1,10 @@
 <?php
 
 
-namespace App\Repositories;
+namespace App\Repositories\Repositories;
 
 use App\Models\ContactMessageUser;
+use App\Repositories\ContactMessageUserRepositoryInterface;
 
 class ContactMessageUserRepository implements ContactMessageUserRepositoryInterface
 {

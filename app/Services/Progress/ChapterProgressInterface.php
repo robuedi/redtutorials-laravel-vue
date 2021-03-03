@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Services\Progress\Chapter;
-
-use App\Services\Progress\Progress;
+namespace App\Services\Progress;
 
 interface ChapterProgressInterface
 {

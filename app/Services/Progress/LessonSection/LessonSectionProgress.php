@@ -3,7 +3,7 @@
 
 namespace App\Services\Progress\LessonSection;
 
-use App\Repositories\LessonSectionUserRepository;
+use App\Repositories\LessonSectionUserRepositoryInterface;
 use App\Services\Progress\LessonSectionProgressInterface;
 use App\Services\Progress\Progress;
 
@@ -12,9 +12,9 @@ class LessonSectionProgress implements Progress, LessonSectionProgressInterface
     private array $ids = [];
     private array $users_id;
 
-    private LessonSectionUserRepository $lesson_section_user_repository;
+    private LessonSectionUserRepositoryInterface $lesson_section_user_repository;
 
-    public function __construct(LessonSectionUserRepository $lesson_section_user_repository)
+    public function __construct(LessonSectionUserRepositoryInterface $lesson_section_user_repository)
     {
         $this->lesson_section_user_repository = $lesson_section_user_repository;
     }
@@ -41,7 +41,7 @@ class LessonSectionProgress implements Progress, LessonSectionProgressInterface
         return $this->ids;
     }
 
-    public function getProgress(): array
+    public function getProgress(bool $floor = false): array
     {
         //get last completed
         $completed_sections = $this->lesson_section_user_repository->getCompletedSections($this->users_id, $this->ids)->groupBy('user_id')->toArray();

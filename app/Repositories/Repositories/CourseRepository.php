@@ -1,9 +1,10 @@
 <?php
 
 
-namespace App\Repositories;
+namespace App\Repositories\Repositories;
 
 use App\Models\Course;
+use App\Repositories\CourseRepositoryInterface;
 
 class CourseRepository implements CourseRepositoryInterface
 {

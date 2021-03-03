@@ -1,9 +1,10 @@
 <?php
 
 
-namespace App\Repositories;
+namespace App\Repositories\Repositories;
 
 use App\Models\LessonSection;
+use App\Repositories\LessonSectionRepositoryInterface;
 use Illuminate\Support\Facades\DB;
 
 class LessonSectionRepository implements LessonSectionRepositoryInterface
