@@ -33,23 +33,23 @@
                 <div class="lesson-progress-container"  >
                     <div class="lesson-progress" data-role="lesson-progress">
                         @foreach($lesson->publicLessonSections as $index => $lesson_section)
-                            @if($lesson_section->type == 'quiz')
-                                <span title="Quiz" class="@if($lesson_sections_status[$lesson_section->id] == 1) active @elseif($lesson_sections_status[$lesson_section->id] == 2) pre-active @endif quiz-sign"><i>?</i></span>
-                            @elseif($lesson_section->type == 'text')
-                                <span @if(!empty($lesson_section->name)) title="{{$lesson_section->name}}" @endif class="@if($lesson_sections_status[$lesson_section->id] == 1) active @elseif($lesson_sections_status[$lesson_section->id] == 2) pre-active @endif text-sign"><i class="fas fa-caret-right"></i></span>
+                            @if($lesson_section->type === 'quiz')
+                                <span title="Quiz" class="@if($lesson_sections_progress[$lesson_section->id] === 1) active @elseif($lesson_sections_progress[$lesson_section->id] === 2) pre-active @endif quiz-sign"><i>?</i></span>
+                            @elseif($lesson_section->type === 'text')
+                                <span @if(!empty($lesson_section->name)) title="{{$lesson_section->name}}" @endif class="@if($lesson_sections_progress[$lesson_section->id] === 1) active @elseif($lesson_sections_progress[$lesson_section->id] === 2) pre-active @endif text-sign"><i class="fas fa-caret-right"></i></span>
                             @endif
                         @endforeach
                     </div>
                 </div>
                 <div class="lessons-list" id="lessons_list" data-role="lessons-list">
                     @foreach($lesson->publicLessonSections as $index => $lesson_section)
-                        <div data-text="{{$lesson_sections_status[$lesson_section->id]}}" class="lesson-container @if($lesson_sections_status[$lesson_section->id] == 1) active @endif" @if($lesson_section->type == 'quiz' && $lesson_section->publicLessonSectionOptions->isNotEmpty()) data-type="q" @else data-type="t" @endif>
+                        <div data-text="{{$lesson_sections_progress[$lesson_section->id]}}" class="lesson-container @if($lesson_sections_progress[$lesson_section->id] === 1) active @endif" @if($lesson_section->type === 'quiz' && $lesson_section->publicLessonSectionOptions->isNotEmpty()) data-type="q" @else data-type="t" @endif>
                             @if(!empty($lesson_section->name))
                                 <h2>{!! $lesson_section->name !!}</h2>
                             @endif
                             {!! $lesson_section->content !!}
 
-                            @if($lesson_section->type == 'quiz' && $lesson_section->publicLessonSectionOptions->isNotEmpty())
+                            @if($lesson_section->type === 'quiz' && $lesson_section->publicLessonSectionOptions->isNotEmpty())
                             <div class="quiz-form" data-quiz="{{$lesson_section->id}}">
                                 @foreach($lesson_section->publicLessonSectionOptions as $quiz_answer)
                                         <label class="input-container">

@@ -3,14 +3,18 @@
 
 namespace App\Services\Progress\Decorator;
 
+use App\Services\Progress\Wrapper\ProgressWrapperInterface;
+
 abstract class ProgressDecorator implements Progress
 {
     protected Progress $sub_section;
     protected array $ids;
+    protected ProgressWrapperInterface $wrapper;
 
-    public function __construct(Progress $sub_section)
+    public function __construct(Progress $sub_section, ProgressWrapperInterface $wrapper)
     {
         $this->sub_section = $sub_section;
+        $this->wrapper = $wrapper;
     }
 
     public function setIDs(array $ids): Progress
@@ -41,9 +45,9 @@ abstract class ProgressDecorator implements Progress
         return $this->sub_section->getUsersIDs();
     }
 
-    protected function getChildrenProgress(): array
+    protected function getChildrenProgress() : array
     {
-        return $this->sub_section->getProgress();
+        return $this->sub_section->getProgress()->getRaw();
     }
 
     public function getChildren() : Progress
@@ -53,7 +57,7 @@ abstract class ProgressDecorator implements Progress
 
     abstract protected function getChildrenByParent();
 
-    public function getProgress(bool $floor = false): array
+    public function getProgress(bool $floor = false): ProgressWrapperInterface
     {
         $lesson_subsections = $this->getChildrenByParent();
 
@@ -97,7 +101,7 @@ abstract class ProgressDecorator implements Progress
             });
         });
 
-        return $response;
+        return $this->wrapper->setProgress($response);
     }
 
 }

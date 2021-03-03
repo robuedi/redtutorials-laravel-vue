@@ -3,6 +3,7 @@
 namespace App\Services\Progress;
 
 use App\Services\Progress\Decorator\Progress;
+use App\Services\Progress\Wrapper\ProgressWrapperInterface;
 
 interface ChapterProgressInterface
 {
@@ -10,7 +11,7 @@ interface ChapterProgressInterface
 
     public function setUsersIDs(array $users_id): Progress;
 
-    public function getProgress(): array;
+    public function getProgress(): ProgressWrapperInterface;
 
     public function getChildren() : Progress;
 }

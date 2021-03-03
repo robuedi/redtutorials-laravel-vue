@@ -5,6 +5,7 @@ namespace App\Services\Progress\CourseComponents;
 use App\Repositories\LessonSectionUserRepositoryInterface;
 use App\Services\Progress\Decorator\Progress;
 use App\Services\Progress\LessonSectionProgressInterface;
+use App\Services\Progress\Wrapper\ProgressWrapperInterface;
 
 class LessonSectionProgress implements Progress, LessonSectionProgressInterface
 {
@@ -12,10 +13,12 @@ class LessonSectionProgress implements Progress, LessonSectionProgressInterface
     private array $users_id;
 
     private LessonSectionUserRepositoryInterface $lesson_section_user_repository;
+    private ProgressWrapperInterface $wrapper;
 
-    public function __construct(LessonSectionUserRepositoryInterface $lesson_section_user_repository)
+    public function __construct(LessonSectionUserRepositoryInterface $lesson_section_user_repository, ProgressWrapperInterface $wrapper)
     {
         $this->lesson_section_user_repository = $lesson_section_user_repository;
+        $this->wrapper = $wrapper;
     }
 
     public function setIDs(array $ids): Progress
@@ -40,7 +43,7 @@ class LessonSectionProgress implements Progress, LessonSectionProgressInterface
         return $this->ids;
     }
 
-    public function getProgress(bool $floor = false): array
+    public function getProgress(bool $floor = false): ProgressWrapperInterface
     {
         //get last completed
         $completed_sections = $this->lesson_section_user_repository->getCompletedSections($this->users_id, $this->ids)->groupBy('user_id')->toArray();
@@ -62,6 +65,6 @@ class LessonSectionProgress implements Progress, LessonSectionProgressInterface
             }, $this->ids);
         });
 
-        return $response;
+        return $this->wrapper->setProgress($response);
     }
 }

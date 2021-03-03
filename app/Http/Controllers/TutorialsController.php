@@ -8,6 +8,7 @@ use App\Repositories\LessonRepositoryInterface;
 use App\Services\Authentication\AuthenticationServiceInterface;
 use App\Services\Progress\ChapterProgressInterface;
 use App\Services\Progress\LessonSectionProgressInterface;
+use App\Services\Progress\Wrapper\ProgressWrapperInterface;
 use App\Services\SEO\MetaDescriptionServiceInterface;
 
 class TutorialsController extends Controller
@@ -25,7 +26,7 @@ class TutorialsController extends Controller
         $this->meta_description_service = $meta_description_service;
     }
 
-    public function showCourseContent(string $course_slug)
+    public function showCourseContent(string $course_slug, ProgressWrapperInterface $progress_wrapper)
     {
         $course_info = $this->course_repository->getPublicBySlugWith($course_slug, ['publicChapters:id,course_id,name,slug', 'publicChapters.publicLessons:id,chapter_id,name,slug', 'mediaFilesMain:url'], ['name', 'id', 'description', 'slug']);
 
@@ -34,15 +35,16 @@ class TutorialsController extends Controller
             abort(404);
         }
 
-        $current_user = $this->authentication_service->getUserId();
+        $current_user = 3;
+//        $current_user = $this->authentication_service->getUserId();
         $this->chapter_progress
             ->setIDs($course_info->publicChapters->pluck('id')->toArray())
             ->setUsersIDs([$current_user]);
 
         return view('tutorials.course-content', [
             'course'        => $course_info,
-            'status_chapters'  => $this->chapter_progress->getProgress(true)[$current_user],
-            'status_lessons'  => $this->chapter_progress->getChildren()->getProgress(true)[$current_user],
+            'status_chapters'  => $this->chapter_progress->getProgress(true)->setForUser($current_user)->setPercentage(true),
+            'status_lessons'  => $this->chapter_progress->getChildren()->getProgress(true)->setForUser($current_user)->setPercentage(true),
             'meta_description'  => $this->meta_description_service->getCourseDescription($course_info->name, $course_info->meta_description, $course_info->publicChapters->pluck('name')->toArray())
         ]);
     }
@@ -71,7 +73,7 @@ class TutorialsController extends Controller
             'lesson'                => $lesson,
             'next_lesson'           => $lesson->next(),
             'meta_description'      => '',
-            'lesson_sections_status'=> $lesson_section_progress->getProgress(true)[$current_user],
+            'lesson_sections_progress'=> $lesson_section_progress->getProgress(true)[$current_user],
             'user'                  => $this->authentication_service->userLogged()
         ]);
     }

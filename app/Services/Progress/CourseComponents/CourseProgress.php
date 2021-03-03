@@ -7,14 +7,15 @@ use App\Repositories\ChapterRepositoryInterface;
 use App\Services\Progress\CourseProgressInterface;
 use App\Services\Progress\Decorator\Progress;
 use App\Services\Progress\Decorator\ProgressDecorator;
+use App\Services\Progress\Wrapper\ProgressWrapperInterface;
 
 class CourseProgress extends ProgressDecorator implements CourseProgressInterface
 {
     private ChapterRepositoryInterface $section_repository;
 
-    public function __construct(Progress $sub_section, ChapterRepositoryInterface $section_repository)
+    public function __construct(Progress $sub_section, ProgressWrapperInterface $progress_wrapper, ChapterRepositoryInterface $section_repository)
     {
-        parent::__construct($sub_section);
+        parent::__construct($sub_section, $progress_wrapper);
         $this->section_repository = $section_repository;
     }
 

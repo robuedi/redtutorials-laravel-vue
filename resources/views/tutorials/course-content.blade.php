@@ -31,7 +31,7 @@
             <div class="list-container content">
                 <ol class="chapters-list">
                 @foreach($course->publicChapters as $index => $chapter)
-                    <x-client.chapter-status-wrapper :status="$status_chapters[$chapter->id] ?? 0">
+                    <x-client.chapter-status-wrapper :status="$status_chapters->getFor($chapter->id)  ?? 0">
                         <x-slot name="chapter_content">
                             <span class="option" >
                                 <span class="course-number">
@@ -39,13 +39,13 @@
                                 </span>
                                 <div class="top-level" >
                                     <h2>{!! $chapter->name !!}</h2>
-                                    <span class="line-completion-indicator" style="width: {{$status_chapters[$chapter->id] ?? 0}}%;"></span>
-                                    <span class="dot-completion-indicator" style="left: {{$status_chapters[$chapter->id] ?? 0}}%;"></span>
+                                    <span class="line-completion-indicator" style="width: {{$status_chapters->getFor($chapter->id) ?? 0}}%;"></span>
+                                    <span class="dot-completion-indicator" style="left: {{$status_chapters->getFor($chapter->id) ?? 0}}%;"></span>
                                     <span class="route">
                                         <span class="inner-route"></span>
                                     </span>
-                                    @if(isset($status_chapters[$chapter->id])&& $status_chapters[$chapter->id] > 0)
-                                        <span class="completion-percentage" >{{$status_chapters[$chapter->id]}}%</span>
+                                    @if($status_chapters->biggerThan($chapter->id, 0))
+                                        <span class="completion-percentage" >{{$status_chapters->getFor($chapter->id)}}%</span>
                                     @endif
                                 </div>
                             </span>
@@ -59,8 +59,8 @@
                                                     <header class="top-txt" >
                                                         <h2>{!! $lesson->name !!}</h2>
                                                     </header>
-                                                    @if(isset($status_lessons[$lesson->id])&&$status_lessons[$lesson->id] > 0)
-                                                        <span class="lesson-completion">@if($status_lessons[$lesson->id] == 100)<i class="fas fa-check"></i>@else{{$status_lessons[$lesson->id]}}%@endif</span>
+                                                    @if($status_lessons->biggerThan($lesson->id, 0))
+                                                        <span class="lesson-completion">@if($status_lessons->equalTo($lesson->id, 100))<i class="fas fa-check"></i>@else{{$status_lessons->getFor($lesson->id)}}%@endif</span>
                                                     @endif
                                                     <footer class="go-link" >
                                                 <span class="lesson-number">

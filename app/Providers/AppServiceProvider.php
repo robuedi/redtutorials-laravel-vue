@@ -21,6 +21,8 @@ use App\Services\Progress\CourseProgressInterface;
 use App\Services\Progress\Decorator\Progress;
 use App\Services\Progress\LessonProgressInterface;
 use App\Services\Progress\LessonSectionProgressInterface;
+use App\Services\Progress\Wrapper\ProgressWrapper;
+use App\Services\Progress\Wrapper\ProgressWrapperInterface;
 use App\Services\SEO\MetaDescriptionServiceInterface;
 use App\Services\SEO\MetaDescriptionService;
 use Illuminate\Support\ServiceProvider;
@@ -46,6 +48,7 @@ class AppServiceProvider extends ServiceProvider
         app()->singleton(LessonProgressInterface::class, LessonProgress::class);
         app()->singleton(ChapterProgressInterface::class, ChapterProgress::class);
         app()->singleton(CourseProgressInterface::class, CourseProgress::class);
+        app()->singleton(ProgressWrapperInterface::class, ProgressWrapper::class);
 
         app()->when(LessonProgress::class)
             ->needs(Progress::class)

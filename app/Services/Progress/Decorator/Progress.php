@@ -3,6 +3,8 @@
 
 namespace App\Services\Progress\Decorator;
 
+use App\Services\Progress\Wrapper\ProgressWrapperInterface;
+
 interface Progress
 {
     public function setIDs(array $ids) : Progress;
@@ -11,7 +13,7 @@ interface Progress
 
     public function getIDs() : array;
 
-    public function getProgress(bool $floor = false) : array;
+    public function getProgress(bool $floor = false) : ProgressWrapperInterface;
 
     public function getUsersIDs(): array;
 }
