@@ -34,14 +34,15 @@ class TutorialsController extends Controller
             abort(404);
         }
 
+        $current_user = $this->authentication_service->getUserId();
         $this->chapter_progress
             ->setIDs($course_info->publicChapters->pluck('id')->toArray())
-            ->setUsersIDs([$this->authentication_service->getUserId()]);
+            ->setUsersIDs([$current_user]);
 
         return view('tutorials.course-content', [
             'course'        => $course_info,
-            'status_chapters'  => $this->chapter_progress->getProgress(true)[$this->authentication_service->getUserId()],
-            'status_lessons'  => $this->chapter_progress->getChildren()->getProgress(true)[$this->authentication_service->getUserId()],
+            'status_chapters'  => $this->chapter_progress->getProgress(true)[$current_user],
+            'status_lessons'  => $this->chapter_progress->getChildren()->getProgress(true)[$current_user],
             'meta_description'  => $this->meta_description_service->getCourseDescription($course_info->name, $course_info->meta_description, $course_info->publicChapters->pluck('name')->toArray())
         ]);
     }
@@ -61,15 +62,16 @@ class TutorialsController extends Controller
             abort(404);
         }
 
+        $current_user = $this->authentication_service->getUserId();
         $lesson_section_progress->setIDs($lesson->publicLessonSections->pluck('id')->toArray())
-                            ->setUsersIDs([$this->authentication_service->getUserId()]);
+                            ->setUsersIDs([$current_user]);
 
         return view('tutorials.lesson-content', [
             'course_slug'           => '/'.$course_slug,
             'lesson'                => $lesson,
             'next_lesson'           => $lesson->next(),
             'meta_description'      => '',
-            'lesson_sections_status'=> $lesson_section_progress->getProgress(true)[$this->authentication_service->getUserId()],
+            'lesson_sections_status'=> $lesson_section_progress->getProgress(true)[$current_user],
             'user'                  => $this->authentication_service->userLogged()
         ]);
     }
