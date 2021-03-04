@@ -52,18 +52,6 @@ class AppServiceProvider extends ServiceProvider
         app()->singleton(ChapterProgressInterface::class, ChapterProgress::class);
         app()->singleton(CourseProgressInterface::class, CourseProgress::class);
         app()->bind(ProgressWrapperInterface::class, ProgressWrapper::class);
-
-        app()->when(LessonProgress::class)
-            ->needs(Progress::class)
-            ->give(LessonSectionProgress::class);
-
-        app()->when(ChapterProgress::class)
-            ->needs(Progress::class)
-            ->give(LessonProgress::class);
-
-        app()->when(CourseProgress::class)
-            ->needs(Progress::class)
-            ->give(ChapterProgress::class);
     }
 
     /**

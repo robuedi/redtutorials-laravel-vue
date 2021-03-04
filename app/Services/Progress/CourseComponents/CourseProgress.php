@@ -4,8 +4,8 @@
 namespace App\Services\Progress\CourseComponents;
 
 use App\Repositories\ChapterRepositoryInterface;
+use App\Services\Progress\ChapterProgressInterface;
 use App\Services\Progress\CourseProgressInterface;
-use App\Services\Progress\Decorator\Progress;
 use App\Services\Progress\Decorator\ProgressDecorator;
 use App\Services\Progress\Wrapper\ProgressWrapperInterface;
 
@@ -13,7 +13,7 @@ class CourseProgress extends ProgressDecorator implements CourseProgressInterfac
 {
     private ChapterRepositoryInterface $section_repository;
 
-    public function __construct(Progress $sub_section, ProgressWrapperInterface $progress_wrapper, ChapterRepositoryInterface $section_repository)
+    public function __construct(ChapterProgressInterface $sub_section, ProgressWrapperInterface $progress_wrapper, ChapterRepositoryInterface $section_repository)
     {
         parent::__construct($sub_section, $progress_wrapper);
         $this->section_repository = $section_repository;
