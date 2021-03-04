@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\admin\AuthenticationController;
 use App\Http\Controllers\admin\DashboardController;
+use App\Http\Controllers\auth\LoginController;
+use App\Http\Controllers\auth\RegisterController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\StaticPagesController;
@@ -51,3 +53,19 @@ Route::get('/info/{url}', [StaticPagesController::class, 'index']);
 //Glide - for images
 Route::get('/images/uploads/media_library/{year}/{month}/{file_name}', [ImageController::class, 'showMediaImage'])->where('year', '[0-9]{4}')->where('month', '[0-9]{2}');
 Route::get('/images/assets/img/{file_name}', [ImageController::class, 'showAssetImage']);
+Route::get('/user/sign-in', 'UserSignInController@index');
+
+// auth
+Route::group(['namespace' => 'auth'], function(){
+    //Register
+    Route::get('/register', [RegisterController::class, 'index']);
+
+    //Login
+    Route::get('/login', [LoginController::class, 'login']);
+
+    //Logout
+    Route::get('/logout', [LoginController::class, 'logout']);
+
+    Route::get('/activate-account/{user_id}/{activation_code}', [RegisterController::class, 'activateAccount']);
+
+});

@@ -3,16 +3,15 @@
 
 namespace App\Services\Authentication;
 
+use App\Services\Authentication\Facade\AuthenticationFacade;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Cartalyst\Sentinel\Checkpoints\NotActivatedException;
 
-class AuthenticationService implements AuthenticationServiceInterface
+class AuthenticationService extends AuthenticationFacade implements AuthenticationServiceInterface
 {
-    use AuthenticationLogin, AuthenticationLogout;
+    private $logged_user = null;
 
-    private $logged_user;
-
-    public function getUserId()
+    public function getUserId() : ?int
     {
         if($this->userLogged())
         {
@@ -24,28 +23,38 @@ class AuthenticationService implements AuthenticationServiceInterface
 
     public function getUserName() : string
     {
-        if(!$this->userLogged())
+        if($this->userLogged())
         {
-            return '';
+            return $this->userLogged()->first_name.' '.$this->userLogged()->last_name;
         }
 
-        return $this->userLogged()->first_name.' '.$this->userLogged()->last_name;
+        return '';
     }
 
     public function getUserFirstName() : string
     {
-        if(!$this->userLogged())
+        if($this->userLogged())
         {
-            return '';
+            return $this->userLogged()->first_name;
         }
 
-        return $this->userLogged()->first_name;
+        return '';
     }
 
     public function checkIfAdmin() : string
     {
+        return $this->checkIfRoles(['admin']);
+    }
+
+    public function checkIfClient() : string
+    {
+        return $this->checkIfRoles(['client']);
+    }
+
+    public function checkIfRoles(array $roles) : string
+    {
         try {
-            if ($this->userLogged() && $this->hasAcces(['admin']))
+            if ($this->userLogged() && $this->hasAcces($roles))
                 return 'yes';
             else
                 return 'no';
@@ -56,9 +65,17 @@ class AuthenticationService implements AuthenticationServiceInterface
 
     public function userLogged()
     {
-        if(!isset($this->user_logged))
+        if(!$this->user_logged)
         {
-            $this->logged_user = Sentinel::getUser();
+            return $this->logged_user;
+        }
+
+        //get user
+        $this->logged_user = Sentinel::getUser();
+
+        if(!$this->logged_user)
+        {
+            return null;
         }
 
         return $this->logged_user;

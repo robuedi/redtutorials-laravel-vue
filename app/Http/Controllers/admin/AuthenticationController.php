@@ -4,7 +4,6 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\admin\LoginRequest;
-use App\Repositories\LoginSessionRepositoryInterface;
 use App\Services\Authentication\AuthenticationServiceInterface;
 
 class AuthenticationController extends Controller
@@ -32,32 +31,27 @@ class AuthenticationController extends Controller
         }
     }
 
-    public function doLogin(LoginRequest $request, LoginSessionRepositoryInterface $login_session_repository)
+    public function doLogin(LoginRequest $request)
     {
         //make login
-        $this->authentication_service->setLoginRequiredRoles(['admin']);
-        $login_status = $this->authentication_service->doLogin($request->get('email'),$request->get('password'),$request->get('remember'));
+        $login_status = $this->authentication_service->login(['admin'], $request->get('email'),$request->get('password'),$request->get('remember'));
 
         //check login status
-        if(!$login_status)
+        if(!$login_status['status'])
         {
-            return redirect()->back()->withInput()->withErrors($this->authentication_service->getLoginMsg());
+            return redirect()->back()->withInput()->withErrors($login_status['msg']);
         }
 
-        //save the login session
-        $login_session_repository->saveLogin($this->authentication_service->getUserId());
         return response()->redirectToIntended(config('app.admin_route').'/dashboard');
     }
 
-    function logout(LoginSessionRepositoryInterface $login_repository)
+    function logout()
     {
         //do logout
         if(!$this->authentication_service->logout()){
             return response()->redirectTo(config('app.admin_route'))->withErrors(['Unable to logout.']);
         }
 
-        //save logout action
-        $login_repository->saveLogout();
         return response()->redirectTo(config('app.admin_route'));
     }
 }

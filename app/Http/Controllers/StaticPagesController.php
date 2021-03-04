@@ -23,7 +23,7 @@ class StaticPagesController
         if(!$page)
             abort(404);
 
-        return view('static_pages.index', [
+        return view('static-pages.index', [
             'page' => $page
         ]);
     }
