@@ -8,26 +8,30 @@ class ProgressWrapper implements ProgressWrapperInterface
 {
     private array $progress;
     private array $current_user_progress = [];
-    private bool $percentage = false;
+    private int $percentage = 1;
 
-    public function setProgress(array $progress)
+    public function setProgress(array $progress) : ProgressWrapperInterface
     {
         $this->progress = $progress;
         return $this;
     }
 
-    public function setPercentage(bool $percentage)
+    public function setPercentage(bool $percentage) : ProgressWrapperInterface
     {
-        $this->percentage = $percentage;
+        if($percentage)
+        {
+            $this->percentage = 100;
+        }
+
         return $this;
     }
 
-    public function getRaw()
+    public function getRaw() : array
     {
         return $this->progress;
     }
 
-    public function setForUser(?int $user_id)
+    public function setForUser(?int $user_id) : ProgressWrapperInterface
     {
         if($user_id && isset($this->progress[$user_id]))
         {
@@ -37,19 +41,24 @@ class ProgressWrapper implements ProgressWrapperInterface
         return $this;
     }
 
+    public function getCurrentUserProgress() : array
+    {
+        return $this->current_user_progress;
+    }
+
     public function getFor(int $id) : ?int
     {
         if(isset($this->current_user_progress[$id]))
         {
-            return $this->percentage ? $this->current_user_progress[$id]*100 : $this->current_user_progress[$id];
+            return $this->current_user_progress[$id]*$this->percentage;
         }
 
         return null;
     }
 
-    public function biggerThan(int $id, int $value)
+    public function biggerThan(int $id, int $value) : bool
     {
-        if(isset($this->current_user_progress[$id]) && $this->current_user_progress[$id] > $value)
+        if(isset($this->current_user_progress[$id]) && ($this->current_user_progress[$id]*$this->percentage) > $value)
         {
             return true;
         }
@@ -57,13 +66,23 @@ class ProgressWrapper implements ProgressWrapperInterface
         return false;
     }
 
-    public function equalTo(int $id, int $value)
+    public function equalTo(int $id, int $value) : bool
     {
-        if(isset($this->current_user_progress[$id]) && $this->current_user_progress[$id] === $value)
+        if(isset($this->current_user_progress[$id]) && ($this->current_user_progress[$id]*$this->percentage) === $value)
         {
             return true;
         }
 
         return false;
+    }
+
+    public function checkFullyCompleted() : bool
+    {
+        return array_sum($this->current_user_progress) === count($this->current_user_progress) && !empty($this->current_user_progress) ;
+    }
+
+    public function checkNoneStarted() : bool
+    {
+        return array_sum($this->current_user_progress) === 0;
     }
 }

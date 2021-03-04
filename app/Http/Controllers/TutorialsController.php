@@ -6,9 +6,9 @@ namespace App\Http\Controllers;
 use App\Repositories\CourseRepositoryInterface;
 use App\Repositories\LessonRepositoryInterface;
 use App\Services\Authentication\AuthenticationServiceInterface;
+use App\Services\LessonSectionStatus\LessonSectionStatusInterface;
 use App\Services\Progress\ChapterProgressInterface;
 use App\Services\Progress\LessonSectionProgressInterface;
-use App\Services\Progress\Wrapper\ProgressWrapperInterface;
 use App\Services\SEO\MetaDescriptionServiceInterface;
 
 class TutorialsController extends Controller
@@ -26,7 +26,7 @@ class TutorialsController extends Controller
         $this->meta_description_service = $meta_description_service;
     }
 
-    public function showCourseContent(string $course_slug, ProgressWrapperInterface $progress_wrapper)
+    public function showCourseContent(string $course_slug)
     {
         $course_info = $this->course_repository->getPublicBySlugWith($course_slug, ['publicChapters:id,course_id,name,slug', 'publicChapters.publicLessons:id,chapter_id,name,slug', 'mediaFilesMain:url'], ['name', 'id', 'description', 'slug']);
 
@@ -35,8 +35,7 @@ class TutorialsController extends Controller
             abort(404);
         }
 
-        $current_user = 3;
-//        $current_user = $this->authentication_service->getUserId();
+        $current_user = $this->authentication_service->getUserId();
         $this->chapter_progress
             ->setIDs($course_info->publicChapters->pluck('id')->toArray())
             ->setUsersIDs([$current_user]);
@@ -49,7 +48,7 @@ class TutorialsController extends Controller
         ]);
     }
 
-    public function showLessonContent(string $course_slug, string $chapter_slug, string $lesson_slug, LessonRepositoryInterface $lesson_repository, LessonSectionProgressInterface $lesson_section_progress)
+    public function showLessonContent(string $course_slug, string $chapter_slug, string $lesson_slug, LessonRepositoryInterface $lesson_repository, LessonSectionProgressInterface $lesson_section_progress, LessonSectionStatusInterface $lesson_section_status)
     {
         //get the lesson
         $lesson = $lesson_repository->getLessonByCourseChapterLessonSlugs(
@@ -65,7 +64,7 @@ class TutorialsController extends Controller
         }
 
         $current_user = $this->authentication_service->getUserId();
-        $lesson_section_progress->setIDs($lesson->publicLessonSections->pluck('id')->toArray())
+        $lesson_section_progress->setIDs($lesson->publicLessonSections->where('type', 'quiz')->pluck('id')->toArray())
                             ->setUsersIDs([$current_user]);
 
         return view('tutorials.lesson-content', [
@@ -73,7 +72,8 @@ class TutorialsController extends Controller
             'lesson'                => $lesson,
             'next_lesson'           => $lesson->next(),
             'meta_description'      => '',
-            'lesson_sections_progress'=> $lesson_section_progress->getProgress(true)[$current_user],
+            'lesson_sections_progress'=> $lesson_section_progress->getProgress(true)->setForUser($current_user),
+            'lesson_section_status' => $lesson_section_status,
             'user'                  => $this->authentication_service->userLogged()
         ]);
     }

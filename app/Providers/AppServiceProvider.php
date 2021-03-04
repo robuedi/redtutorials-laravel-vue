@@ -6,6 +6,8 @@ use App\Services\CoursesHierarchy\CoursesHierarchyAdmin;
 use App\Services\CoursesHierarchy\CoursesHierarchyAdminInterface;
 use App\Services\ItemsStatusFlag\ItemsStatusFlag;
 use App\Services\ItemsStatusFlag\ItemsStatusFlagInterface;
+use App\Services\LessonSectionStatus\LessonSectionStatus;
+use App\Services\LessonSectionStatus\LessonSectionStatusInterface;
 use App\Services\Menu\MenuAdmin;
 use App\Services\Menu\MenuAdminInterface;
 use App\Services\Menu\MenuUserContactMessages;
@@ -42,13 +44,14 @@ class AppServiceProvider extends ServiceProvider
         app()->singleton(MetaDescriptionServiceInterface::class, MetaDescriptionService::class);
         app()->singleton(NumericHelperInterface::class, NumericHelper::class);
         app()->singleton(ItemsStatusFlagInterface::class, ItemsStatusFlag::class);
+        app()->singleton(LessonSectionStatusInterface::class, LessonSectionStatus::class);
 
         //Progress - Decorator Design Pattern
         app()->singleton(LessonSectionProgressInterface::class, LessonSectionProgress::class);
         app()->singleton(LessonProgressInterface::class, LessonProgress::class);
         app()->singleton(ChapterProgressInterface::class, ChapterProgress::class);
         app()->singleton(CourseProgressInterface::class, CourseProgress::class);
-        app()->singleton(ProgressWrapperInterface::class, ProgressWrapper::class);
+        app()->bind(ProgressWrapperInterface::class, ProgressWrapper::class);
 
         app()->when(LessonProgress::class)
             ->needs(Progress::class)
