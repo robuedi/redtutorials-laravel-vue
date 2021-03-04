@@ -56,7 +56,7 @@ class LessonRepository implements LessonRepositoryInterface
             ->get();
     }
 
-    public static function getLessonByCourseChapterLessonSlugs(string $course_slug, string $chapter_slug, string $lesson_slug, array $select = [], array $with = [])
+    public function getLessonByCourseChapterLessonSlugs(string $course_slug, string $chapter_slug, string $lesson_slug, array $select = [], array $with = [])
     {
         $query = Lesson::wherehas('chapter', function($query) use (&$chapter_slug){
                 $query->where('slug', $chapter_slug);

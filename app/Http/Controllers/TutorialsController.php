@@ -17,13 +17,19 @@ class TutorialsController extends Controller
     private ChapterProgressInterface $chapter_progress;
     private AuthenticationServiceInterface $authentication_service;
     private MetaDescriptionServiceInterface $meta_description_service;
+    private LessonRepositoryInterface $lesson_repository;
+    private LessonSectionProgressInterface $lesson_section_progress;
+    private LessonSectionStatusInterface $lesson_section_status;
 
-    public function __construct(CourseRepositoryInterface $course_repository, ChapterProgressInterface $chapter_progress, AuthenticationServiceInterface $authentication_service, MetaDescriptionServiceInterface $meta_description_service)
+    public function __construct(CourseRepositoryInterface $course_repository, ChapterProgressInterface $chapter_progress, AuthenticationServiceInterface $authentication_service, MetaDescriptionServiceInterface $meta_description_service, LessonRepositoryInterface $lesson_repository, LessonSectionProgressInterface $lesson_section_progress, LessonSectionStatusInterface $lesson_section_status)
     {
         $this->course_repository        = $course_repository;
         $this->chapter_progress         = $chapter_progress;
         $this->authentication_service   = $authentication_service;
         $this->meta_description_service = $meta_description_service;
+        $this->lesson_repository        = $lesson_repository;
+        $this->lesson_section_progress  = $lesson_section_progress;
+        $this->lesson_section_status    = $lesson_section_status;
     }
 
     public function showCourseContent(string $course_slug)
@@ -48,10 +54,10 @@ class TutorialsController extends Controller
         ]);
     }
 
-    public function showLessonContent(string $course_slug, string $chapter_slug, string $lesson_slug, LessonRepositoryInterface $lesson_repository, LessonSectionProgressInterface $lesson_section_progress, LessonSectionStatusInterface $lesson_section_status)
+    public function showLessonContent(string $course_slug, string $chapter_slug, string $lesson_slug)
     {
         //get the lesson
-        $lesson = $lesson_repository->getLessonByCourseChapterLessonSlugs(
+        $lesson = $this->lesson_repository->getLessonByCourseChapterLessonSlugs(
             $course_slug, $chapter_slug, $lesson_slug,
             ['chapter_id', 'order_weight','id','name'],
             [ 'publicLessonSections', 'publicLessonSections.publicLessonSectionOptions', 'publicChapter:id,name,slug,course_id', 'publicChapter.publicCourse:id,name,slug', 'publicChapter.publicCourse.mediaFilesMain:url']
@@ -64,7 +70,7 @@ class TutorialsController extends Controller
         }
 
         $current_user = $this->authentication_service->getUserId();
-        $lesson_section_progress->setIDs($lesson->publicLessonSections->where('type', 'quiz')->pluck('id')->toArray())
+        $this->lesson_section_progress->setIDs($lesson->publicLessonSections->where('type', 'quiz')->pluck('id')->toArray())
                             ->setUsersIDs([$current_user]);
 
         return view('tutorials.lesson-content', [
@@ -72,8 +78,8 @@ class TutorialsController extends Controller
             'lesson'                => $lesson,
             'next_lesson'           => $lesson->next(),
             'meta_description'      => '',
-            'lesson_sections_progress'=> $lesson_section_progress->getProgress(true)->setForUser($current_user),
-            'lesson_section_status' => $lesson_section_status,
+            'lesson_sections_progress'=> $this->lesson_section_progress->getProgress(true)->setForUser($current_user),
+            'lesson_section_status' => $this->lesson_section_status,
             'user'                  => $this->authentication_service->userLogged()
         ]);
     }
