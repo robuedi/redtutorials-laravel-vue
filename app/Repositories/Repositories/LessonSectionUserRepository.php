@@ -7,7 +7,6 @@ use App\Models\LessonSection;
 use App\Models\LessonSectionUser;
 use App\Repositories\LessonSectionUserRepositoryInterface;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class LessonSectionUserRepository implements LessonSectionUserRepositoryInterface
 {

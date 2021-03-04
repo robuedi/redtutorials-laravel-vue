@@ -5,7 +5,6 @@ namespace App\Repositories\Repositories;
 
 use App\Models\Login;
 use App\Repositories\LoginSessionRepositoryInterface;
-use App\Services\Authentication\AuthenticationServiceInterface;
 
 class LoginSessionRepository implements LoginSessionRepositoryInterface
 {
