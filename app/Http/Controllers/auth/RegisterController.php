@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\auth;
 
+use App\Http\Requests\client\ActivateAccountRequest;
 use App\Http\Requests\client\RegisterRequest;
 use App\Services\Authentication\AuthenticationServiceInterface;
 use App\Services\Authentication\Facade\AuthenticationFacadeInterface;
@@ -66,6 +67,23 @@ class RegisterController
             'title' => 'Something went wrong...',
             'msg'   => 'Please try again later or contact the support team.'
         ]);
+    }
+
+    public function activateAccount(ActivateAccountRequest $request)
+    {
+        $response = $this->authentication_facade->activateAccount($request->get('user_id'), $request->get('activation_code'));
+
+        //activate user
+        if ($response)
+        {
+            //show feedback
+            return view('user.msg', [
+                'title' => 'Email Confirmation Failed',
+                'msg'   =>  'Something went wrong... please try again later.'
+            ]);
+        }
+
+        return response()->redirectTo('/login');
     }
 
 }

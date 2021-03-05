@@ -14,6 +14,7 @@ return [
     */
 
     'default' => env('MAIL_MAILER', 'smtp'),
+    'contact_mail' => env('MAIL_CONTACT', 'contact@redtutorial.com'),
 
     /*
     |--------------------------------------------------------------------------

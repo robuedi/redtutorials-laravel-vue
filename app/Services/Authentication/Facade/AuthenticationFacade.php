@@ -71,4 +71,9 @@ namespace App\Services\Authentication\Facade;
 
          return $response;
      }
+
+     public function activateAccount(int $user_id, string $activation_code)
+     {
+         return $this->authentication_register->activateAccount($user_id, $activation_code);
+     }
  }

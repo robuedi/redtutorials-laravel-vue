@@ -42,4 +42,36 @@ class AuthenticationRegister implements AuthenticationRegisterInterface
     {
         return Activation::create($user);
     }
+
+    public function activateAccount(int $user_id, string $activation_code)
+    {
+        $response = [
+            'status'    => false,
+            'user'      => null,
+            'msg'       => ''
+        ];
+
+        //get the user
+        $user = Sentinel::findById($user_id);
+
+        //user not found
+        if(!$user)
+        {
+            $response['msg'] = 'User not found';
+            return $response;
+        }
+
+
+        //try to activate user
+        if(!Activation::complete($user, $activation_code))
+        {
+            $response['msg']    = 'Activation failed.';
+            $response['user']   = $user;
+            return $response;
+        }
+
+        //success
+        $response['status'] = true;
+        return $response;
+    }
 }
