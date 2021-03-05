@@ -8,16 +8,23 @@ use App\Repositories\LessonRepositoryInterface;
 
 class LessonRepository implements LessonRepositoryInterface
 {
+    private Lesson $lesson;
+
+    public function __construct(Lesson $lesson)
+    {
+        $this->lesson = $lesson;
+    }
+
     public function getCountTotal()
     {
-        return Lesson::selectRaw('COUNT(id) as total')
+        return $this->lesson->selectRaw('COUNT(id) as total')
             ->pluck('total')
             ->first();
     }
 
     public function getCountPublic()
     {
-        return Lesson::selectRaw('COUNT(id) as public')
+        return $this->lesson->selectRaw('COUNT(id) as public')
             ->public(true)
             ->pluck('public')
             ->first();
@@ -25,7 +32,7 @@ class LessonRepository implements LessonRepositoryInterface
 
     public function getCountDraft()
     {
-        return Lesson::selectRaw('COUNT(id) as draft')
+        return $this->lesson->selectRaw('COUNT(id) as draft')
             ->draft(true)
             ->pluck('draft')
             ->first();
@@ -33,7 +40,7 @@ class LessonRepository implements LessonRepositoryInterface
 
     public function getByWeightGrouped()
     {
-        Lesson::whereNotNull('chapter_id')
+        return $this->lesson->whereNotNull('chapter_id')
             ->weightOrdering()
             ->select('id', 'name', 'chapter_id', 'is_public', 'is_draft')
             ->get()
@@ -47,7 +54,7 @@ class LessonRepository implements LessonRepositoryInterface
             return collect([]);
         }
 
-        return Lesson::whereIn('chapter_id', $chapters_ids)
+        return $this->lesson->whereIn('chapter_id', $chapters_ids)
             ->withSlug(true)
             ->weightOrdering()
             ->select($select_fields)
@@ -57,7 +64,7 @@ class LessonRepository implements LessonRepositoryInterface
 
     public function getLessonByCourseChapterLessonSlugs(string $course_slug, string $chapter_slug, string $lesson_slug, array $select = [], array $with = [])
     {
-        $query = Lesson::wherehas('chapter', function($query) use (&$chapter_slug){
+        $query = $this->lesson->wherehas('chapter', function($query) use (&$chapter_slug){
                 $query->where('slug', $chapter_slug);
                 $query->where('is_public', 1);
             })

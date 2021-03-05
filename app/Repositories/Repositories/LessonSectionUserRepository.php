@@ -10,6 +10,13 @@ use Illuminate\Support\Facades\DB;
 
 class LessonSectionUserRepository implements LessonSectionUserRepositoryInterface
 {
+    private LessonSectionUser $lesson_section_user;
+
+    public function __construct(LessonSectionUser $lesson_section_user)
+    {
+        $this->lesson_section_user = $lesson_section_user;
+    }
+
     public function countPublicQuizByLessons(int $user_id, array $lessons_id)
     {
         return LessonSection::whereHas('users', function($query) use (&$user_id){
@@ -25,7 +32,7 @@ class LessonSectionUserRepository implements LessonSectionUserRepositoryInterfac
 
     public function getCompletedSections(array $user_id, array $section_id = [])
     {
-        return LessonSectionUser::whereIn('user_id', $user_id)
+        return $this->lesson_section_user->whereIn('user_id', $user_id)
             ->whereIn('lesson_section_id', $section_id)
             ->select('lesson_section_id', 'user_id')
             ->get();

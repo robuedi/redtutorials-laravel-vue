@@ -3,16 +3,24 @@
 
 namespace App\Repositories\Repositories;
 
+use App\Models\Lesson;
 use App\Models\LessonSection;
 use App\Repositories\LessonSectionRepositoryInterface;
 use Illuminate\Support\Facades\DB;
 
 class LessonSectionRepository implements LessonSectionRepositoryInterface
 {
+    private LessonSection $lesson_section;
+
+    public function __construct(LessonSection $lesson_section)
+    {
+        $this->lesson_section = $lesson_section;
+    }
+
     public function countPublicQuizByLessons(array $lessons_id)
     {
 
-        return LessonSection::whereIn('lesson_id', $lessons_id)
+        return $this->lesson_section->whereIn('lesson_id', $lessons_id)
             ->public(true)
             ->where('type', 'quiz')
             ->select('lesson_id', DB::raw('count(*) as total'))
@@ -23,7 +31,7 @@ class LessonSectionRepository implements LessonSectionRepositoryInterface
     public function getQuizByLessons(array $lessons_id = [], array $select = [])
     {
 
-        return LessonSection::whereIn('lesson_id', $lessons_id)
+        return $this->lesson_section->whereIn('lesson_id', $lessons_id)
             ->public(true)
             ->where('type', 'quiz')
             ->select($select)
@@ -37,7 +45,7 @@ class LessonSectionRepository implements LessonSectionRepositoryInterface
             return collect([]);
         }
 
-        return LessonSection::whereIn('id', $ids)
+        return $this->lesson_section->whereIn('id', $ids)
             ->whereHas('users', function($query) use (&$user_id){
                 $query->where('user.id', $user_id);
             })

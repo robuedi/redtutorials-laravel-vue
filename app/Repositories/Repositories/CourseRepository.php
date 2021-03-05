@@ -8,16 +8,23 @@ use App\Repositories\CourseRepositoryInterface;
 
 class CourseRepository implements CourseRepositoryInterface
 {
+    private Course $course;
+
+    public function __construct(Course $course)
+    {
+        $this->course = $course;
+    }
+
     public function getCountTotal()
     {
-        return Course::selectRaw('COUNT(id) as total')
+        return $this->course->selectRaw('COUNT(id) as total')
             ->pluck('total')
             ->first();
     }
 
     public function getCountPublic()
     {
-        return Course::selectRaw('COUNT(id) as public')
+        return $this->course->selectRaw('COUNT(id) as public')
             ->public(true)
             ->pluck('public')
             ->first();
@@ -25,7 +32,7 @@ class CourseRepository implements CourseRepositoryInterface
 
     public function getCountDraft()
     {
-        return Course::selectRaw('COUNT(id) as draft')
+        return $this->course->selectRaw('COUNT(id) as draft')
             ->draft(true)
             ->pluck('draft')
             ->first();
@@ -33,14 +40,14 @@ class CourseRepository implements CourseRepositoryInterface
 
     public function getByWeight()
     {
-        return Course::orderBy('order_weight')
+        return $this->course->orderBy('order_weight')
             ->select('id', 'name')
             ->get();
     }
 
     public function getPublic(array $fields = [])
     {
-        return Course::public(true)
+        return $this->course->public(true)
             ->select($fields)
             ->weightOrdering()
             ->withSlug(true)
@@ -49,7 +56,7 @@ class CourseRepository implements CourseRepositoryInterface
 
     public function getPublicWithSlug(array $fields = [])
     {
-        return Course::public(true)
+        return $this->course->public(true)
             ->select($fields)
             ->withSlug(true)
             ->weightOrdering()
@@ -58,7 +65,7 @@ class CourseRepository implements CourseRepositoryInterface
 
     public function getPublicBySlugWith(string $slug, array $with = [], array $select = [])
     {
-        $q = Course::query();
+        $q = $this->course::query();
         $q->where('slug', $slug)
             ->public(true)
             ->select($select);

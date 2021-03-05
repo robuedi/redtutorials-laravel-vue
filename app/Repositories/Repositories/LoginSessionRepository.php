@@ -8,22 +8,28 @@ use App\Repositories\LoginSessionRepositoryInterface;
 
 class LoginSessionRepository implements LoginSessionRepositoryInterface
 {
+    private Login $login;
+
+    public function __construct(Login $login)
+    {
+        $this->login = $login;
+    }
+
     public function saveLogin(int $user_id) : void
     {
         /// insert in BD and in session login_id
         // if we are here, that means it's a successful login
-        $new_login                = new Login;
-        $new_login->user_id       = $user_id;
-        $new_login->login_date    = date('Y-m-d H:i:s');
-        $new_login->login_success = 1;
-        $new_login->login_ip      = request()->getClientIp();
+        $this->login->user_id       = $user_id;
+        $this->login->login_date    = date('Y-m-d H:i:s');
+        $this->login->login_success = 1;
+        $this->login->login_ip      = request()->getClientIp();
 
         $request                  = request()->server();
-        $new_login->browser       = $request['HTTP_USER_AGENT'] ?? '';
-        $new_login->save();
+        $this->login->browser       = $request['HTTP_USER_AGENT'] ?? '';
+        $this->login->save();
 
         // store in session the current login history id
-        session(['login_history_id' => $new_login->login_id]);
+        session(['login_history_id' => $this->login->login_id]);
     }
 
     public function saveLogout() : void
@@ -35,7 +41,7 @@ class LoginSessionRepository implements LoginSessionRepositoryInterface
             return;
         }
 
-        $login = Login::find($login_history_id);
+        $login = $this->login->find($login_history_id);
 
         // only update the logout date if the record is found
         if (!$login) {

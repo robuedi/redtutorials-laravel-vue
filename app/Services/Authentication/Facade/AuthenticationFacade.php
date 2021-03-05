@@ -15,7 +15,6 @@ namespace App\Services\Authentication\Facade;
     {
         $this->authentication_register = $authentication_register;
         $this->authentication_login = $authentication_login;
-
     }
 
      public function login(array $intended_roles, string $email, string $password, ?bool $remember)
