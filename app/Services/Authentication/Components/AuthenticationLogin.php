@@ -3,18 +3,12 @@
 
 namespace App\Services\Authentication\Components;
 
-use App\Repositories\LoginSessionRepositoryInterface;
 use Cartalyst\Sentinel\Checkpoints\NotActivatedException;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Cartalyst\Sentinel\Checkpoints\ThrottlingException;
 
 class AuthenticationLogin implements AuthenticationLoginInterface
 {
-    private LoginSessionRepositoryInterface $login_session_repository;
-    public function __construct(LoginSessionRepositoryInterface $login_session_repository)
-    {
-        $this->login_session_repository = $login_session_repository;
-    }
 
     public function login(array $intended_roles, string $email, string $password, ?bool $remember)
     {
@@ -40,9 +34,6 @@ class AuthenticationLogin implements AuthenticationLoginInterface
             //check if correct role
             if($this->hasAcces($intended_roles))
             {
-                //save the login session
-                $this->login_session_repository->saveLogin($logged_user->getUserId());
-
                 //set response
                 $response['status'] = true;
                 $response['user'] = $logged_user;
@@ -63,8 +54,7 @@ class AuthenticationLogin implements AuthenticationLoginInterface
 
     public function logout() : bool
     {
-        //save logout action
-        $this->login_session_repository->saveLogout();
+        //do logout
         return Sentinel::logout();
     }
 }

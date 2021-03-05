@@ -4,21 +4,21 @@
 namespace App\Http\Controllers\auth;
 
 use App\Http\Requests\admin\LoginRequest;
-use App\Services\Authentication\AuthenticationServiceInterface;
+use App\Services\Authentication\Facade\AuthenticationFacadeInterface;
 
 class LoginController
 {
-    private AuthenticationServiceInterface $authentication_service;
+    private AuthenticationFacadeInterface $authentication_facade;
 
-    public function __construct(AuthenticationServiceInterface $authentication_service)
+    public function __construct(AuthenticationFacadeInterface $authentication_facade)
     {
-        $this->authentication_service = $authentication_service;
+        $this->authentication_facade = $authentication_facade;
     }
 
     public function login(LoginRequest $request)
     {
         //make login
-        $login_status = $this->authentication_service->login(['client'], $request->get('email'),$request->get('password'),$request->get('remember'));
+        $login_status = $this->authentication_facade->login(['client'], $request->get('email'),$request->get('password'),$request->get('remember'));
 
         //check login status
         if(!$login_status['status'])
@@ -32,7 +32,7 @@ class LoginController
     function logout()
     {
         //do logout
-        if(!$this->authentication_service->logout()){
+        if(!$this->authentication_facade->logout()){
             return response()->redirectTo('/profile')->withErrors(['Unable to logout.']);
         }
 

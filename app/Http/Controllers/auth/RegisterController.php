@@ -4,15 +4,18 @@ namespace App\Http\Controllers\auth;
 
 use App\Http\Requests\client\RegisterRequest;
 use App\Services\Authentication\AuthenticationServiceInterface;
+use App\Services\Authentication\Facade\AuthenticationFacadeInterface;
 use Illuminate\Http\Request;
 
 class RegisterController
 {
     private AuthenticationServiceInterface $authentication_service;
+    private AuthenticationFacadeInterface $authentication_facade;
 
-    public function __construct(AuthenticationServiceInterface $authentication_service)
+    public function __construct(AuthenticationServiceInterface $authentication_service, AuthenticationFacadeInterface $authentication_facade)
     {
         $this->authentication_service = $authentication_service;
+        $this->authentication_facade = $authentication_facade;
     }
 
     public function index(Request $request)
@@ -42,7 +45,7 @@ class RegisterController
 
     public function register(RegisterRequest $request)
     {
-        $response = $this->authentication_service->register('client',
+        $response = $this->authentication_facade->register('client',
             [
                 'first_name'    =>  $request->get('first_name'),
                 'last_name'     =>  $request->get('last_name'),

@@ -5,11 +5,11 @@ namespace App\Services\Authentication\Components;
 
 use Cartalyst\Sentinel\Laravel\Facades\Activation;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
-use Illuminate\Support\Facades\Mail;
+use Cartalyst\Sentinel\Users\UserInterface;
 
 class AuthenticationRegister implements AuthenticationRegisterInterface
 {
-    public function register(string $user_type, array $user_info, string $base_activation_url)
+    public function register(string $user_type, array $user_info)
     {
         $response = [
             'status'    => 'fail',
@@ -32,17 +32,14 @@ class AuthenticationRegister implements AuthenticationRegisterInterface
         // assign user to  role
         $role->users()->attach($user);
 
-        //make activation url
-        $activation_url = $base_activation_url.'/'.$user->id.'/'.Activation::create($user);
-
-        //send email reset code
-        Mail::send('emails.activate_account', ['activation_url' => $activation_url, 'user' => $user], function ($m) use ($user) {
-            $m->from('no-reply@redtutorial.com', config('app.name'));
-            $m->to($user->email, $user->first_name.''.$user->last_name)->subject('Activate Account');
-        });
-
         return [
-            'status'            => 'success'
+            'status'    => 'success',
+            'user'      => $user
         ];
+    }
+
+    public function makeActivationCode(UserInterface $user)
+    {
+        return Activation::create($user);
     }
 }

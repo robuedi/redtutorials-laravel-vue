@@ -7,7 +7,7 @@ use App\Services\Authentication\Facade\AuthenticationFacade;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Cartalyst\Sentinel\Checkpoints\NotActivatedException;
 
-class AuthenticationService extends AuthenticationFacade implements AuthenticationServiceInterface
+class AuthenticationService implements AuthenticationServiceInterface
 {
     private $logged_user = null;
 
@@ -54,7 +54,7 @@ class AuthenticationService extends AuthenticationFacade implements Authenticati
     public function checkIfRoles(array $roles) : string
     {
         try {
-            if ($this->userLogged() && $this->hasAcces($roles))
+            if ($this->userLogged() && $this->hasAccess($roles))
                 return 'yes';
             else
                 return 'no';
@@ -81,7 +81,7 @@ class AuthenticationService extends AuthenticationFacade implements Authenticati
         return $this->logged_user;
     }
 
-    public function hasAcces(array $type) : bool
+    public function hasAccess(array $type) : bool
     {
         return Sentinel::hasAccess($type);
     }

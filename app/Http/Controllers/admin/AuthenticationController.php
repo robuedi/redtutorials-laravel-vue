@@ -5,14 +5,17 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\admin\LoginRequest;
 use App\Services\Authentication\AuthenticationServiceInterface;
+use App\Services\Authentication\Facade\AuthenticationFacadeInterface;
 
 class AuthenticationController extends Controller
 {
     private AuthenticationServiceInterface $authentication_service;
+    private AuthenticationFacadeInterface $authentication_facade;
 
-    public function __construct(AuthenticationServiceInterface $authentication_service)
+    public function __construct(AuthenticationServiceInterface $authentication_service, AuthenticationFacadeInterface $authentication_facade)
     {
         $this->authentication_service = $authentication_service;
+        $this->authentication_facade = $authentication_facade;
     }
 
     public function login()
@@ -34,7 +37,7 @@ class AuthenticationController extends Controller
     public function doLogin(LoginRequest $request)
     {
         //make login
-        $login_status = $this->authentication_service->login(['admin'], $request->get('email'),$request->get('password'),$request->get('remember'));
+        $login_status = $this->authentication_facade->login(['admin'], $request->get('email'),$request->get('password'),$request->get('remember'));
 
         //check login status
         if(!$login_status['status'])
@@ -48,7 +51,7 @@ class AuthenticationController extends Controller
     function logout()
     {
         //do logout
-        if(!$this->authentication_service->logout()){
+        if(!$this->authentication_facade->logout()){
             return response()->redirectTo(config('app.admin_route'))->withErrors(['Unable to logout.']);
         }
 
