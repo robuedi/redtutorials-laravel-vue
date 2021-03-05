@@ -41,7 +41,7 @@ class AuthenticationLogin implements AuthenticationLoginInterface
             }
 
             $this->logout();
-            $response['status'] = 'Login not authorised.';
+            $response['msg'] = 'Login not authorised.';
         } catch (NotActivatedException $e) {
             $response['msg'] = 'Account is not activated!';
         } catch (ThrottlingException $e) {

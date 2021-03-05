@@ -54,7 +54,7 @@ class RegisterController
             ], $request->root().'/activate-account/');
 
         //show feedback
-        if($response['status'] === 'success')
+        if($response['status'])
         {
             return view('static-pages.msg', [
                 'title' => 'Email Confirmation',

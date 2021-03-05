@@ -12,7 +12,7 @@ class AuthenticationRegister implements AuthenticationRegisterInterface
     public function register(string $user_type, array $user_info)
     {
         $response = [
-            'status'    => 'fail',
+            'status'    => false,
             'msg'       => ''
         ];
 
@@ -33,7 +33,7 @@ class AuthenticationRegister implements AuthenticationRegisterInterface
         $role->users()->attach($user);
 
         return [
-            'status'    => 'success',
+            'status'    => true,
             'user'      => $user
         ];
     }

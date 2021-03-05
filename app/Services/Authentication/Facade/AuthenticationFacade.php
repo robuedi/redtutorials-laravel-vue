@@ -55,7 +55,7 @@ namespace App\Services\Authentication\Facade;
      {
          $response = $this->authentication_register->register($user_type, $user_info);
 
-         if($response['status'] !== 'success')
+         if(!$response['status'])
          {
              return $response;
          }
