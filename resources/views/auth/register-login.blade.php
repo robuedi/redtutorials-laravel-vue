@@ -27,7 +27,7 @@
         </div>
     </section>
 
-{{--    @include('_partials.feedback')--}}
+    @include('_partials.feedback')
 
     <form class="section-container form-item @if(isset($register)) inactive @endif" data-role="choose-action-container" data-type="register" enctype="application/x-www-form-urlencoded" action="/register" method="POST">
         {{ csrf_field() }}

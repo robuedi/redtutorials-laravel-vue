@@ -1,4 +1,4 @@
-@extends('_partials.standard_page')
+@extends('_partials.standard-page')
 
 @section('meta')
     <meta name="description" content="Feedback message">

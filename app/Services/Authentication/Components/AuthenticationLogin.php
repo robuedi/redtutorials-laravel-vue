@@ -32,7 +32,7 @@ class AuthenticationLogin implements AuthenticationLoginInterface
             }
 
             //check if correct role
-            if($this->hasAcces($intended_roles))
+            if(Sentinel::hasAccess($intended_roles))
             {
                 //set response
                 $response['status'] = true;

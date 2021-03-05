@@ -3,7 +3,6 @@
 
 namespace App\Services\Authentication;
 
-use App\Services\Authentication\Facade\AuthenticationFacade;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Cartalyst\Sentinel\Checkpoints\NotActivatedException;
 
@@ -13,9 +12,9 @@ class AuthenticationService implements AuthenticationServiceInterface
 
     public function getUserId() : ?int
     {
-        if($this->userLogged())
+        if($this->getUserLogged())
         {
-            return $this->userLogged()->getUserId();
+            return $this->getUserLogged()->getUserId();
         }
 
         return null;
@@ -23,9 +22,9 @@ class AuthenticationService implements AuthenticationServiceInterface
 
     public function getUserName() : string
     {
-        if($this->userLogged())
+        if($this->getUserLogged())
         {
-            return $this->userLogged()->first_name.' '.$this->userLogged()->last_name;
+            return $this->getUserLogged()->first_name.' '.$this->getUserLogged()->last_name;
         }
 
         return '';
@@ -33,9 +32,9 @@ class AuthenticationService implements AuthenticationServiceInterface
 
     public function getUserFirstName() : string
     {
-        if($this->userLogged())
+        if($this->getUserLogged())
         {
-            return $this->userLogged()->first_name;
+            return $this->getUserLogged()->first_name;
         }
 
         return '';
@@ -54,7 +53,7 @@ class AuthenticationService implements AuthenticationServiceInterface
     public function checkIfRoles(array $roles) : string
     {
         try {
-            if ($this->userLogged() && $this->hasAccess($roles))
+            if ($this->getUserLogged() && $this->hasAccess($roles))
                 return 'yes';
             else
                 return 'no';
@@ -63,9 +62,9 @@ class AuthenticationService implements AuthenticationServiceInterface
         }
     }
 
-    public function userLogged()
+    public function getUserLogged()
     {
-        if(!$this->logged_user)
+        if($this->logged_user)
         {
             return $this->logged_user;
         }

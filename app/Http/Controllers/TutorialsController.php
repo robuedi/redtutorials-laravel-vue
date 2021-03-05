@@ -80,7 +80,7 @@ class TutorialsController extends Controller
             'meta_description'      => '',
             'lesson_sections_progress'=> $this->lesson_section_progress->getProgress(true)->setForUser($current_user),
             'lesson_section_status' => $this->lesson_section_status,
-            'user'                  => $this->authentication_service->userLogged()
+            'user'                  => $this->authentication_service->getUserLogged()
         ]);
     }
 }

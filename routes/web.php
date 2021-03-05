@@ -8,6 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\StaticPagesController;
 use App\Http\Controllers\TutorialsController;
+use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -57,15 +58,21 @@ Route::get('/user/sign-in', 'UserSignInController@index');
 
 // auth
 Route::group(['namespace' => 'auth'], function(){
+
     //Register
     Route::get('/register', [RegisterController::class, 'index']);
+    Route::post('/register', [RegisterController::class, 'register']);
+    Route::get('/register/activate-account/{user_id}/{activation_code}', [RegisterController::class, 'activateAccount']);
 
     //Login
-    Route::get('/login', [LoginController::class, 'login']);
+    Route::post('/login', [LoginController::class, 'login']);
 
     //Logout
     Route::get('/logout', [LoginController::class, 'logout']);
+});
 
-    Route::get('/activate-account/{user_id}/{activation_code}', [RegisterController::class, 'activateAccount']);
+Route::group(['prefix' => 'profile', 'middleware' => 'client_auth'], function (){
 
+    //Profile
+    Route::get('/', [UserProfileController::class, 'index']);
 });

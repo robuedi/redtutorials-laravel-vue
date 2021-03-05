@@ -20,7 +20,7 @@ class Nav extends Component
     public function __construct(CourseRepositoryInterface $course_repository, AuthenticationServiceInterface $authentication_service)
     {
         $this->courses = $course_repository->getPublicWithSlug(['slug', 'name']);
-        $this->user_logged = $authentication_service->userLogged();
+        $this->user_logged = $authentication_service->getUserLogged();
         $this->user_first_name = $authentication_service->getUserFirstName();
     }
 

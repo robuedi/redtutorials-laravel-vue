@@ -6,6 +6,8 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ActivateAccountRequest extends FormRequest
 {
+    protected $redirect = '/register';
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -13,7 +15,12 @@ class ActivateAccountRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
+    }
+
+    public function validationData()
+    {
+        return $this->route()->parameters();
     }
 
     /**
@@ -24,8 +31,8 @@ class ActivateAccountRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id'           =>'required|int',
-            'activation_code'   =>'required|string|min:4',
+            'user_id'           =>'required',
+            'activation_code'   =>'required',
         ];
     }
 
@@ -33,8 +40,8 @@ class ActivateAccountRequest extends FormRequest
     {
         $fail_message = 'There have been problems in activating your account. Try again later and if it still doesn\'t work contact us at <a class="link" href="mailto:contact@redtutorial.com">contact@redtutorial.com</a>.';
         return [
-            'user_id' => $fail_message,
-            'activation_code' => $fail_message,
+            'user_id.required' => $fail_message,
+            'activation_code.required' => $fail_message,
         ];
     }
 }

@@ -16,7 +16,7 @@ interface AuthenticationServiceInterface
 
     public function checkIfRoles(array $roles): string;
 
-    public function userLogged();
+    public function getUserLogged();
 
     public function hasAccess(array $type): bool;
 }

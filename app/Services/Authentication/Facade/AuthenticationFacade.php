@@ -7,6 +7,7 @@ namespace App\Services\Authentication\Facade;
  use App\Services\Authentication\Components\AuthenticationLoginInterface;
  use App\Services\Authentication\Components\AuthenticationRegisterInterface;
  use App\Services\Mailer\MailerInterface;
+ use Illuminate\Support\Facades\Log;
 
  class AuthenticationFacade implements AuthenticationFacadeInterface
  {
@@ -64,10 +65,17 @@ namespace App\Services\Authentication\Facade;
          $user = $response['user'];
 
          //make activation url
-         $activation_url = $base_activation_url.'/'.$user->id.'/'.$this->authentication_register->makeActivationCode($user);
+         $activation_url = $base_activation_url.'/'.$user->id.'/'.$this->authentication_register->makeActivationCode($user)->code;
 
          //send activation email
-         $this->mailer->sendActivationEmail($activation_url, $user->email, $user->first_name, $user->last_name);
+         if(env('APP_ENV') === 'production')
+         {
+             $this->mailer->sendActivationEmail($activation_url, $user->email, $user->first_name, $user->last_name);
+         }
+         else
+         {
+             Log::info($activation_url);
+         }
 
          return $response;
      }

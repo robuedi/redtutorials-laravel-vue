@@ -52,7 +52,7 @@ class RegisterController
                 'last_name'     =>  $request->get('last_name'),
                 'email'         =>  $request->get('email'),
                 'password'      =>  $request->get('password'),
-            ], $request->root().'/activate-account/');
+            ], $request->root().'/activate-account');
 
         //show feedback
         if($response['status'])
@@ -71,19 +71,19 @@ class RegisterController
 
     public function activateAccount(ActivateAccountRequest $request)
     {
-        $response = $this->authentication_facade->activateAccount($request->get('user_id'), $request->get('activation_code'));
+        $response = $this->authentication_facade->activateAccount($request->route('user_id'), $request->route('activation_code'));
 
         //activate user
-        if ($response)
+        if (!$response)
         {
             //show feedback
-            return view('user.msg', [
+            return view('static-pages.msg', [
                 'title' => 'Email Confirmation Failed',
                 'msg'   =>  'Something went wrong... please try again later.'
             ]);
         }
 
-        return response()->redirectTo('/login');
+        return response()->redirectTo('/register')->with(['success_msg' => 'Account activated successfully.']);
     }
 
 }
