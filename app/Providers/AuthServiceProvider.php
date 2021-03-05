@@ -2,12 +2,11 @@
 
 namespace App\Providers;
 
-use App\Repositories\LoginSessionRepository;
 use App\Repositories\LoginSessionRepositoryInterface;
+use App\Repositories\Repositories\LoginSessionRepository;
 use App\Services\Authentication\AuthenticationService;
 use App\Services\Authentication\AuthenticationServiceInterface;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {

@@ -65,7 +65,7 @@ class AuthenticationService implements AuthenticationServiceInterface
 
     public function userLogged()
     {
-        if(!$this->user_logged)
+        if(!$this->logged_user)
         {
             return $this->logged_user;
         }

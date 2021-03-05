@@ -2,12 +2,20 @@
 
 namespace App\Providers;
 
+use App\Services\Authentication\Components\AuthenticationLogin;
+use App\Services\Authentication\Components\AuthenticationLoginInterface;
+use App\Services\Authentication\Components\AuthenticationRegister;
+use App\Services\Authentication\Components\AuthenticationRegisterInterface;
+use App\Services\Authentication\Facade\AuthenticationFacade;
+use App\Services\Authentication\Facade\AuthenticationFacadeInterface;
 use App\Services\CoursesHierarchy\CoursesHierarchyAdmin;
 use App\Services\CoursesHierarchy\CoursesHierarchyAdminInterface;
 use App\Services\ItemsStatusFlag\ItemsStatusFlag;
 use App\Services\ItemsStatusFlag\ItemsStatusFlagInterface;
 use App\Services\LessonSectionStatus\LessonSectionStatus;
 use App\Services\LessonSectionStatus\LessonSectionStatusInterface;
+use App\Services\Mailer\Mailer;
+use App\Services\Mailer\MailerInterface;
 use App\Services\Menu\MenuAdmin;
 use App\Services\Menu\MenuAdminInterface;
 use App\Services\Menu\MenuUserContactMessages;
@@ -20,7 +28,6 @@ use App\Services\Progress\CourseComponents\CourseProgress;
 use App\Services\Progress\CourseComponents\LessonProgress;
 use App\Services\Progress\CourseComponents\LessonSectionProgress;
 use App\Services\Progress\CourseProgressInterface;
-use App\Services\Progress\Decorator\Progress;
 use App\Services\Progress\LessonProgressInterface;
 use App\Services\Progress\LessonSectionProgressInterface;
 use App\Services\Progress\Wrapper\ProgressWrapper;
@@ -45,6 +52,10 @@ class AppServiceProvider extends ServiceProvider
         app()->singleton(NumericHelperInterface::class, NumericHelper::class);
         app()->singleton(ItemsStatusFlagInterface::class, ItemsStatusFlag::class);
         app()->singleton(LessonSectionStatusInterface::class, LessonSectionStatus::class);
+        app()->singleton(AuthenticationFacadeInterface::class, AuthenticationFacade::class);
+        app()->singleton(AuthenticationRegisterInterface::class, AuthenticationRegister::class);
+        app()->singleton(AuthenticationLoginInterface::class, AuthenticationLogin::class);
+        app()->singleton(MailerInterface::class, Mailer::class);
 
         //Progress - Decorator Design Pattern
         app()->singleton(LessonSectionProgressInterface::class, LessonSectionProgress::class);

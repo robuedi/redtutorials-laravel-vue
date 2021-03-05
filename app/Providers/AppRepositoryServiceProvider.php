@@ -7,12 +7,14 @@ use App\Repositories\ContactMessageUserRepositoryInterface;
 use App\Repositories\CourseRepositoryInterface;
 use App\Repositories\LessonRepositoryInterface;
 use App\Repositories\LessonSectionRepositoryInterface;
+use App\Repositories\LoginSessionRepositoryInterface;
 use App\Repositories\Repositories\ChapterRepository;
 use App\Repositories\Repositories\ContactMessageUserRepository;
 use App\Repositories\Repositories\CourseRepository;
 use App\Repositories\Repositories\LessonRepository;
 use App\Repositories\Repositories\LessonSectionRepository;
 use App\Repositories\Repositories\LessonSectionUserRepository;
+use App\Repositories\Repositories\LoginSessionRepository;
 use App\Repositories\Repositories\StaticPageRepository;
 use App\Repositories\StaticPageRepositoryInterface;
 use App\Repositories\LessonSectionUserRepositoryInterface;
@@ -35,6 +37,7 @@ class AppRepositoryServiceProvider extends ServiceProvider
         app()->singleton(LessonSectionUserRepositoryInterface::class, LessonSectionUserRepository::class);
         app()->singleton(StaticPageRepositoryInterface::class, StaticPageRepository::class);
         app()->singleton(LessonSectionRepositoryInterface::class, LessonSectionRepository::class);
+        app()->singleton(LoginSessionRepositoryInterface::class, LoginSessionRepository::class);
     }
 
     /**

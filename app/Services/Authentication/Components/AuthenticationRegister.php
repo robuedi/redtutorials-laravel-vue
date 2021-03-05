@@ -43,7 +43,7 @@ class AuthenticationRegister implements AuthenticationRegisterInterface
         return Activation::create($user);
     }
 
-    public function activateAccount(int $user_id, string $activation_code)
+    public function activateAccount(int $user_id, string $activation_code) : array
     {
         $response = [
             'status'    => false,

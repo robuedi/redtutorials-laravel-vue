@@ -12,5 +12,6 @@ interface AuthenticationFacadeInterface
     public function logout(): bool;
 
     public function register(string $user_type, array $user_info, string $base_activation_url);
+
     public function activateAccount(int $user_id, string $activation_code);
 }
