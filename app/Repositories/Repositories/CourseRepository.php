@@ -5,6 +5,7 @@ namespace App\Repositories\Repositories;
 
 use App\Models\Course;
 use App\Repositories\CourseRepositoryInterface;
+use Illuminate\Support\Facades\Cache;
 
 class CourseRepository implements CourseRepositoryInterface
 {
@@ -47,37 +48,40 @@ class CourseRepository implements CourseRepositoryInterface
 
     public function getPublic(array $fields = [])
     {
-        return $this->course->public(true)
-            ->select($fields)
-            ->weightOrdering()
-            ->withSlug(true)
-            ->get();
+        return Cache::remember(__CLASS__.__METHOD__.implode('', $fields),3600, function() use ($fields) {
+            return $this->course->public(true)
+                ->select($fields)
+                ->weightOrdering()
+                ->withSlug(true)
+                ->get();
+        });
     }
 
     public function getPublicWithSlug(array $fields = [])
     {
-        return $this->course->public(true)
-            ->select($fields)
-            ->withSlug(true)
-            ->weightOrdering()
-            ->get();
+        return Cache::remember(__CLASS__.__METHOD__.implode('', $fields),3600, function() use ($fields) {
+            return $this->course->public(true)
+                ->select($fields)
+                ->withSlug(true)
+                ->weightOrdering()
+                ->get();
+        });
     }
 
     public function getPublicBySlugWith(string $slug, array $with = [], array $select = [])
     {
-        $q = $this->course::query();
-        $q->where('slug', $slug)
-            ->public(true)
-            ->select($select);
+        return Cache::remember(__CLASS__.__METHOD__.$slug.implode('', $with).implode('', $select),3600, function() use ($slug, $with, $select) {
+            $q = $this->course::query();
+            $q->where('slug', $slug)
+                ->public(true)
+                ->select($select);
 
-        if($with)
-        {
-            $q->with($with);
-        }
+            if($with)
+            {
+                $q->with($with);
+            }
 
-        return $q->first();
+            return $q->first();
+        });
     }
-
-
-
 }

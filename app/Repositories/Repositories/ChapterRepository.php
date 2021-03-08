@@ -5,6 +5,7 @@ namespace App\Repositories\Repositories;
 
 use App\Models\Chapter;
 use App\Repositories\ChapterRepositoryInterface;
+use Illuminate\Support\Facades\Cache;
 
 class ChapterRepository implements ChapterRepositoryInterface
 {
@@ -48,11 +49,13 @@ class ChapterRepository implements ChapterRepositoryInterface
 
     public function getPublicChaptersByCourses(array $courses_ids, array $select_fields = [])
     {
-        return $this->chapter->whereIn('course_id', $courses_ids)
-            ->withSlug(true)
-            ->weightOrdering()
-            ->select($select_fields)
-            ->public(true)
-            ->get();
+        return Cache::remember(__CLASS__.__METHOD__.implode('', $courses_ids).implode('', $select_fields),3600, function() use ($courses_ids, $select_fields) {
+            return $this->chapter->whereIn('course_id', $courses_ids)
+                ->withSlug(true)
+                ->weightOrdering()
+                ->select($select_fields)
+                ->public(true)
+                ->get();
+        });
     }
 }

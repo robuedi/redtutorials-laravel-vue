@@ -5,6 +5,7 @@ namespace App\Repositories\Repositories;
 
 use App\Models\StaticPage;
 use App\Repositories\StaticPageRepositoryInterface;
+use Illuminate\Support\Facades\Cache;
 
 class StaticPageRepository implements StaticPageRepositoryInterface
 {
@@ -17,10 +18,12 @@ class StaticPageRepository implements StaticPageRepositoryInterface
 
     public function getStaticMenu(array $select)
     {
-        return $this->static_page->withSlug(true)
-            ->public(true)
-            ->select($select)
-            ->get();
+        return Cache::remember(__CLASS__.__METHOD__.implode('', $select),3600, function() use ($select) {
+            return $this->static_page->withSlug(true)
+                ->public(true)
+                ->select($select)
+                ->get();
+        });
     }
 
     public function getPublicBySlug(string $slug, array $select)

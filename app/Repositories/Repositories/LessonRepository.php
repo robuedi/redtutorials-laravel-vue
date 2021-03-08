@@ -5,6 +5,7 @@ namespace App\Repositories\Repositories;
 
 use App\Models\Lesson;
 use App\Repositories\LessonRepositoryInterface;
+use Illuminate\Support\Facades\Cache;
 
 class LessonRepository implements LessonRepositoryInterface
 {
@@ -54,12 +55,14 @@ class LessonRepository implements LessonRepositoryInterface
             return collect([]);
         }
 
-        return $this->lesson->whereIn('chapter_id', $chapters_ids)
-            ->withSlug(true)
-            ->weightOrdering()
-            ->select($select_fields)
-            ->public(true)
-            ->get();
+        return Cache::remember(__CLASS__.__METHOD__.implode('', $chapters_ids).implode('', $select_fields),3600, function() use ($chapters_ids, $select_fields) {
+            return $this->lesson->whereIn('chapter_id', $chapters_ids)
+                ->withSlug(true)
+                ->weightOrdering()
+                ->select($select_fields)
+                ->public(true)
+                ->get();
+        });
     }
 
     public function getLessonByCourseChapterLessonSlugs(string $course_slug, string $chapter_slug, string $lesson_slug, array $select = [], array $with = [])
