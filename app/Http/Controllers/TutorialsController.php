@@ -76,7 +76,7 @@ class TutorialsController extends Controller
         return view('tutorials.lesson-content', [
             'course_slug'           => '/'.$course_slug,
             'lesson'                => $lesson,
-            'next_lesson'           => $lesson->next(),
+            'next_lesson'           => $lesson->nextSlug(),
             'meta_description'      => '',
             'lesson_sections_progress'=> $this->lesson_section_progress->getProgress(true)->setForUser($current_user),
             'lesson_section_status' => $this->lesson_section_status,

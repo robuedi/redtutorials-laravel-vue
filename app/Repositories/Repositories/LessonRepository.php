@@ -67,23 +67,26 @@ class LessonRepository implements LessonRepositoryInterface
 
     public function getLessonByCourseChapterLessonSlugs(string $course_slug, string $chapter_slug, string $lesson_slug, array $select = [], array $with = [])
     {
-        $query = $this->lesson->wherehas('chapter', function($query) use (&$chapter_slug){
+        return Cache::remember(__CLASS__.__METHOD__.$course_slug.$chapter_slug.$lesson_slug.implode('', $select).implode('', $with),3600, function() use ($course_slug, $chapter_slug, $lesson_slug, $select, $with) {
+            $query = $this->lesson->wherehas('chapter', function($query) use (&$chapter_slug){
                 $query->where('slug', $chapter_slug);
                 $query->where('is_public', 1);
             })
-            ->wherehas('chapter.course', function($query) use (&$course_slug){
-                $query->where('slug', $course_slug);
-                $query->where('is_public', 1);
-            })
-            ->public(true)
-            ->where('slug', '=', $lesson_slug)
-            ->select($select);
+                ->wherehas('chapter.course', function($query) use (&$course_slug){
+                    $query->where('slug', $course_slug);
+                    $query->where('is_public', 1);
+                })
+                ->public(true)
+                ->where('slug', '=', $lesson_slug)
+                ->select($select);
 
-        if($with)
-        {
-            $query->with($with);
-        }
+            if($with)
+            {
+                $query->with($with);
+            }
 
-        return $query->first();
+            return $query->first();
+        });
+
     }
 }

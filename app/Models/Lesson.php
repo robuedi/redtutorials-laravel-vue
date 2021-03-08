@@ -8,6 +8,7 @@ use App\Models\scope_traits\ScopeSlug;
 use App\Models\scope_traits\ScopeWeight;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class Lesson extends Model
 {
@@ -35,14 +36,22 @@ class Lesson extends Model
         return $this->chapter()->public(true);
     }
 
-    public function next(){
+    public function nextSlug(){
         // get next lesson
-        return $this->orderBy('order_weight')
-                    ->where('order_weight', '>', $this->order_weight)
-                    ->where('chapter_id', '>', $this->chapter_id)
-                    ->public(true)
-                    ->withSlug(true)
-                    ->first();
+        return $this->next(['slug']);
 
+    }
+
+    public function next(array $select = []){
+        // get next lesson
+        return Cache::remember(__CLASS__.__METHOD__.implode('', $select),3600, function() use ($select) {
+            return $this->orderBy('order_weight')
+                ->where('order_weight', '>', $this->order_weight)
+                ->where('chapter_id', '>', $this->chapter_id)
+                ->select($select)
+                ->public(true)
+                ->withSlug(true)
+                ->first();
+        });
     }
 }
