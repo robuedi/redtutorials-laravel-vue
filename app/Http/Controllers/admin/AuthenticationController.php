@@ -4,24 +4,24 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\admin\LoginRequest;
-use App\Services\Authentication\AuthenticationServiceInterface;
+use App\Services\Authentication\AuthenticationHelperInterface;
 use App\Services\Authentication\Facade\AuthenticationFacadeInterface;
 
 class AuthenticationController extends Controller
 {
-    private AuthenticationServiceInterface $authentication_service;
+    private AuthenticationHelperInterface $authentication_helper;
     private AuthenticationFacadeInterface $authentication_facade;
 
-    public function __construct(AuthenticationServiceInterface $authentication_service, AuthenticationFacadeInterface $authentication_facade)
+    public function __construct(AuthenticationHelperInterface $authentication_helper, AuthenticationFacadeInterface $authentication_facade)
     {
-        $this->authentication_service = $authentication_service;
+        $this->authentication_helper = $authentication_helper;
         $this->authentication_facade = $authentication_facade;
     }
 
     public function login()
     {
         //check if user is logged in as admin
-        switch ($this->authentication_service->checkIfAdmin())
+        switch ($this->authentication_helper->checkIfAdmin())
         {
             case 'yes':
                 return response()->redirectToIntended(config('app.admin_route').'/dashboard');

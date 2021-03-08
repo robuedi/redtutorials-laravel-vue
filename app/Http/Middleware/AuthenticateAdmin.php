@@ -2,17 +2,17 @@
 
 namespace App\Http\Middleware;
 
-use App\Services\Authentication\AuthenticationServiceInterface;
+use App\Services\Authentication\AuthenticationHelperInterface;
 use Closure;
 use Illuminate\Http\Request;
 
 class AuthenticateAdmin
 {
-    private AuthenticationServiceInterface $authentication_service;
+    private AuthenticationHelperInterface $authentication_helper;
 
-    public function __construct(AuthenticationServiceInterface $authentication_service)
+    public function __construct(AuthenticationHelperInterface $authentication_helper)
     {
-        $this->authentication_service = $authentication_service;
+        $this->authentication_helper = $authentication_helper;
     }
 
     /**
@@ -25,7 +25,7 @@ class AuthenticateAdmin
     public function handle(Request $request, Closure $next)
     {
         //check if user is logged in as admin
-        switch ($this->authentication_service->checkIfAdmin())
+        switch ($this->authentication_helper->checkIfAdmin())
         {
             case 'yes':
                 return $next($request);

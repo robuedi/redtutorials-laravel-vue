@@ -4,18 +4,18 @@ namespace App\Http\Controllers\auth;
 
 use App\Http\Requests\client\ActivateAccountRequest;
 use App\Http\Requests\client\RegisterRequest;
-use App\Services\Authentication\AuthenticationServiceInterface;
+use App\Services\Authentication\AuthenticationHelperInterface;
 use App\Services\Authentication\Facade\AuthenticationFacadeInterface;
 use Illuminate\Http\Request;
 
 class RegisterController
 {
-    private AuthenticationServiceInterface $authentication_service;
+    private AuthenticationHelperInterface $authentication_helper;
     private AuthenticationFacadeInterface $authentication_facade;
 
-    public function __construct(AuthenticationServiceInterface $authentication_service, AuthenticationFacadeInterface $authentication_facade)
+    public function __construct(AuthenticationHelperInterface $authentication_helper, AuthenticationFacadeInterface $authentication_facade)
     {
-        $this->authentication_service = $authentication_service;
+        $this->authentication_helper = $authentication_helper;
         $this->authentication_facade = $authentication_facade;
     }
 
@@ -31,7 +31,7 @@ class RegisterController
         }
 
         //check if user is logged in as client
-        switch ($this->authentication_service->checkIfClient())
+        switch ($this->authentication_helper->checkIfClient())
         {
             case 'yes':
                 return response()->redirectToIntended();

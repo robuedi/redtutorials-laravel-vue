@@ -11,18 +11,18 @@ namespace App\Services\Menu;
 
 use App\ContactMessageToUser;
 use App\Repositories\ContactMessageUserRepositoryInterface;
-use App\Services\Authentication\AuthenticationServiceInterface;
+use App\Services\Authentication\AuthenticationHelperInterface;
 use Sentinel;
 
 class MenuUserContactMessages implements MenuUserContactMessagesInterface
 {
     private $unread_msg_nr = null;
-    private AuthenticationServiceInterface $authentication_service;
+    private AuthenticationHelperInterface $authentication_helper;
     private ContactMessageUserRepositoryInterface $contact_message_user_repository;
 
-    public function __construct(AuthenticationServiceInterface $authentication_service, ContactMessageUserRepositoryInterface $contact_message_user_repository)
+    public function __construct(AuthenticationHelperInterface $authentication_helper, ContactMessageUserRepositoryInterface $contact_message_user_repository)
     {
-        $this->authentication_service = $authentication_service;
+        $this->authentication_helper = $authentication_helper;
         $this->contact_message_user_repository = $contact_message_user_repository;
     }
 
@@ -35,7 +35,7 @@ class MenuUserContactMessages implements MenuUserContactMessagesInterface
         }
 
         //get the nr of msg
-        $user_id = $this->authentication_service->getUserId();
+        $user_id = $this->authentication_helper->getUserId();
 
         if($user_id)
         {

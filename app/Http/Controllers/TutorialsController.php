@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\CourseRepositoryInterface;
 use App\Repositories\LessonRepositoryInterface;
-use App\Services\Authentication\AuthenticationServiceInterface;
+use App\Services\Authentication\AuthenticationHelperInterface;
 use App\Services\LessonSectionStatus\LessonSectionStatusInterface;
 use App\Services\Progress\ChapterProgressInterface;
 use App\Services\Progress\LessonSectionProgressInterface;
@@ -15,17 +15,17 @@ class TutorialsController extends Controller
 {
     private CourseRepositoryInterface $course_repository;
     private ChapterProgressInterface $chapter_progress;
-    private AuthenticationServiceInterface $authentication_service;
+    private AuthenticationHelperInterface $authentication_helper;
     private MetaDescriptionServiceInterface $meta_description_service;
     private LessonRepositoryInterface $lesson_repository;
     private LessonSectionProgressInterface $lesson_section_progress;
     private LessonSectionStatusInterface $lesson_section_status;
 
-    public function __construct(CourseRepositoryInterface $course_repository, ChapterProgressInterface $chapter_progress, AuthenticationServiceInterface $authentication_service, MetaDescriptionServiceInterface $meta_description_service, LessonRepositoryInterface $lesson_repository, LessonSectionProgressInterface $lesson_section_progress, LessonSectionStatusInterface $lesson_section_status)
+    public function __construct(CourseRepositoryInterface $course_repository, ChapterProgressInterface $chapter_progress, AuthenticationHelperInterface $authentication_helper, MetaDescriptionServiceInterface $meta_description_service, LessonRepositoryInterface $lesson_repository, LessonSectionProgressInterface $lesson_section_progress, LessonSectionStatusInterface $lesson_section_status)
     {
         $this->course_repository        = $course_repository;
         $this->chapter_progress         = $chapter_progress;
-        $this->authentication_service   = $authentication_service;
+        $this->authentication_helper   = $authentication_helper;
         $this->meta_description_service = $meta_description_service;
         $this->lesson_repository        = $lesson_repository;
         $this->lesson_section_progress  = $lesson_section_progress;
@@ -41,7 +41,7 @@ class TutorialsController extends Controller
             abort(404);
         }
 
-        $current_user = $this->authentication_service->getUserId();
+        $current_user = $this->authentication_helper->getUserId();
         $this->chapter_progress
             ->setIDs($course_info->publicChapters->pluck('id')->toArray())
             ->setUsersIDs([$current_user]);
@@ -69,7 +69,7 @@ class TutorialsController extends Controller
             abort(404);
         }
 
-        $current_user = $this->authentication_service->getUserId();
+        $current_user = $this->authentication_helper->getUserId();
         $this->lesson_section_progress->setIDs($lesson->publicLessonSections->where('type', 'quiz')->pluck('id')->toArray())
                             ->setUsersIDs([$current_user]);
 
@@ -80,7 +80,7 @@ class TutorialsController extends Controller
             'meta_description'      => '',
             'lesson_sections_progress'=> $this->lesson_section_progress->getProgress(true)->setForUser($current_user),
             'lesson_section_status' => $this->lesson_section_status,
-            'user'                  => $this->authentication_service->getUserLogged()
+            'user'                  => $this->authentication_helper->getUserLogged()
         ]);
     }
 }

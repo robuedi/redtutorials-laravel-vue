@@ -2,7 +2,7 @@
 
 namespace App\Services\Menu;
 
-use App\Services\Authentication\AuthenticationServiceInterface;
+use App\Services\Authentication\AuthenticationHelperInterface;
 use Config;
 use function foo\func;
 use Log;
@@ -11,11 +11,11 @@ use Sentinel;
 
 class MenuAdmin implements MenuAdminInterface
 {
-    private $authentication_service;
+    private AuthenticationHelperInterface $authentication_helper;
 
-    public function __construct(AuthenticationServiceInterface $authentication_service)
+    public function __construct(AuthenticationHelperInterface $authentication_helper)
     {
-        $this->authentication_service = $authentication_service;
+        $this->authentication_helper = $authentication_helper;
     }
 
     public function getMenu()
@@ -38,7 +38,7 @@ class MenuAdmin implements MenuAdminInterface
         );
 
         // filter menu based on current user type
-        if ($this->authentication_service->checkIfAdmin() === 'yes')
+        if ($this->authentication_helper->checkIfAdmin() === 'yes')
             $menu = $menu['admin'];
 
         foreach ($menu as $top_level_menu_key => $top_level_menu)

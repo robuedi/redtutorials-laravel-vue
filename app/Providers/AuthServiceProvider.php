@@ -4,8 +4,8 @@ namespace App\Providers;
 
 use App\Repositories\LoginSessionRepositoryInterface;
 use App\Repositories\Repositories\LoginSessionRepository;
-use App\Services\Authentication\AuthenticationService;
-use App\Services\Authentication\AuthenticationServiceInterface;
+use App\Services\Authentication\AuthenticationHelper;
+use App\Services\Authentication\AuthenticationHelperInterface;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -21,7 +21,7 @@ class AuthServiceProvider extends ServiceProvider
 
     public function register()
     {
-        app()->singleton(AuthenticationServiceInterface::class, AuthenticationService::class);
+        app()->singleton(AuthenticationHelperInterface::class, AuthenticationHelper::class);
         app()->singleton(LoginSessionRepositoryInterface::class, LoginSessionRepository::class);
     }
 

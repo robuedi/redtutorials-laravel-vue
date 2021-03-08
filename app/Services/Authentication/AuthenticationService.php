@@ -6,7 +6,7 @@ namespace App\Services\Authentication;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Cartalyst\Sentinel\Checkpoints\NotActivatedException;
 
-class AuthenticationService implements AuthenticationServiceInterface
+class AuthenticationHelper implements AuthenticationHelperInterface
 {
     private $logged_user = null;
 

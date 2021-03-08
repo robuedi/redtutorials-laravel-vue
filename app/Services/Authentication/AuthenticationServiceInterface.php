@@ -2,7 +2,7 @@
 
 namespace App\Services\Authentication;
 
-interface AuthenticationServiceInterface
+interface AuthenticationHelperInterface
 {
     public function getUserId(): ?int;
 

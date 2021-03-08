@@ -2,7 +2,7 @@
 
 namespace App\View\Components\admin;
 
-use App\Services\Authentication\AuthenticationServiceInterface;
+use App\Services\Authentication\AuthenticationHelperInterface;
 use Illuminate\View\Component;
 
 class Header extends Component
@@ -13,9 +13,9 @@ class Header extends Component
      *
      * @return void
      */
-    public function __construct(AuthenticationServiceInterface $authentication_service)
+    public function __construct(AuthenticationHelperInterface $authentication_helper)
     {
-        $this->user_name = $authentication_service->getUserName();
+        $this->user_name = $authentication_helper->getUserName();
     }
 
     /**

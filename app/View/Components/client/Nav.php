@@ -3,7 +3,7 @@
 namespace App\View\Components\client;
 
 use App\Repositories\CourseRepositoryInterface;
-use App\Services\Authentication\AuthenticationServiceInterface;
+use App\Services\Authentication\AuthenticationHelperInterface;
 use Illuminate\View\Component;
 
 class Nav extends Component
@@ -17,11 +17,11 @@ class Nav extends Component
      *
      * @return void
      */
-    public function __construct(CourseRepositoryInterface $course_repository, AuthenticationServiceInterface $authentication_service)
+    public function __construct(CourseRepositoryInterface $course_repository, AuthenticationHelperInterface $authentication_helper)
     {
         $this->courses = $course_repository->getPublicWithSlug(['slug', 'name']);
-        $this->user_logged = $authentication_service->getUserLogged();
-        $this->user_first_name = $authentication_service->getUserFirstName();
+        $this->user_logged = $authentication_helper->getUserLogged();
+        $this->user_first_name = $authentication_helper->getUserFirstName();
     }
 
     /**
