@@ -3,8 +3,8 @@
 namespace App\Services\Progress\Decorator;
 
 use App\Repositories\LessonSectionUserRepositoryInterface;
+use App\Services\Progress\Decorator\Wrapper\ProgressWrapperInterface;
 use App\Services\Progress\LessonSectionProgressInterface;
-use App\Services\Progress\Wrapper\ProgressWrapperInterface;
 
 class LessonSectionProgress implements Progress, LessonSectionProgressInterface
 {

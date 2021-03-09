@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Services\Progress\Wrapper;
+namespace App\Services\Progress\Decorator\Wrapper;
 
 
 class ProgressWrapper implements ProgressWrapperInterface

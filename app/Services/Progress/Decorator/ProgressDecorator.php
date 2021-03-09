@@ -3,7 +3,7 @@
 
 namespace App\Services\Progress\Decorator;
 
-use App\Services\Progress\Wrapper\ProgressWrapperInterface;
+use App\Services\Progress\Decorator\Wrapper\ProgressWrapperInterface;
 
 abstract class ProgressDecorator implements Progress
 {

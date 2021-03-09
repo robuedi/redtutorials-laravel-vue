@@ -7,7 +7,7 @@ use App\Repositories\ChapterRepositoryInterface;
 use App\Services\Progress\ChapterProgressInterface;
 use App\Services\Progress\CourseProgressInterface;
 use App\Services\Progress\Decorator\ProgressDecorator;
-use App\Services\Progress\Wrapper\ProgressWrapperInterface;
+use App\Services\Progress\Decorator\Wrapper\ProgressWrapperInterface;
 
 class CourseProgress extends ProgressDecorator implements CourseProgressInterface
 {

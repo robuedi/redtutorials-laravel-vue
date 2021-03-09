@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Progress\Wrapper;
+namespace App\Services\Progress\Decorator\Wrapper;
 
 interface ProgressWrapperInterface
 {

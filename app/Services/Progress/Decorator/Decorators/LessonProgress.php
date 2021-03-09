@@ -5,9 +5,9 @@ namespace App\Services\Progress\Decorator\Decorators;
 
 use App\Repositories\LessonSectionRepositoryInterface;
 use App\Services\Progress\Decorator\ProgressDecorator;
+use App\Services\Progress\Decorator\Wrapper\ProgressWrapperInterface;
 use App\Services\Progress\LessonProgressInterface;
 use App\Services\Progress\LessonSectionProgressInterface;
-use App\Services\Progress\Wrapper\ProgressWrapperInterface;
 
 class LessonProgress extends ProgressDecorator implements LessonProgressInterface
 {
