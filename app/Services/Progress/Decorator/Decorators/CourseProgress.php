@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Services\Progress\CourseComponents;
+namespace App\Services\Progress\Decorator\Decorators;
 
 use App\Repositories\ChapterRepositoryInterface;
 use App\Services\Progress\ChapterProgressInterface;

@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Services\Progress\CourseComponents;
+namespace App\Services\Progress\Decorator;
 
 use App\Repositories\LessonSectionUserRepositoryInterface;
-use App\Services\Progress\Decorator\Progress;
 use App\Services\Progress\LessonSectionProgressInterface;
 use App\Services\Progress\Wrapper\ProgressWrapperInterface;
 
