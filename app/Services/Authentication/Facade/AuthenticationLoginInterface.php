@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Authentication\Components;
+namespace App\Services\Authentication\Facade;
 
 interface AuthenticationLoginInterface
 {

@@ -1,8 +1,9 @@
 <?php
 
 
-namespace App\Services\Authentication\Components;
+namespace App\Services\Authentication\Facade\Components;
 
+use App\Services\Authentication\Facade\AuthenticationRegisterInterface;
 use Cartalyst\Sentinel\Laravel\Facades\Activation;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Cartalyst\Sentinel\Users\UserInterface;

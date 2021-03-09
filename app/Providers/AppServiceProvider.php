@@ -2,12 +2,12 @@
 
 namespace App\Providers;
 
-use App\Services\Authentication\Components\AuthenticationLogin;
-use App\Services\Authentication\Components\AuthenticationLoginInterface;
-use App\Services\Authentication\Components\AuthenticationRegister;
-use App\Services\Authentication\Components\AuthenticationRegisterInterface;
 use App\Services\Authentication\Facade\AuthenticationFacade;
 use App\Services\Authentication\Facade\AuthenticationFacadeInterface;
+use App\Services\Authentication\Facade\AuthenticationLoginInterface;
+use App\Services\Authentication\Facade\AuthenticationRegisterInterface;
+use App\Services\Authentication\Facade\Components\AuthenticationLogin;
+use App\Services\Authentication\Facade\Components\AuthenticationRegister;
 use App\Services\CoursesHierarchy\CoursesHierarchyAdmin;
 use App\Services\CoursesHierarchy\CoursesHierarchyAdminInterface;
 use App\Services\ItemsStatusFlag\ItemsStatusFlag;

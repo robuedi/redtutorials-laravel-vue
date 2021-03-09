@@ -4,10 +4,7 @@
 namespace App\Services\Authentication\Facade;
 
  use App\Repositories\LoginSessionRepositoryInterface;
- use App\Services\Authentication\Components\AuthenticationLoginInterface;
- use App\Services\Authentication\Components\AuthenticationRegisterInterface;
  use App\Services\Mailer\MailerInterface;
- use Illuminate\Support\Facades\Log;
 
  class AuthenticationFacade implements AuthenticationFacadeInterface
  {
@@ -74,7 +71,8 @@ namespace App\Services\Authentication\Facade;
          }
          else
          {
-             Log::info($activation_url);
+             // log for dev support
+             info($activation_url);
          }
 
          return $response;
