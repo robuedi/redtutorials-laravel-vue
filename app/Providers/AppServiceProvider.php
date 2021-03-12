@@ -30,6 +30,8 @@ use App\Services\Progress\Decorator\LessonSectionProgress;
 use App\Services\Progress\CourseProgressInterface;
 use App\Services\Progress\Decorator\Wrapper\ProgressWrapper;
 use App\Services\Progress\Decorator\Wrapper\ProgressWrapperInterface;
+use App\Services\Progress\Facade\CourseProgressHelper;
+use App\Services\Progress\Facade\CourseProgressHelperInterface;
 use App\Services\Progress\LessonProgressInterface;
 use App\Services\Progress\LessonSectionProgressInterface;
 use App\Services\SEO\MetaDescriptionServiceInterface;
@@ -57,12 +59,14 @@ class AppServiceProvider extends ServiceProvider
         app()->singleton(AuthenticationLoginInterface::class, AuthenticationLogin::class);
         app()->singleton(MailerInterface::class, Mailer::class);
 
-        //Progress - Decorator Design Pattern
+        //Progress
         app()->singleton(LessonSectionProgressInterface::class, LessonSectionProgress::class);
         app()->singleton(LessonProgressInterface::class, LessonProgress::class);
         app()->singleton(ChapterProgressInterface::class, ChapterProgress::class);
         app()->singleton(CourseProgressInterface::class, CourseProgress::class);
         app()->bind(ProgressWrapperInterface::class, ProgressWrapper::class);
+        app()->bind(CourseProgressHelperInterface::class, CourseProgressHelper::class);
+
     }
 
     /**

@@ -11,7 +11,7 @@
 @stop
 
 @section('content')
-    <main class="lesson-main-container">
+    <section class="lesson-main-container">
 
         <section class="header-section content-parent" style='background-image: url("/images/{{$lesson->publicChapter->publicCourse->mediaFilesMain->first()->url}}?w=1000&fit=contain&filt=greyscale")'>
             <x-client.random-gradient-container :classes="'background-color'"></x-client.random-gradient-container>
@@ -69,6 +69,6 @@
                 </div>
             </div>
         </section>
-    </main>
+    </section>
 
 @stop

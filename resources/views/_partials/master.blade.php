@@ -49,15 +49,16 @@
     </head>
 
     <body class="@yield('body_class')">
+        <main id="app">
+            <x-client.nav></x-client.nav>
 
-        <x-client.nav></x-client.nav>
+            @yield('content')
 
-        @yield('content')
+            <x-client.footer></x-client.footer>
 
-        <x-client.footer></x-client.footer>
+        </main>
 
         @yield('scripts')
-
         <!-- JS -->
         <script src="/js/app.js?v=14"></script>
 

@@ -36,24 +36,24 @@ services:
     networks:
       - app-net
 
-  init-scripts:
-    build:
-      args:
-        user: eduard
-        uid: 1000
-      context: ./
-      dockerfile: Dockerfile
-    image: php-app
-    container_name: ${APP_NAME}-init-scripts
-    working_dir: /var/www/
-    command: bash -c 'chmod +x docker/init.sh && docker/init.sh' # migrations will run at startup
-    volumes:
-      - ./:/var/www
-    depends_on:
-      db:
-        condition: service_healthy
-    networks:
-      - app-net
+#  init-scripts:
+#    build:
+#      args:
+#        user: eduard
+#        uid: 1000
+#      context: ./
+#      dockerfile: Dockerfile
+#    image: php-app
+#    container_name: ${APP_NAME}-init-scripts
+#    working_dir: /var/www/
+#    command: bash -c 'chmod +x docker/init.sh && docker/init.sh' # migrations will run at startup
+#    volumes:
+#      - ./:/var/www
+#    depends_on:
+#      db:
+#        condition: service_healthy
+#    networks:
+#      - app-net
 
   app:
     build:
