@@ -16,7 +16,7 @@ class StaticPageRepository implements StaticPageRepositoryInterface
         $this->static_page = $static_page;
     }
 
-    public function getStaticMenu(array $select)
+    public function getPublic(array $select)
     {
         return Cache::remember(__CLASS__.__METHOD__.implode('', $select),3600, function() use ($select) {
             return $this->static_page->withSlug(true)

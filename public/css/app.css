@@ -700,42 +700,6 @@ body > main {
     margin-top: 0;
   }
 }
-body #footer-container {
-  margin: 10px 15px;
-  text-align: center;
-}
-body #footer-container .copyright-container {
-  box-sizing: border-box;
-  text-align: center;
-  margin: 0;
-  line-height: 2;
-}
-body #footer-container .footer-links {
-  margin: 0;
-  box-sizing: border-box;
-  vertical-align: middle;
-  list-style: none;
-  padding: 0;
-}
-body #footer-container .footer-links > li {
-  display: inline-block;
-  padding-left: 10px;
-}
-body #footer-container .footer-links > li a {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #000;
-  text-decoration: none;
-  transition: color 0.5s;
-  font-size: 18px;
-  letter-spacing: 1px;
-  font-weight: 100;
-  line-height: 2;
-  display: inline-block;
-}
-body #footer-container .footer-links > li a.active, body #footer-container .footer-links > li a:hover {
-  color: #cf142b;
-}
 
 textarea:focus, input:focus, button:focus {
   outline: none;

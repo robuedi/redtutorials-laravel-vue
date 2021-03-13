@@ -54,8 +54,8 @@
 
             @yield('content')
 
-            <x-client.footer></x-client.footer>
-
+{{--            <x-client.footer></x-client.footer>--}}
+            <footer-section></footer-section>
         </main>
 
         @yield('scripts')

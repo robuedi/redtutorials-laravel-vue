@@ -21,49 +21,6 @@ body {
       margin-top: 0;
     }
   }
-
-  #footer-container{
-    margin: 10px 15px;
-    text-align: center;
-
-    .copyright-container{
-      box-sizing: border-box;
-      text-align: center;
-      margin: 0;
-      line-height: 2;  
-    }
-
-    .footer-links{
-      margin: 0;
-      box-sizing: border-box;
-      vertical-align: middle;
-      list-style: none;
-      padding: 0;
-
-      > li {
-        display: inline-block;
-        padding-left: 10px;
-
-        a {
-          -webkit-font-smoothing: antialiased;
-          -moz-osx-font-smoothing: grayscale;
-          color: $text-color;
-          text-decoration: none;
-          transition: color .5s;
-          font-size: 18px;
-          letter-spacing: 1px;
-          font-weight: 100;
-          line-height: 2;
-          display: inline-block;
-
-          &.active, &:hover {
-            color: $brand-primary;
-          }
-        }
-
-      }
-    }
-  }
 }
 textarea:focus, input:focus, button:focus{
   outline: none;

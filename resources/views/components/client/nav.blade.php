@@ -22,9 +22,6 @@
             @endif
             <li><a href="/contact-us" class="option @if(url()->current() === url('/contact-us')) active @endif" >Contact Us</a></li>
             <li class="display-inline-block" ><a href="https://twitter.com/_redtutorial" aria-label="Twitter" target="_blank" rel="noopener" class="twitter-account option" ><i class="fab fa-twitter"></i></a></li>
-            {{--<li class="display-inline-block" ><a href="https://www.youtube.com/channel/UCdiASKn5toBvQZV_TJKCM8A" aria-label="YouTube" target="_blank" rel="noopener" ><i class="fab fa-youtube"></i></a></li>--}}
-            {{--<li class="display-inline-block" ><a href="https://www.facebook.com/com.RedTutorial" aria-label="Facebook" target="_blank" rel="noopener" ><i class="fab fa-facebook-square"></i></a></li>--}}
         </ul>
     </div>
-
 </nav>

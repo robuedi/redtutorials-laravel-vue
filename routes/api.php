@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\v1\CoursesController;
+use App\Http\Controllers\api\v1\StaticPagesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,4 +21,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function (){
     Route::get('/courses', [CoursesController::class, 'index']);
+    Route::get('/static-pages', [StaticPagesController::class, 'index']);
 });
